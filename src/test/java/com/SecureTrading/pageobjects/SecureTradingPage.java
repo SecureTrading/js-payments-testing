@@ -1,11 +1,11 @@
 package com.SecureTrading.pageobjects;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.StoredElement;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SecureTradingPage extends BasePage {
 

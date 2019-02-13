@@ -18,6 +18,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import util.enums.PropertyType;
 import util.enums.StoredElement;
 
 abstract class DriverFactory {
@@ -42,18 +43,16 @@ abstract class DriverFactory {
     protected static WebDriver driver;
     @Getter
     private static WebDriverWait waitDriver;
-    @Getter @Setter
+    @Getter
+    @Setter
     private static String parentWindowHandle;
     @Getter
     private static Iterator<String> windowIterator;
     @Getter
     protected static Local local;
 
-    protected static String USERNAME = getProperty("USERNAME");
-    protected static String ACCESS_KEY = getProperty("ACCESS_KEY");
-    protected static String REMOTE_URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@hub.browserstack.com/wd/hub";
-
     public DriverFactory() {
+        PropertiesHandler.init();
         driver = createDriver();
         parentWindowHandle = driver.getWindowHandle();
     }
@@ -70,23 +69,13 @@ abstract class DriverFactory {
 
         DesiredCapabilities caps = new DesiredCapabilities();
 
-        // Desktop configuration
-        if (System.getProperty("os") != null)
-            caps.setCapability("os", System.getProperty("os"));
-        if (System.getProperty("os_version") != null)
-            caps.setCapability("os_version", System.getProperty("os_version"));
-        if (System.getProperty("browser") != null)
-            caps.setCapability("browser", System.getProperty("browser"));
-        if (System.getProperty("browser_version") != null)
-            caps.setCapability("browser_version", System.getProperty("browser_version"));
-        if (System.getProperty("resolution") != null)
-            caps.setCapability("resolution", System.getProperty("resolution"));
-
-        // Additional mobile configuration
-        if (System.getProperty("device") != null)
-            caps.setCapability("device", System.getProperty("device"));
-        if (System.getProperty("real_mobile") != null)
-            caps.setCapability("real_mobile", System.getProperty("real_mobile"));
+        // Browser/device configuration
+        for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device", "real_mobile"}) {
+            String value = System.getProperty(property);
+            if (value != null) {
+                caps.setCapability(property, value);
+            }
+        }
 
         // Logging configuration
         caps.setCapability("browserstack.console", "errors");
@@ -102,7 +91,7 @@ abstract class DriverFactory {
             caps.setCapability("browserstack.local", "true");
             local = new Local();
             Map<String, String> options = new HashMap<String, String>();
-            options.put("key", getProperty("ACCESS_KEY"));
+            options.put("key", getProperty(PropertyType.BS_ACCESS_KEY.toString()));
             try {
                 local.start(options);
             } catch (Exception e) {
@@ -114,9 +103,9 @@ abstract class DriverFactory {
     }
 
     private static WebDriver createDriver() {
-        if (!getProperty("TARGET").equals("local")) {
+        if (!getProperty(PropertyType.TARGET.toString()).equals("local")) {
             try {
-                driver = new RemoteWebDriver(new URL(REMOTE_URL), GetRemoteDriverCapabilities());
+                driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME.toString()) + ":" + getProperty(PropertyType.BS_ACCESS_KEY.toString()) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
