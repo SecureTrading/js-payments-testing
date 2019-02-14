@@ -1,5 +1,7 @@
 package util;
 
+import util.enums.PropertyType;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -17,8 +19,8 @@ public class PropertiesHandler {
         }
     }
 
-    public static String getProperty(String property) {
-        String value = System.getenv(property);
-        return value != null ? value : properties.getProperty(property);
+    public static String getProperty(PropertyType property) {
+        String value = System.getenv(property.toString());
+        return value != null ? value : properties.getProperty(property.toString());
     }
 }

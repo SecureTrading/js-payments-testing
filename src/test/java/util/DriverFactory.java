@@ -90,7 +90,7 @@ abstract class DriverFactory {
             caps.setCapability("browserstack.local", "true");
             local = new Local();
             Map<String, String> options = new HashMap<String, String>();
-            options.put("key", getProperty(PropertyType.BS_ACCESS_KEY.toString()));
+            options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
             try {
                 local.start(options);
             } catch (Exception e) {
@@ -102,9 +102,9 @@ abstract class DriverFactory {
     }
 
     private static WebDriver createDriver() {
-        if (!getProperty(PropertyType.TARGET.toString()).equals("local")) {
+        if (!getProperty(PropertyType.TARGET).equals("local")) {
             try {
-                driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME.toString()) + ":" + getProperty(PropertyType.BS_ACCESS_KEY.toString()) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
+                driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME) + ":" + getProperty(PropertyType.BS_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
