@@ -24,7 +24,8 @@
     <commons.io.version>2.6</commons.io.version>
     <browserstack.local.version.version>1.0.3</browserstack.local.version.version>
     <lombok.version>1.18.4</lombok.version>
-    <pico-container-version>2.15</pico-container-version>
+    <pico.container.version>2.15</pico.container.version>
+    <commons.lang.version>3.8.1</commons.lang.version>
     <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
   </properties>
 
@@ -69,7 +70,12 @@
     <dependency>
       <groupId>org.picocontainer</groupId>
       <artifactId>picocontainer</artifactId>
-      <version>${pico-container-version}</version>
+      <version>${pico.container.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons.lang.version}</version>
     </dependency>
   </dependencies>
 
