@@ -84,10 +84,9 @@ abstract class DriverFactory {
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
-        caps.setCapability("build", LocalDate.now().toString());
         caps.setCapability("name", PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
-        if (System.getProperty("local") != null && System.getProperty("local").equals("true")) {
+        if (System.getProperty(PropertyType.LOCAL.toString()) != null && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
             caps.setCapability("browserstack.local", "true");
             local = new Local();
             Map<String, String> options = new HashMap<String, String>();

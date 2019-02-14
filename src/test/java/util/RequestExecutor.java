@@ -15,12 +15,8 @@ public final class RequestExecutor {
                     + PicoContainerHelper.getFromContainer(StoredElement.errorMessage) + "\\\"}\" https://api.browserstack.com/automate/sessions/"
                     + PicoContainerHelper.getFromContainer(StoredElement.sessionId) + ".json");
             int resultCode = process.waitFor();
-
-            if (resultCode == 0) {
-                // all is good
-            }
-        } catch (Throwable cause) {
-            // process cause
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 }
