@@ -6,7 +6,7 @@ before_script:
   - npm install -g npm@latest
   - npm install
   - npm run prod
-  - npm run server
+  - npm run start
 jobs:
   include:
     - stage: "Test"
