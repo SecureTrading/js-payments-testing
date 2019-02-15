@@ -2,7 +2,7 @@ language: java
 before_script:
   - git clone https://github.com/SecureTrading/js-payments
   - cd js-payments
-  - git develop
+  - git checkout develop
   - npm install -g npm@latest
   - npm install
   - npm run prod
