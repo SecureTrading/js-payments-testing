@@ -108,8 +108,8 @@ abstract class DriverFactory {
         if (!getProperty(PropertyType.TARGET).equals("local")) {
             System.out.println("----------------------------------1");
             System.out.println(getProperty(PropertyType.BS_USERNAME));
-            System.out.println(System.getenv("username"));
-            System.out.println(System.getenv("access_key"));
+            System.out.println(System.getenv("BROWSERSTACK_USER"));
+            System.out.println(System.getenv("BROWSERSTACK_ACCESSKEY"));
             System.out.println("----------------------------------1");
             try {
                 driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME) + ":" + getProperty(PropertyType.BS_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
