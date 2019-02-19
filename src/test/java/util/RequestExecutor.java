@@ -9,15 +9,6 @@ public final class RequestExecutor {
 
     public static void markTestAsFailed() {
         Runtime runtime = Runtime.getRuntime();
-        System.out.println("----------------------------------2");
-        System.out.println("----------------------------------2");
-
-        System.out.println(PicoContainerHelper.getFromContainer(StoredElement.errorMessage));
-        System.out.println(PicoContainerHelper.getFromContainer(StoredElement.sessionId));
-        System.out.println(getProperty(PropertyType.BS_USERNAME));
-
-        System.out.println("----------------------------------2");
-        System.out.println("----------------------------------2");
         try {
             Process process = runtime.exec("curl -u \"" + getProperty(PropertyType.BS_USERNAME) + ":" + getProperty(PropertyType.BS_ACCESS_KEY) + "\" -X PUT -H \"Content-Type: " +
                     "application/json\" -d \"{\\\"status\\\":\\\"failed\\\", \\\"reason\\\":\\\""
