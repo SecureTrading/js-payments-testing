@@ -10,7 +10,6 @@
   <packaging>jar</packaging>
 
   <name>JSPaymentsInterface</name>
-  <!-- FIXME change it to the project's website -->
   <url>https://www.securetrading.com/</url>
 
   <properties>

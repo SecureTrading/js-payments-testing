@@ -1,11 +1,11 @@
 run_all_in_parallel:
-	make clean_it test_base_configs
+	make --output-sync clean_it test_base_configs
 
 clean_it:
 	mvn clean
 
 test_base_configs:
-	make -j 10 test_chrome_68_w10 test_firefox_61_w10 test_edge_17_w10 test_edge_17_w10 test_ie_9_w7 test_ie_10_w8 test_ie_11_w8 test_safari_11_osxhs
+	make -j test_chrome_68_w10 test_firefox_61_w10 test_edge_17_w10 test_edge_17_w10 test_ie_9_w7 test_ie_10_w8 test_ie_11_w8 test_safari_11_osxhs
 
 test_chrome_68_w10:
 	mvn install -Dos=Windows -Dos_version=10 -Dbrowser=chrome -Dbrowser_version=68.0 -Dresolution=1920x1080
