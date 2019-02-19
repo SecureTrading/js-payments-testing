@@ -110,6 +110,13 @@ abstract class DriverFactory {
             }
 
             PicoContainerHelper.updateInContainer(StoredElement.sessionId, ((RemoteWebDriver) driver).getSessionId().toString());
+            System.out.println("----------------------------------1");
+            System.out.println("----------------------------------1");
+
+            System.out.println(PicoContainerHelper.getFromContainer(StoredElement.sessionId));
+
+            System.out.println("----------------------------------1");
+            System.out.println("----------------------------------1");
         } else {
             System.setProperty("webdriver.chrome.driver", "./src/binary/chrome/chromedriver.exe");
             driver = new ChromeDriver();
