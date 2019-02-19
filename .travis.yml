@@ -11,8 +11,8 @@ before_script:
 jobs:
   include:
     - stage: "Test"
-      name: "Behavioural test: chrome 68"
-      script: run_all_in_parallel
+      name: "Behavioural test: all basic configurations"
+      script: make run_all_in_parallel
 #      name: "Behavioural test: chrome 68"
 #      script: make test_chrome_68_w10
 #    - name: "Behavioural test: firefox 61"
