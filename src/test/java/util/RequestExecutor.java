@@ -14,6 +14,8 @@ public final class RequestExecutor {
 
         System.out.println(PicoContainerHelper.getFromContainer(StoredElement.errorMessage));
         System.out.println(PicoContainerHelper.getFromContainer(StoredElement.sessionId));
+        System.out.println(PicoContainerHelper.getFromContainer(getProperty(PropertyType.BS_USERNAME)));
+        System.out.println(PicoContainerHelper.getFromContainer(getProperty(PropertyType.BS_ACCESS_KEY)));
 
         System.out.println("----------------------------------2");
         System.out.println("----------------------------------2");
