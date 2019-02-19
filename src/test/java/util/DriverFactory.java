@@ -87,7 +87,10 @@ abstract class DriverFactory {
         caps.setCapability("name", PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
+            System.out.println("----------------------------------------------------------------------------------------------------------------- LOCAL");
+            System.out.println("----------------------------------------------------------------------------------------------------------------- "+ System.getProperty("BROWSERSTACK_LOCAL_IDENTIFIER"));
             caps.setCapability("browserstack.local", "true");
+            caps.setCapability("browserstack.localIdentifier", System.getProperty("BROWSERSTACK_LOCAL_IDENTIFIER"));
             local = new Local();
             Map<String, String> options = new HashMap<String, String>();
             options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
@@ -105,6 +108,8 @@ abstract class DriverFactory {
         if (!getProperty(PropertyType.TARGET).equals("local")) {
             System.out.println("----------------------------------1");
             System.out.println(getProperty(PropertyType.BS_USERNAME));
+            System.out.println(System.getenv("username"));
+            System.out.println(System.getenv("access_key"));
             System.out.println("----------------------------------1");
             try {
                 driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME) + ":" + getProperty(PropertyType.BS_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
