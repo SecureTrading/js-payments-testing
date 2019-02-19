@@ -10,6 +10,7 @@ public class AfterHooks {
 
     @After
     public void afterScenario(Scenario scenario) {
+        System.out.println("---------------------------------- scenario failed");
         if (scenario.isFailed()) {
             markTestAsFailed();
         }

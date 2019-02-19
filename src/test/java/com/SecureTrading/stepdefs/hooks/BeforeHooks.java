@@ -10,6 +10,6 @@ public class BeforeHooks {
     @Before
     public void beforeScenario(Scenario scenario) {
         PicoContainerHelper.cleanContainer();
-        PicoContainerHelper.addToContainer(StoredElement.scenarioName, scenario.getName());
+        PicoContainerHelper.updateInContainer(StoredElement.scenarioName, scenario.getName());
     }
 }
