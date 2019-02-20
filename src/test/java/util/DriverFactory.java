@@ -94,8 +94,8 @@ abstract class DriverFactory {
             options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
             options.put("forcelocal", "true");
             options.put("forceproxy", "true");
-//            options.put("proxyHost", "localhost");
-//            options.put("proxyPort", "8899");
+            options.put("proxyHost", "localhost");
+            options.put("proxyPort", "8899");
             try {
                 local.start(options);
             } catch (Exception e) {
