@@ -40,12 +40,22 @@ public class SecureTradingPageSteps {
 
     @Then("Make rest assured request$")
     public void make_rest_assured_request() {
-        System.out.println("----------------------------------------------------------###");
+        System.out.println("----------------------------------------------------------### external");
         System.out.println(given()
                 .spec(buildJsonRequestSpecification())
                 .when()
                 .get("/pet").asString());
-        System.out.println("----------------------------------------------------------###");
+        System.out.println("----------------------------------------------------------### external");
+    }
+
+    @Then("Make rest assured request on local host$")
+    public void make_rest_assured_request_with_proxy() {
+        System.out.println("----------------------------------------------------------### local host");
+        System.out.println(given()
+                .spec(buildJsonRequestSpecification())
+                .when()
+                .get("http://localhost:8760/pet").asString());
+        System.out.println("----------------------------------------------------------### local host");
     }
 
     public RequestSpecification buildJsonRequestSpecification() {
