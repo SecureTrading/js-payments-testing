@@ -95,8 +95,8 @@ abstract class DriverFactory {
             options.put("forcelocal", "true");
             options.put("forceproxy", "true");
             options.put("onlyAutomate", "true");
-            options.put("proxyHost", "127.0.0.1");
-            options.put("proxyPort", "9880");
+//            options.put("proxyHost", "127.0.0.1");
+//            options.put("proxyPort", "9880");
             try {
                 local.start(options);
             } catch (Exception e) {
