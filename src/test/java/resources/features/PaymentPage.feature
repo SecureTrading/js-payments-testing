@@ -1,16 +1,16 @@
 Feature: Credit Card
   As a user
-  I want to fill payment form using correct credentials
-  In order to make successful payment
+  I want to use various payment methods using correct and incorrect credentials
+  In order to check full payment funcionallity
 
   Background:
     Given User opens page with payment form
 
   @positive
-  Scenario Outline: Successful payment using correct credentials
+  Scenario Outline: Successful payment using Credit Card and correct credentials
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     And User clicks Pay button
-    Then User will see information about successful payment
+    Then User will see information about successful payment 'Successful Payment!'
     Examples:
       | cardNumber       | cvc | expirationDate | cardType            |
       | 340000000000611  | 123 | 12/22          | AMEX                |
@@ -26,23 +26,24 @@ Feature: Credit Card
       | 4245190000000311 | 123 | 12/22          | ELECTRON            |
       | 4484000000000411 | 123 | 12/22          | PURCHASING          |
 
-  Scenario Outline: Credit card recognition
-    When User fills credit card number field with number <cardNumber>
+  Scenario Outline: Credit card recognition and validate date on animated card
+    When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     Then User will should see card icon connected to card type
+    And User will should see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
     Examples:
-      | cardNumber       | cardType            |
-      | 340000000000611  | AMEX                |
-      | 3000000000000111 | DINERS              |
-      | 6011000000000301 | DISCOVER            |
-      | 3528000000000411 | JCB                 |
-      | 5000000000000611 | MAESTRO             |
-      | 5100000000000511 | MASTERCARD          |
-      | 5124990000000101 | MASTERCARDDEBITv    |
-      | 4370000000000061 | VPAY                |
-      | 4111110000000211 | VISA aka Visa Debit |
-      | 3000000000000111 | DELTA1              |
-      | 4245190000000311 | ELECTRON            |
-      | 4484000000000411 | PURCHASING          |
+      | cardNumber       | cvc | expirationDate | cardType            |
+      | 340000000000611  | 123 | 12/22          | AMEX                |
+      | 3000000000000111 | 123 | 12/22          | DINERS              |
+      | 6011000000000301 | 123 | 12/22          | DISCOVER            |
+      | 3528000000000411 | 123 | 12/22          | JCB                 |
+      | 5000000000000611 | 123 | 12/22          | MAESTRO             |
+      | 5100000000000511 | 123 | 12/22          | MASTERCARD          |
+      | 5124990000000101 | 123 | 12/22          | MASTERCARDDEBIT     |
+      | 4370000000000061 | 123 | 12/22          | VPAY                |
+      | 4111110000000211 | 123 | 12/22          | VISA aka Visa Debit |
+      | 3000000000000111 | 123 | 12/22          | DELTA1              |
+      | 4245190000000311 | 123 | 12/22          | ELECTRON            |
+      | 4484000000000411 | 123 | 12/22          | PURCHASING          |
 
   Scenario Outline: Wrong card number cause payment declination
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
@@ -80,3 +81,42 @@ Feature: Credit Card
   Scenario: Check CVV/CVC tooltip info
     When I click tooltip icon next to CVV/CVC
     Then I should see information about this field
+
+  #ToDo
+  Scenario: Successful payment using ApplePay payment methods
+    When User chooses ApplePay as payment method
+    And User enter his email on ApplePay popup
+    Then User will see information about successful payment 'Successful Payment!'
+
+    #ToDo
+  Scenario: Successful payment using VisaCheckout payment methods
+    When User chooses VisaCheckout as payment method
+    And User enter his email on VisaCheckout popup
+    Then User will see information about successful payment 'Successful Payment!'
+
+    #ToDo
+  Scenario: Wrong ApplePay credentials cause payment declination
+    When User chooses ApplePay as payment method
+    And User enter wrong email on ApplePay popup
+    Then User will see information about successful payment 'Successful Payment!'
+
+    #ToDo
+  Scenario: Wrong VisaCheckout credentials cause payment declination
+    When User chooses VisaCheckout as payment method
+    And User enter wrong email on VisaCheckout popup
+    Then User will see information about declined payment
+
+    #ToDo
+  Scenario: Successful payment using PayPal payment methods
+    When User chooses PayPal as payment method
+    And User enter his email on PayPal popup
+    Then User will see information about declined payment
+
+       #ToDo
+  Scenario: Wrong PayPal credentials cause payment declination
+    When User chooses PayPal as payment method
+    And User enter wrong email on VisaCheckout popup
+    Then User will see information about declined payment
+
+
+
