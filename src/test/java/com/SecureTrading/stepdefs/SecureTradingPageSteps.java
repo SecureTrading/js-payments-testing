@@ -28,20 +28,30 @@ public class SecureTradingPageSteps {
         secureTradingPage.checkIfPageHeaderContainsRequiredText(expectedText);
     }
 
+    @Then("Visit pet endpoint$")
+    public void visit_pet_endpoint() {
+        SeleniumExecutor.getDriver().get("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/pet");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Then("Make rest assured request$")
-    public void test() {
-        System.out.println("--------------------------------------------------");
+    public void make_rest_assured_request() {
+        System.out.println("----------------------------------------------------------###");
         System.out.println(given()
                 .spec(buildJsonRequestSpecification())
                 .when()
                 .get("/pet").asString());
-        System.out.println("--------------------------------------------------");
+        System.out.println("----------------------------------------------------------###");
     }
 
     public RequestSpecification buildJsonRequestSpecification() {
         return new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
-                .setBaseUri("http://localhost:8089/")
+                .setBaseUri("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/")
                 .build();
     }
 }

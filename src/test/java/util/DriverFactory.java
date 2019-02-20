@@ -88,14 +88,27 @@ abstract class DriverFactory {
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
             caps.setCapability("browserstack.local", "true");
+
             local = new Local();
             Map<String, String> options = new HashMap<String, String>();
             options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
+            options.put("forcelocal", "true");
+            options.put("forceproxy", "true");
+//            options.put("proxyHost", "localhost");
+//            options.put("proxyPort", "8899");
             try {
                 local.start(options);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            System.out.println("----------------------------------------------------------###");
+            try {
+                System.out.println(local.isRunning());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("----------------------------------------------------------###");
         }
 
         return caps;
