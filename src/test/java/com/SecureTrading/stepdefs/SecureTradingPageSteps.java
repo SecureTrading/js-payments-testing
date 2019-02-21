@@ -30,32 +30,29 @@ public class SecureTradingPageSteps {
 
     @Then("Visit pet endpoint$")
     public void visit_pet_endpoint() {
+        System.out.println("----------------------------------------------------------### visiting external endpoint using browser");
         SeleniumExecutor.getDriver().get("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/pet");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        System.out.println("----------------------------------------------------------### visiting external endpoint using browser");
     }
 
     @Then("Make rest assured request$")
     public void make_rest_assured_request() {
-        System.out.println("----------------------------------------------------------### external");
+        System.out.println("----------------------------------------------------------### external endpoint by api");
         System.out.println(given()
                 .spec(buildJsonRequestSpecification())
                 .when()
                 .get("/pet").asString());
-        System.out.println("----------------------------------------------------------### external");
+        System.out.println("----------------------------------------------------------### external endpoint by api");
     }
 
     @Then("Make rest assured request on local host$")
     public void make_rest_assured_request_with_proxy() {
-        System.out.println("----------------------------------------------------------### local host");
+        System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
         System.out.println(given()
                 .spec(buildJsonRequestSpecification())
                 .when()
                 .get("http://localhost:8760/pet").asString());
-        System.out.println("----------------------------------------------------------### local host");
+        System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
     }
 
     public RequestSpecification buildJsonRequestSpecification() {

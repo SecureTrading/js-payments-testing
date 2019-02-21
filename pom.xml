@@ -95,7 +95,6 @@
         <groupId>uk.co.automatictester</groupId>
         <artifactId>wiremock-maven-plugin</artifactId>
         <version>${wiremock.maven.plugin}</version>
-
         <executions>
           <execution>
             <goals>
@@ -108,7 +107,6 @@
             </configuration>
           </execution>
         </executions>
-
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

@@ -4,8 +4,6 @@ import static util.PropertiesHandler.getProperty;
 
 import util.enums.PropertyType;
 import util.enums.StoredElement;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.Json;
 
 public final class RequestExecutor {
