@@ -29,8 +29,8 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) {
         paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
-        paymentPage.fillCreditCardInputField(CardFieldType.number, cvc);
-        paymentPage.fillCreditCardInputField(CardFieldType.number, expirationDate);
+        paymentPage.fillCreditCardInputField(CardFieldType.cvc, cvc);
+        paymentPage.fillCreditCardInputField(CardFieldType.expiryDate, expirationDate);
     }
 
     @And("^User clicks Pay button$")
@@ -65,7 +65,7 @@ public class PaymentPageSteps {
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberCvcCvcAndExpirationDateExpiration(String cardNumber, String cvc, String expirationDate) {
         paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
-        paymentPage.fillCreditCardInputField(CardFieldType.number, cvc);
+        paymentPage.fillCreditCardInputField(CardFieldType.cvc, cvc);
         paymentPage.fillCreditCardInputField(CardFieldType.number, expirationDate);
     }
 
