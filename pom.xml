@@ -31,11 +31,6 @@
 
   <dependencies>
     <dependency>
-	    <groupId>org.glassfish</groupId>
-  	  <artifactId>javax.json</artifactId>
-  	  <version>1.0.2</version>
-    </dependency>
-    <dependency>
       <groupId>info.cukes</groupId>
       <artifactId>cucumber-java</artifactId>
       <version>${cucumber.java.version}</version>

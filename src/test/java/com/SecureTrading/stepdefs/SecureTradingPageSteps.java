@@ -1,14 +1,12 @@
 package com.SecureTrading.stepdefs;
 
+import static io.restassured.RestAssured.given;
+
 import com.SecureTrading.pageobjects.SecureTradingPage;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 import util.SeleniumExecutor;
-
-import static io.restassured.RestAssured.given;
 
 public class SecureTradingPageSteps {
 
@@ -39,9 +37,8 @@ public class SecureTradingPageSteps {
     public void make_rest_assured_request() {
         System.out.println("----------------------------------------------------------### external endpoint by api");
         System.out.println(given()
-                .spec(buildJsonRequestSpecification())
                 .when()
-                .get("/pet").asString());
+                .get("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/pet").asString());
         System.out.println("----------------------------------------------------------### external endpoint by api");
     }
 
@@ -49,16 +46,9 @@ public class SecureTradingPageSteps {
     public void make_rest_assured_request_with_proxy() {
         System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
         System.out.println(given()
-                .spec(buildJsonRequestSpecification())
+                .contentType(ContentType.JSON)
                 .when()
                 .get("http://localhost:8760/pet").asString());
         System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
-    }
-
-    public RequestSpecification buildJsonRequestSpecification() {
-        return new RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
-                .setBaseUri("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/")
-                .build();
     }
 }

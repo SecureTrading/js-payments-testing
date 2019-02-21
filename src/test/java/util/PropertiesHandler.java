@@ -1,10 +1,9 @@
 package util;
 
-import util.enums.PropertyType;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import util.enums.PropertyType;
 
 public class PropertiesHandler {
 
