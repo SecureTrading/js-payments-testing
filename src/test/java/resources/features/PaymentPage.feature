@@ -4,7 +4,7 @@ Feature: Credit Card
   In order to check full payment funcionallity
 
   Background:
-    Given User opens page with payment form
+    Given User opens page with payment form 'https://www.securetrading.com/'
 
   @positive
   Scenario Outline: Successful payment using Credit Card and correct credentials

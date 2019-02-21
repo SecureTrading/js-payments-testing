@@ -20,11 +20,10 @@ public class PaymentPageSteps {
         paymentPage = new PaymentPage();
     }
 
-    @Given("^User opens page with payment form$")
-    public void userOpensPageWithPaymentForm(String url) {
+    @Given("^User opens page with payment form '(.+)'$")
+    public void userOpensPageWithPaymentFormHttpsWwwSecuretradingCom(String url) {
         SeleniumExecutor.getDriver().get(url);
     }
-
 
     @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) {
@@ -113,5 +112,7 @@ public class PaymentPageSteps {
         assertEquals(cvc, paymentPage.getCvcFromAnimatedCardText());
         assertEquals(expirationDate, paymentPage.getExpirationDateFromAnimatedCard());
     }
+
+
 
 }
