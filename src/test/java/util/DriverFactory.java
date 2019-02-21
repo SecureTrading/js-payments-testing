@@ -52,7 +52,6 @@ abstract class DriverFactory {
     protected static Local local;
 
     public DriverFactory() {
-        PropertiesHandler.init();
         driver = createDriver();
         parentWindowHandle = driver.getWindowHandle();
     }

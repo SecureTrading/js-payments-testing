@@ -12,6 +12,7 @@ public class PropertiesHandler {
 
     public static void init() {
         properties = new Properties();
+
         try {
             properties.load(new FileInputStream("src/test/resources/application.properties"));
         } catch (IOException e) {
@@ -20,6 +21,10 @@ public class PropertiesHandler {
     }
 
     public static String getProperty(PropertyType property) {
+        if (properties == null) {
+            init();
+        }
+
         String value = System.getenv(property.toString());
         return value != null ? value : properties.getProperty(property.toString());
     }

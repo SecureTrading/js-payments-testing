@@ -15,7 +15,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cucumber.jvm.parallel.version>5.0.0</cucumber.jvm.parallel.version>
-    <failsafe.maven.plugin.version>3.0.0-M3</failsafe.maven.plugin.version>
+    <surefire.maven.plugin.version>3.0.0-M3</surefire.maven.plugin.version>
     <cucumber.java.version>1.2.5</cucumber.java.version>
     <cucumber.junit.version>1.2.5</cucumber.junit.version>
     <selenium.java.version>3.141.59</selenium.java.version>
@@ -118,14 +118,14 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${failsafe.maven.plugin.version}</version>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.maven.plugin.version}</version>
         <executions>
           <execution>
             <id>acceptance-test</id>
             <phase>integration-test</phase>
             <goals>
-              <goal>integration-test</goal>
+              <goal>test</goal>
             </goals>
             <configuration>
               <forkCount>${acceptance.test.parallel.count}</forkCount>
