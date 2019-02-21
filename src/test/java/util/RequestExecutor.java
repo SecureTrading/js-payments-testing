@@ -14,14 +14,14 @@ public final class RequestExecutor {
             String jsonData = Json.createObjectBuilder()
                 .add("status", "failed")
                 .add("reason", PicoContainerHelper.getFromContainer(StoredElement.errorMessage).toString())
-                .build().toString();
+                .build().toString().replace("\"","\\\"");
 
-            String cmd = "curl -u '" + getProperty(PropertyType.BS_USERNAME) 
-            + ":" + getProperty(PropertyType.BS_ACCESS_KEY) + 
-            "' -X PUT -H \"Content-Type: " + "application/json\" -d '"+ jsonData 
-            + "' https://api.browserstack.com/automate/sessions/"
+            String cmd = "curl -u \"" + getProperty(PropertyType.BS_USERNAME)
+            + ":" + getProperty(PropertyType.BS_ACCESS_KEY) +
+            "\" -X PUT -H \"Content-Type: application/json\" -d \""+ jsonData
+            + "\" https://api.browserstack.com/automate/sessions/"
             + PicoContainerHelper.getFromContainer(StoredElement.sessionId) + ".json";
-            
+
             Process process = runtime.exec(cmd);
             int resultCode = process.waitFor();
         } catch (Throwable e) {
