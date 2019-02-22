@@ -18,19 +18,19 @@ public class SecureTradingPageSteps {
         secureTradingPage = new SecureTradingPage();
     }
 
-    @Given("^I am on the website '(.+)'$")
-    public void I_am_on_the_website(String url) {
+    @Given("^User is on the website '(.+)'$")
+    public void User_is_on_the_website(String url) {
         SeleniumExecutor.getDriver().get(url);
     }
 
-    @Then("The page header should contain '(.+)'$")
-    public void page_should_contain(String expectedText) {
+    @Then("The page header contains '(.+)'$")
+    public void page_header_contains(String expectedText) {
         secureTradingPage.checkIfPageHeaderContainsRequiredText(expectedText);
     }
 
     //Only as example to be removed
-    @Then("Visit pet endpoint version 1$")
-    public void visit_pet_endpoint_version_1() {
+    @Then("User visits pet endpoint version 1$")
+    public void user_visits_pet_endpoint_version_1() {
         stubVersion1();
 
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
@@ -42,8 +42,8 @@ public class SecureTradingPageSteps {
     }
 
     //Only as example to be removed
-    @Then("Visit pet endpoint version 2$")
-    public void visit_pet_endpoint_version_2() {
+    @Then("User visits pet endpoint version 2$")
+    public void user_visits_pet_endpoint_version_2() {
         stubVersion2();
 
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");

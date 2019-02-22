@@ -24,7 +24,7 @@ public class AfterHooks {
                 e.printStackTrace();
             }
         }
-        
+
         SeleniumExecutor.stop();
     }
 }

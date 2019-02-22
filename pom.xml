@@ -21,10 +21,10 @@
     <selenium.java.version>3.141.59</selenium.java.version>
     <junit.jupiter.api.version>5.4.0</junit.jupiter.api.version>
     <commons.io.version>2.6</commons.io.version>
-    <browserstack.local.version.version>1.0.3</browserstack.local.version.version>
+    <browserstack.local.version>1.0.3</browserstack.local.version>
     <lombok.version>1.18.4</lombok.version>
     <pico.container.version>2.15</pico.container.version>
-    <wiremock.maven.plugin>4.1.0</wiremock.maven.plugin>
+    <wiremock.version>2.19.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
     <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
   </properties>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>com.browserstack</groupId>
       <artifactId>browserstack-local-java</artifactId>
-      <version>${browserstack.local.version.version}</version>
+      <version>${browserstack.local.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -80,7 +80,7 @@
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
       <artifactId>wiremock</artifactId>
-      <version>2.19.0</version>
+      <version>${wiremock.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
