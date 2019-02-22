@@ -14,7 +14,7 @@ public class MocksHandler {
         wireMockServer.start();
     }
 
-    private static void startWireMockServer() {
+    public static void startWireMockServer() {
         init();
     }
 
@@ -23,13 +23,11 @@ public class MocksHandler {
 }
 
     public static void stubVersion1() {
-        startWireMockServer();
         wireMockServer.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBody("Hello world version 1")));
     }
 
     public static void stubVersion2() {
-        startWireMockServer();
         wireMockServer.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBody("Hello world version 2")));
     }
