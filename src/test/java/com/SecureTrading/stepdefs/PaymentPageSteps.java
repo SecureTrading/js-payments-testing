@@ -1,7 +1,6 @@
 package com.SecureTrading.stepdefs;
 
 import com.SecureTrading.pageobjects.PaymentPage;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,6 +10,7 @@ import util.enums.CardFieldType;
 import util.enums.PaymentType;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static util.PropertiesHandler.getProperty;
 
 public class PaymentPageSteps {
 
@@ -20,16 +20,14 @@ public class PaymentPageSteps {
         paymentPage = new PaymentPage();
     }
 
-    @Given("^User opens page with payment form '(.+)'$")
-    public void userOpensPageWithPaymentFormHttpsWwwSecuretradingCom(String url) {
-        SeleniumExecutor.getDriver().get(url);
+    @Given("^User opens page with payment form$")
+    public void userOpensPageWithPaymentForm() {
+        SeleniumExecutor.getDriver().get(getProperty("baseUri"));
     }
 
     @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) {
-        paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
-        paymentPage.fillCreditCardInputField(CardFieldType.cvc, cvc);
-        paymentPage.fillCreditCardInputField(CardFieldType.expiryDate, expirationDate);
+        paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
     }
 
     @And("^User clicks Pay button$")
@@ -39,9 +37,7 @@ public class PaymentPageSteps {
 
     @Then("^User will see information about successful payment 'Successful Payment!'$")
     public void userWillSeeInformationAboutSuccessfulPaymentSuccessfulPayment(String message) {
-        //ToDo
-        //Simple assert or make same as validateIfFieldValidationMessageWasAsExpected?
-        assertEquals(message, paymentPage.getSuccessfulPaymentMessage());
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
     }
 
     @When("^User fills credit card number field with number ([^\"]*)$")
@@ -49,47 +45,42 @@ public class PaymentPageSteps {
         paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
     }
 
-    @Then("^User will should see card icon connected to card type$")
-    public void userWillShouldSeeCardIconConnectedToCardType() {
+    @Then("^User will see card icon connected to card type ([^\"]*)$")
+    public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         //ToDo
+        paymentPage.validateIfCardTypeIconWasAsExpected(cardType);
     }
 
     @Then("^User will see information about declined payment$")
     public void userWillSeeInformationAboutDeclinedPayment(String message) {
-        //ToDo
-        //Simple assert or make same as validateIfFieldValidationMessageWasAsExpected?
-        assertEquals(message, paymentPage.getErrorPaymentMessage());
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberCvcCvcAndExpirationDateExpiration(String cardNumber, String cvc, String expirationDate) {
-        paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
-        paymentPage.fillCreditCardInputField(CardFieldType.cvc, cvc);
-        paymentPage.fillCreditCardInputField(CardFieldType.number, expirationDate);
+        paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
     }
 
-    @Then("^User should see validation message ([^\"]*) under ([^\"]*) field$")
-    public void userShouldSeeValidationMessageMessageUnderFieldTypeField(String message, String cardFieldType) {
-        //Check cast from string to enum
+    @Then("^User will see validation message ([^\"]*) under ([^\"]*) field$")
+    public void userWillSeeValidationMessageMessageUnderFieldTypeField(String message, String cardFieldType) {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(cardFieldType), message);
     }
 
-
     @Then("^He will see validation message \"([^\"]*)\" under credit card number field$")
-    public void heWillSeeValidationMessageUnderCreditCardNumberField(String message) throws Throwable {
+    public void heWillSeeValidationMessageUnderCreditCardNumberField(String message) {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.number, message);
     }
 
-    @When("^I click tooltip icon next to CVV/CVC$")
-    public void iClickTooltipIconNextToCVVCVC() {
-        paymentPage.clickCvvTooltipIcon();
+    @When("^User clicks tooltip icon next to CVV/CVC$")
+    public void userClicksTooltipIconNextToCVVCVC() {
+        paymentPage.clickCvcTooltipIcon();
     }
 
-    @Then("^I should see information about this field$")
-    public void iShouldSeeInformationAboutThisField() {
-        assertFalse(paymentPage.getCvvTooltipText().isEmpty());
+    @Then("^User will see information about this field ([^\"]*)$")
+    public void userWillSeeInformationAboutThisFieldCvcText(String cvcTooltipText) {
+        //ToDo
+        paymentPage.validateIfCvcTooltipTextWasAsExpected(cvcTooltipText);
     }
-
 
     @When("^User chooses ApplePay as payment method$")
     public void userChoosesApplePayAsPaymentMethod() {
@@ -106,13 +97,12 @@ public class PaymentPageSteps {
         paymentPage.choosePaymentMethod(PaymentType.payPal);
     }
 
-    @And("^User will should see the same provided data on animated credit card \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void userWillShouldSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
-        assertEquals(cardNumber, paymentPage.getCreditCardNumberFromAnimatedCardText());
-        assertEquals(cvc, paymentPage.getCvcFromAnimatedCardText());
-        assertEquals(expirationDate, paymentPage.getExpirationDateFromAnimatedCard());
+    @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
+    public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
+        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
+        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
     }
-
 
 
 }

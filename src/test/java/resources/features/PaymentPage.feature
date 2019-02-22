@@ -4,7 +4,7 @@ Feature: Credit Card
   In order to check full payment funcionallity
 
   Background:
-    Given User opens page with payment form 'https://www.securetrading.com/'
+    Given User opens page with payment form
 
   @positive
   Scenario Outline: Successful payment using Credit Card and correct credentials
@@ -28,8 +28,8 @@ Feature: Credit Card
 
   Scenario Outline: Credit card recognition and validate date on animated card
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
-    Then User will should see card icon connected to card type
-    And User will should see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
+    Then User will see card icon connected to card type <cardType>
+    And User will see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
     Examples:
       | cardNumber       | cvc | expirationDate | cardType            |
       | 340000000000611  | 123 | 12/22          | AMEX                |
@@ -67,7 +67,7 @@ Feature: Credit Card
   Scenario Outline: Filling payment form form with incomplete data - fields validation
     When User fills payment form with incorrect or missing data: card number <cardNumber>, cvc <cvc> and expiration date <expiration>
     And User clicks Pay button
-    Then User should see validation message <message> under <fieldType> field
+    Then User will see validation message <message> under <fieldType> field
     Examples:
       | cardNumber       | cvc | expiration | message | fieldType  |
       |                  | 123 | 12/22      | TODO    | number     |
@@ -79,8 +79,8 @@ Feature: Credit Card
     Then He will see validation message "TODO" under credit card number field
 
   Scenario: Check CVV/CVC tooltip info
-    When I click tooltip icon next to CVV/CVC
-    Then I should see information about this field
+    When User clicks tooltip icon next to CVV/CVC
+    Then User will see information about this field <cvcText>
 
   #ToDo
   Scenario: Successful payment using ApplePay payment methods

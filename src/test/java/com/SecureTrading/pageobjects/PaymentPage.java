@@ -3,6 +3,7 @@ package com.SecureTrading.pageobjects;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.actions.CustomClickImpl.click;
+import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 
@@ -35,7 +36,7 @@ public class PaymentPage extends BasePage {
 
     //animated credit card
     private By creditCardNumberFromAnimatedCard = By.cssSelector("");
-    private By cvcInputFromAnimatedCard = By.cssSelector("");
+    private By cvcFromAnimatedCard = By.cssSelector("");
     private By expirationDateFromAnimatedCard = By.cssSelector("");
     private By cardTypeIconFromAnimatedCard = By.cssSelector("");
 
@@ -47,8 +48,7 @@ public class PaymentPage extends BasePage {
     private By payPal = By.cssSelector("");
 
     //payment confirmation view
-    private By successfulPaymentMessage = By.cssSelector("");
-    private By errorPaymentMessage = By.cssSelector("");
+    private By paymentStatusMessage = By.cssSelector("");
     private By transactionReference = By.cssSelector("");
     private By authCode = By.cssSelector("");
     private By amount = By.cssSelector("");
@@ -60,7 +60,6 @@ public class PaymentPage extends BasePage {
     private String applePayPopup = "";
     private String visaCheckoutPopup = "";
     private String psyPalPopup = "";
-
 
     //Get info from payment confirmation view
     public String getTransactionReferenceText() {
@@ -83,12 +82,8 @@ public class PaymentPage extends BasePage {
         return getText(SeleniumExecutor.getDriver().findElement(paymentType));
     }
 
-    public String getSuccessfulPaymentMessage() {
-        return getText(SeleniumExecutor.getDriver().findElement(successfulPaymentMessage));
-    }
-
-    public String getErrorPaymentMessage() {
-        return getText(SeleniumExecutor.getDriver().findElement(errorPaymentMessage));
+    public String getPaymentStatusMessage() {
+        return getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
     }
 
     public String getMerchantNameText() {
@@ -96,22 +91,26 @@ public class PaymentPage extends BasePage {
     }
 
     //Get info from animated credit card
-    public String getCreditCardNumberFromAnimatedCardText() {
-        return getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
-    }
-
-    public String getCvcFromAnimatedCardText() {
-        return getText(SeleniumExecutor.getDriver().findElement(cvcInputFromAnimatedCard));
-    }
-
-    public String getExpirationDateFromAnimatedCard() {
-        return getText(SeleniumExecutor.getDriver().findElement(expirationDateFromAnimatedCard));
-    }
-
     public String getCardTypeIconFromAnimatedCardText() {
-        return getText(SeleniumExecutor.getDriver().findElement(cardTypeIconFromAnimatedCard));
+        return getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeIconFromAnimatedCard), "a");
     }
 
+    public String getDataFromAnimatedCreditCard(CardFieldType fieldType) {
+        String data = "";
+
+        switch (fieldType) {
+            case number:
+                data = getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
+                break;
+            case cvc:
+                data = getText(SeleniumExecutor.getDriver().findElement(cvcFromAnimatedCard));
+                break;
+            case expiryDate:
+                data = getText(SeleniumExecutor.getDriver().findElement(expirationDateFromAnimatedCard));
+                break;
+        }
+        return data;
+    }
 
     public void choosePaymentMethod(PaymentType paymentType) {
         switch (paymentType) {
@@ -131,6 +130,12 @@ public class PaymentPage extends BasePage {
                 click(SeleniumExecutor.getDriver().findElement(payPal));
                 break;
         }
+    }
+
+    public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
+        fillCreditCardInputField(CardFieldType.number, cardNumber);
+        fillCreditCardInputField(CardFieldType.cvc, cvc);
+        fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
     }
 
     public void fillCreditCardInputField(CardFieldType fieldType, String value) {
@@ -178,18 +183,36 @@ public class PaymentPage extends BasePage {
         return message;
     }
 
-
-
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
         PicoContainerHelper.addToContainer(StoredElement.errorMessage, fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: " + getCreditCardFieldValidationMessage(fieldType));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCreditCardFieldValidationMessage(fieldType), expectedMessage);
     }
 
-    public void clickCvvTooltipIcon() {
+    public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) {
+        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " payment status message is not correct, should be " + expectedMessage + " but was: " + getPaymentStatusMessage());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getPaymentStatusMessage(), expectedMessage);
+    }
+
+    public void validateIfCardTypeIconWasAsExpected(String expectedCardIcon) {
+        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " Card type icon is not correct, should be " + expectedCardIcon + " but was: " + getCardTypeIconFromAnimatedCardText());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCardTypeIconFromAnimatedCardText(), expectedCardIcon);
+    }
+
+    public void validateIfCvcTooltipTextWasAsExpected(String expectedCvcTooltipText) {
+        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " Cvc tooltip text is not correct, should be " + expectedCvcTooltipText + " but was: " + getCvcTooltipText());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCvcTooltipText(), expectedCvcTooltipText);
+    }
+
+    public void validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType fieldType, String expectedData) {
+        PicoContainerHelper.addToContainer(StoredElement.errorMessage, fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData + " but was: " + getDataFromAnimatedCreditCard(fieldType));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getDataFromAnimatedCreditCard(fieldType), expectedData);
+    }
+
+    public void clickCvcTooltipIcon() {
         click(SeleniumExecutor.getDriver().findElement(cvvTooltipIcon));
     }
 
-    public String getCvvTooltipText(){
+    public String getCvcTooltipText(){
         return getText(SeleniumExecutor.getDriver().findElement(cvvTooltipText));
     }
 }
