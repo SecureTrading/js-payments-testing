@@ -15,15 +15,12 @@ public class MocksHandler {
     }
 
     private static void startWireMockServer() {
-        if (wireMockServer == null) {
-            init();
-        }
+        init();
     }
 
     public static void stopWireMockServer() {
         wireMockServer.stop();
-        wireMockServer = null;
-    }
+}
 
     public static void stubVersion1() {
         startWireMockServer();
