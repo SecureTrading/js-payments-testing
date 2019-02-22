@@ -26,29 +26,23 @@ public class SecureTradingPageSteps {
         secureTradingPage.checkIfPageHeaderContainsRequiredText(expectedText);
     }
 
+    //Only as example to be removed
     @Then("Visit pet endpoint$")
     public void visit_pet_endpoint() {
-        System.out.println("----------------------------------------------------------### visiting external endpoint using browser");
-        SeleniumExecutor.getDriver().get("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/pet");
-        System.out.println("----------------------------------------------------------### visiting external endpoint using browser");
+        SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Then("Make rest assured request$")
-    public void make_rest_assured_request() {
-        System.out.println("----------------------------------------------------------### external endpoint by api");
-        System.out.println(given()
-                .when()
-                .get("https://mtx2z9j2k7.execute-api.us-east-1.amazonaws.com/prod/pet").asString());
-        System.out.println("----------------------------------------------------------### external endpoint by api");
-    }
-
-    @Then("Make rest assured request on local host$")
+    //Only as example to be removed
+    @Then("Make rest assured pet request on local host$")
     public void make_rest_assured_request_with_proxy() {
-        System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
         System.out.println(given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get("http://localhost:8760/pet").asString());
-        System.out.println("----------------------------------------------------------### external endpoint by api as defined host");
     }
 }
