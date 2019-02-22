@@ -1,6 +1,5 @@
 package util;
 
-import static util.MocksHandler.startWireMockServer;
 import static util.PropertiesHandler.getProperty;
 
 import com.browserstack.local.Local;
@@ -53,7 +52,7 @@ abstract class DriverFactory {
     protected static Local local;
 
     public DriverFactory() {
-        startWireMockServer();
+//        startWireMockServer();
         driver = createDriver();
         parentWindowHandle = driver.getWindowHandle();
     }

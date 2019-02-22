@@ -1,6 +1,5 @@
 package com.SecureTrading.stepdefs.hooks;
 
-import static util.MocksHandler.stopWireMockServer;
 import static util.RequestExecutor.markTestAsFailed;
 
 import cucumber.api.Scenario;
@@ -17,7 +16,7 @@ public class AfterHooks {
             markTestAsFailed();
         }
 
-        stopWireMockServer();
+//        stopWireMockServer();
 
         if (SeleniumExecutor.getLocal() != null) {
             try {

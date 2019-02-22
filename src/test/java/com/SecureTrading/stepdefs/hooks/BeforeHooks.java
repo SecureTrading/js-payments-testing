@@ -5,8 +5,6 @@ import cucumber.api.java.Before;
 import util.PicoContainerHelper;
 import util.enums.StoredElement;
 
-import static util.MocksHandler.startWireMockServer;
-
 public class BeforeHooks {
 
     @Before
