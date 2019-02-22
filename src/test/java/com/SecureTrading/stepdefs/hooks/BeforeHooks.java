@@ -11,5 +11,7 @@ public class BeforeHooks {
     public void beforeScenario(Scenario scenario) {
         PicoContainerHelper.cleanContainer();
         PicoContainerHelper.updateInContainer(StoredElement.scenarioName, scenario.getName());
+        System.out.println("------------------------------------- test started " + PicoContainerHelper.getFromContainer(StoredElement.scenarioName));
+        System.out.println("-------------------------------------");
     }
 }
