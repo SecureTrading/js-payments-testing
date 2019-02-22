@@ -98,14 +98,6 @@ abstract class DriverFactory {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            System.out.println("----------------------------------------------------------### is local instance running");
-            try {
-                System.out.println(local.isRunning());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println("----------------------------------------------------------### is local instance running");
         }
 
         return caps;
