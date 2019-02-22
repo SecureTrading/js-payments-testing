@@ -103,6 +103,4 @@ public class PaymentPageSteps {
         paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
         paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
     }
-
-
 }

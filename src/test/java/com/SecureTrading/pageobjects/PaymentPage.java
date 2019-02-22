@@ -1,5 +1,6 @@
 package com.SecureTrading.pageobjects;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.actions.CustomClickImpl.click;
@@ -82,12 +83,12 @@ public class PaymentPage extends BasePage {
         return getText(SeleniumExecutor.getDriver().findElement(paymentType));
     }
 
-    public String getPaymentStatusMessage() {
-        return getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
-    }
-
     public String getMerchantNameText() {
         return getText(SeleniumExecutor.getDriver().findElement(merchantName));
+    }
+
+    public String getPaymentStatusMessage() {
+        return getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
     }
 
     //Get info from animated credit card
@@ -184,28 +185,28 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
-        PicoContainerHelper.addToContainer(StoredElement.errorMessage, fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: " + getCreditCardFieldValidationMessage(fieldType));
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCreditCardFieldValidationMessage(fieldType), expectedMessage);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: " + getCreditCardFieldValidationMessage(fieldType));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedMessage, getCreditCardFieldValidationMessage(fieldType));
     }
 
     public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) {
-        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " payment status message is not correct, should be " + expectedMessage + " but was: " + getPaymentStatusMessage());
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getPaymentStatusMessage(), expectedMessage);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " payment status message is not correct, should be " + expectedMessage + " but was: " + getPaymentStatusMessage());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedMessage, getPaymentStatusMessage());
     }
 
     public void validateIfCardTypeIconWasAsExpected(String expectedCardIcon) {
-        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " Card type icon is not correct, should be " + expectedCardIcon + " but was: " + getCardTypeIconFromAnimatedCardText());
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCardTypeIconFromAnimatedCardText(), expectedCardIcon);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Card type icon is not correct, should be " + expectedCardIcon + " but was: " + getCardTypeIconFromAnimatedCardText());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedCardIcon, getCardTypeIconFromAnimatedCardText());
     }
 
     public void validateIfCvcTooltipTextWasAsExpected(String expectedCvcTooltipText) {
-        PicoContainerHelper.addToContainer(StoredElement.errorMessage, " Cvc tooltip text is not correct, should be " + expectedCvcTooltipText + " but was: " + getCvcTooltipText());
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getCvcTooltipText(), expectedCvcTooltipText);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Cvc tooltip text is not correct, should be " + expectedCvcTooltipText + " but was: " + getCvcTooltipText());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedCvcTooltipText, getCvcTooltipText());
     }
 
     public void validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType fieldType, String expectedData) {
-        PicoContainerHelper.addToContainer(StoredElement.errorMessage, fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData + " but was: " + getDataFromAnimatedCreditCard(fieldType));
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getDataFromAnimatedCreditCard(fieldType), expectedData);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData + " but was: " + getDataFromAnimatedCreditCard(fieldType));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedData, getDataFromAnimatedCreditCard(fieldType));
     }
 
     public void clickCvcTooltipIcon() {
