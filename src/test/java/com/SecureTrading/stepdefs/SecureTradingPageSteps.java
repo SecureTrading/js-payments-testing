@@ -1,6 +1,8 @@
 package com.SecureTrading.stepdefs;
 
 import static io.restassured.RestAssured.given;
+import static util.MocksHandler.stubVersion1;
+import static util.MocksHandler.stubVersion2;
 
 import com.SecureTrading.pageobjects.SecureTradingPage;
 import cucumber.api.java.en.Given;
@@ -27,11 +29,26 @@ public class SecureTradingPageSteps {
     }
 
     //Only as example to be removed
-    @Then("Visit pet endpoint$")
-    public void visit_pet_endpoint() {
+    @Then("Visit pet endpoint version 1$")
+    public void visit_pet_endpoint_version_1() {
+        stubVersion1();
+
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Only as example to be removed
+    @Then("Visit pet endpoint version 2$")
+    public void visit_pet_endpoint_version_2() {
+        stubVersion2();
+
+        SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
+        try {
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
