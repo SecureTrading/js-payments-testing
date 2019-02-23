@@ -26,7 +26,7 @@
     <pico.container.version>2.15</pico.container.version>
     <wiremock.version>2.19.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
-    <acceptance.test.parallel.count>1</acceptance.test.parallel.count>
+    <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
   </properties>
 
   <dependencies>
