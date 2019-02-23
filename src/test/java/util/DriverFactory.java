@@ -52,7 +52,6 @@ abstract class DriverFactory {
     protected static Local local;
 
     public DriverFactory() {
-//        startWireMockServer();
         driver = createDriver();
         parentWindowHandle = driver.getWindowHandle();
     }

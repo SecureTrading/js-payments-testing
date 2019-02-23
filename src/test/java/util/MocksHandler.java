@@ -15,17 +15,17 @@ public class MocksHandler {
     }
 
     public static void startWireMockServer() {
-        if (wireMockServer == null) {
+//        if (wireMockServer == null) {
             System.out.println("**********************************- wiremock server started");
             init();
-        }
+//        }
     }
 
     public static void stopWireMockServer() {
         System.out.println("**********************************- wiremock server stopped");
-        wireMockServer.stop();
-        wireMockServer = null;
-}
+//        wireMockServer.stop();
+//        wireMockServer = null;
+    }
 
     public static void stubVersion1() {
         wireMockServer.stubFor(get(urlEqualTo("/pet"))
