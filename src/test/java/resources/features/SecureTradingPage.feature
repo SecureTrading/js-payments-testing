@@ -10,6 +10,6 @@ Feature: Test feature
     Then The page header contains 'POWERING PAYMENTS.'
     And User visits pet endpoint version 2
 
-  Scenario: Navigate to Secure Trading main page - error
-    Given User is on the website 'https://www.securetrading.com/'
-    Then The page header contains 'POWERING PAYMENTS ERROR.'
+#  Scenario: Navigate to Secure Trading main page - error
+#    Given User is on the website 'https://www.securetrading.com/'
+#    Then The page header contains 'POWERING PAYMENTS ERROR.'
