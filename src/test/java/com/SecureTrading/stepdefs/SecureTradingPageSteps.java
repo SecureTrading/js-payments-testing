@@ -8,7 +8,10 @@ import com.SecureTrading.pageobjects.SecureTradingPage;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.restassured.http.ContentType;
+import org.junit.Assert;
+import util.PicoContainerHelper;
 import util.SeleniumExecutor;
+import util.enums.StoredElement;
 
 public class SecureTradingPageSteps {
 
@@ -38,8 +41,9 @@ public class SecureTradingPageSteps {
     public void user_visits_pet_endpoint_version_1() {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
         stubVersion1();
-
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,"Wrong endpoint triggered");
+        Assert.assertTrue(SeleniumExecutor.getDriver().getPageSource().contains("1111"));
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -53,8 +57,9 @@ public class SecureTradingPageSteps {
     public void user_visits_pet_endpoint_version_2() {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
         stubVersion2();
-
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,"Wrong endpoint triggered");
+        Assert.assertTrue(SeleniumExecutor.getDriver().getPageSource().contains("2222"));
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {

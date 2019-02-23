@@ -29,11 +29,21 @@ public class MocksHandler {
 
     public static void stubVersion1() {
         wireMockServer.stubFor(get(urlEqualTo("/pet"))
-                .willReturn(aResponse().withStatus(200).withBody("Hello world version 1")));
+                .willReturn(aResponse().withStatus(200).withBody("Hello world version 1111")));
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void stubVersion2() {
         wireMockServer.stubFor(get(urlEqualTo("/pet"))
-                .willReturn(aResponse().withStatus(200).withBody("Hello world version 2")));
+                .willReturn(aResponse().withStatus(200).withBody("Hello world version 2222")));
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
