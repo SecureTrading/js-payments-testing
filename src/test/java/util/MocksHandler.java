@@ -23,7 +23,7 @@ public class MocksHandler {
 
     public static void stopWireMockServer() {
         System.out.println("**********************************- wiremock server stopped");
-//        wireMockServer.stop();
+        wireMockServer.stop();
 //        wireMockServer = null;
     }
 
