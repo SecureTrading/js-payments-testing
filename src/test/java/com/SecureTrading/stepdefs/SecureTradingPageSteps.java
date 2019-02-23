@@ -33,13 +33,7 @@ public class SecureTradingPageSteps {
     public void user_visits_pet_endpoint_version_1() {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
         stubVersion1();
-
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
     }
 
@@ -48,13 +42,7 @@ public class SecureTradingPageSteps {
     public void user_visits_pet_endpoint_version_2() {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
         stubVersion2();
-
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
     }
 
