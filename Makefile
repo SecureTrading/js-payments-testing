@@ -1,5 +1,5 @@
 run_all_in_parallel:
-	make --output-sync clean_it test_base_configs
+	make test_base_configs
 
 clean_it:
 	mvn clean
