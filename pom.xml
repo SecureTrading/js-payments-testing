@@ -26,7 +26,7 @@
     <pico.container.version>2.15</pico.container.version>
     <wiremock.version>2.19.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
-    <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
+    <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
   </properties>
 
   <dependencies>
@@ -147,7 +147,7 @@
               <tags>
                 <tag>~@ignore</tag>
               </tags>
-              <parallelScheme>FEATURE</parallelScheme>
+              <parallelScheme>SCENARIO</parallelScheme>
               <namingScheme>pattern</namingScheme>
               <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
               <namingPattern>{f}_Parallel{c}IT</namingPattern>
