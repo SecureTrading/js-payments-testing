@@ -13,17 +13,23 @@ jobs:
     - stage: "Test"
       name: "Behavioural test: chrome 68"
       script: make test_chrome_68_w10
-    - name: "Behavioural test: firefox 61"
+    - stage: "Test2"
+      name: "Behavioural test: firefox 61"
       script: make test_firefox_61_w10
-    - name: "Behavioural test: edge 17"
+    - stage: "Test3"
+      name: "Behavioural test: edge 17"
       script: make test_edge_17_w10
-    - name: "Behavioural test: ie 9"
+    - stage: "Test4"
+      name: "Behavioural test: ie 9"
       script: make test_ie_9_w7
-    - name: "Behavioural test: ie 10"
+    - stage: "Test5"
+      name: "Behavioural test: ie 10"
       script: make test_ie_10_w8
-    - name: "Behavioural test: ie 11"
+    - stage: "Test6"
+      name: "Behavioural test: ie 11"
       script: make test_ie_11_w8
-    - name: "Behavioural test: safari 11"
+    - stage: "Test7"
+      name: "Behavioural test: safari 11"
       script: make test_safari_11_osxhs
 env:
   global:
