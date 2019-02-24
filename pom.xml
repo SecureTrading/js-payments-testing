@@ -117,6 +117,29 @@
         </executions>
       </plugin>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>target/test-classes/com/SecureTrading/cucumberjvm</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/resources</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>com.github.temyers</groupId>
         <artifactId>cucumber-jvm-parallel-plugin</artifactId>
         <version>${cucumber.jvm.parallel.version}</version>
@@ -147,7 +170,7 @@
               <tags>
                 <tag>~@ignore</tag>
               </tags>
-              <parallelScheme>SCENARIO</parallelScheme>
+              <parallelScheme>FEATURE</parallelScheme>
               <namingScheme>pattern</namingScheme>
               <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
               <namingPattern>{f}_Parallel{c}IT</namingPattern>
