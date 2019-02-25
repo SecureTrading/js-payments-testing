@@ -94,23 +94,6 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>uk.co.automatictester</groupId>
-        <artifactId>wiremock-maven-plugin</artifactId>
-        <version>4.1.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>run</goal>
-              <goal>stop</goal> <!-- important in multi-module project where more than one module uses this plugin -->
-            </goals>
-            <configuration>
-              <dir>target/classes</dir>
-              <params>--port=8760 --verbose</params>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
