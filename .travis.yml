@@ -1,5 +1,8 @@
 language: java
-#before_script:
+before_script:
+  - cd src/main/resources
+  - java -jar wiremock-standalone-2.21.0.jar -port 8760 -verbose
+  - cd ../../..
 #  - git clone https://github.com/SecureTrading/js-payments
 #  - cd js-payments
 #  - git checkout develop
