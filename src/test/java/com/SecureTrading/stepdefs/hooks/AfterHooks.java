@@ -17,7 +17,7 @@ public class AfterHooks {
             markTestAsFailed();
         }
 
-        stopWireMockServer();
+//        stopWireMockServer();
 
         if (SeleniumExecutor.getLocal() != null) {
             try {

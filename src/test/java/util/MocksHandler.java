@@ -15,10 +15,10 @@ public class MocksHandler {
     }
 
     public static void startWireMockServer() {
-//        if (wireMockServer == null) {
+        if (wireMockServer == null) {
             System.out.println("**********************************- wiremock server started");
             init();
-//        }
+        }
     }
 
     public static void stopWireMockServer() {

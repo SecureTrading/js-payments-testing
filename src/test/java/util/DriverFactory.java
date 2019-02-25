@@ -82,7 +82,7 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.networkLogs", true);
 
         caps.setCapability("project", "JS Payments Interface");
-        caps.setCapability("build", "mock server start/stop for each test");
+        caps.setCapability("build", "mock server started only once per thread");
         caps.setCapability("name", PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
