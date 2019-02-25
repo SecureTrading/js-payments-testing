@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
+import util.enums.PaymentType;
 import util.enums.StoredElement;
 
 public class PaymentPage extends BasePage {
@@ -48,6 +49,9 @@ public class PaymentPage extends BasePage {
     private By currency = By.cssSelector("");
     private By paymentType = By.cssSelector("");
     private By merchantName = By.cssSelector("");
+
+    //paymentMethods
+    private By creditCardPaymentMethod = By.cssSelector("");
 
     //Get info from payment confirmation view
     public String getTransactionReferenceText() {
@@ -103,6 +107,14 @@ public class PaymentPage extends BasePage {
         }
         switchToDefaultIframe();
         return data;
+    }
+
+    public void choosePaymentMethod(PaymentType paymentType) {
+        switch (paymentType) {
+            case creditCard:
+                click(SeleniumExecutor.getDriver().findElement(creditCardPaymentMethod));
+                break;
+        }
     }
 
     public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
