@@ -81,39 +81,3 @@ Feature: Credit and debit card payments
   Scenario: Check CVV/CVC tooltip info
     When User clicks tooltip icon next to CVV/CVC
     Then User will see information about this field <cvcText>
-
-    #ToDo
-  Scenario: Successful payment using ApplePay payment methods
-    When User chooses ApplePay as payment method
-    And User enter his email on ApplePay popup
-    Then User will see information about successful payment 'Successful Payment!'
-
-    #ToDo
-  Scenario: Successful payment using VisaCheckout payment methods
-    When User chooses VisaCheckout as payment method
-    And User enter his email on VisaCheckout popup
-    Then User will see information about successful payment 'Successful Payment!'
-
-    #ToDo
-  Scenario: Wrong ApplePay credentials cause payment declination
-    When User chooses ApplePay as payment method
-    And User enter wrong email on ApplePay popup
-    Then User will see information about successful payment 'Successful Payment!'
-
-    #ToDo
-  Scenario: Wrong VisaCheckout credentials cause payment declination
-    When User chooses VisaCheckout as payment method
-    And User enter wrong email on VisaCheckout popup
-    Then User will see information about declined payment
-
-    #ToDo
-  Scenario: Successful payment using PayPal payment methods
-    When User chooses PayPal as payment method
-    And User enter his email on PayPal popup
-    Then User will see information about declined payment
-
-    #ToDo
-  Scenario: Wrong PayPal credentials cause payment declination
-    When User chooses PayPal as payment method
-    And User enter wrong email on VisaCheckout popup
-    Then User will see information about declined payment
