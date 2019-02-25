@@ -13,10 +13,10 @@ before_script:
 #  - cd $TRAVIS_BUILD_DIR
 jobs:
   include:
-    - stage: "Run wiremock server"
-      script: make run_wiremock
     - stage: "Test"
-      name: "Behavioural test: chrome 68"
+    - name: "run wiremock"
+      script: make run_wiremock
+    - name: "Behavioural test: chrome 68"
       script: make test_chrome_68_w10
     - name: "Behavioural test: firefox 61"
       script: make test_firefox_61_w10
