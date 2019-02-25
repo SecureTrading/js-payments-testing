@@ -24,8 +24,9 @@
     <browserstack.local.version>1.0.3</browserstack.local.version>
     <lombok.version>1.18.4</lombok.version>
     <pico.container.version>2.15</pico.container.version>
-    <wiremock.version>2.19.0</wiremock.version>
+    <wiremock.version>2.21.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
+    <jackson.databind>2.9.8</jackson.databind>
     <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
   </properties>
 
@@ -79,9 +80,14 @@
     </dependency>
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
-      <artifactId>wiremock</artifactId>
+      <artifactId>wiremock-standalone</artifactId>
       <version>${wiremock.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.databind}</version>
     </dependency>
   </dependencies>
 
