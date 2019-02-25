@@ -1,6 +1,5 @@
 package com.SecureTrading.pageobjects;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.actions.CustomClickImpl.click;
@@ -13,7 +12,6 @@ import org.openqa.selenium.By;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
-import util.enums.PaymentType;
 import util.enums.StoredElement;
 
 public class PaymentPage extends BasePage {
@@ -22,6 +20,7 @@ public class PaymentPage extends BasePage {
     private String creditCardNumberFrameName = "";
     private String cvcFrameName = "";
     private String expiryDateFrameName = "";
+    private String animatedCardFrameName = "";
 
     private By creditCardNumberInputField = By.cssSelector("");
     private By cvcInputField = By.cssSelector("");
@@ -41,13 +40,6 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.cssSelector("");
     private By cardTypeIconFromAnimatedCard = By.cssSelector("");
 
-    //paymentMethods
-    private By visaPaymentMethod = By.cssSelector("");
-    private By masterCardPaymentMethod = By.cssSelector("");
-    private By applePayPaymentMethod = By.cssSelector("");
-    private By visaCheckoutPaymentMethod = By.cssSelector("");
-    private By payPal = By.cssSelector("");
-
     //payment confirmation view
     private By paymentStatusMessage = By.cssSelector("");
     private By transactionReference = By.cssSelector("");
@@ -56,11 +48,6 @@ public class PaymentPage extends BasePage {
     private By currency = By.cssSelector("");
     private By paymentType = By.cssSelector("");
     private By merchantName = By.cssSelector("");
-
-    //Other payment method - ToDo
-    private String applePayPopup = "";
-    private String visaCheckoutPopup = "";
-    private String psyPalPopup = "";
 
     //Get info from payment confirmation view
     public String getTransactionReferenceText() {
@@ -93,11 +80,15 @@ public class PaymentPage extends BasePage {
 
     //Get info from animated credit card
     public String getCardTypeIconFromAnimatedCardText() {
-        return getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeIconFromAnimatedCard), "a");
+        switchToIframe(animatedCardFrameName);
+        String iconName =  getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeIconFromAnimatedCard), "a");
+        switchToDefaultIframe();
+        return iconName;
     }
 
     public String getDataFromAnimatedCreditCard(CardFieldType fieldType) {
         String data = "";
+        switchToIframe(animatedCardFrameName);
 
         switch (fieldType) {
             case number:
@@ -110,27 +101,8 @@ public class PaymentPage extends BasePage {
                 data = getText(SeleniumExecutor.getDriver().findElement(expirationDateFromAnimatedCard));
                 break;
         }
+        switchToDefaultIframe();
         return data;
-    }
-
-    public void choosePaymentMethod(PaymentType paymentType) {
-        switch (paymentType) {
-            case visa:
-                click(SeleniumExecutor.getDriver().findElement(visaPaymentMethod));
-                break;
-            case masterCard:
-                click(SeleniumExecutor.getDriver().findElement(masterCardPaymentMethod));
-                break;
-            case applePay:
-                click(SeleniumExecutor.getDriver().findElement(applePayPaymentMethod));
-                break;
-            case visaCheckout:
-                click(SeleniumExecutor.getDriver().findElement(visaCheckoutPaymentMethod));
-                break;
-            case payPal:
-                click(SeleniumExecutor.getDriver().findElement(payPal));
-                break;
-        }
     }
 
     public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
@@ -207,6 +179,12 @@ public class PaymentPage extends BasePage {
     public void validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType fieldType, String expectedData) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData + " but was: " + getDataFromAnimatedCreditCard(fieldType));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedData, getDataFromAnimatedCreditCard(fieldType));
+    }
+
+    public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String cvc, String expirationDate) {
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
     }
 
     public void clickCvcTooltipIcon() {

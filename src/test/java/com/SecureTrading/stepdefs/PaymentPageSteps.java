@@ -1,5 +1,7 @@
 package com.SecureTrading.stepdefs;
 
+import static util.PropertiesHandler.getProperty;
+
 import com.SecureTrading.pageobjects.PaymentPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -7,10 +9,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
-import util.enums.PaymentType;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static util.PropertiesHandler.getProperty;
 
 public class PaymentPageSteps {
 
@@ -82,25 +80,8 @@ public class PaymentPageSteps {
         paymentPage.validateIfCvcTooltipTextWasAsExpected(cvcTooltipText);
     }
 
-    @When("^User chooses ApplePay as payment method$")
-    public void userChoosesApplePayAsPaymentMethod() {
-        paymentPage.choosePaymentMethod(PaymentType.applePay);
-    }
-
-    @When("^User chooses VisaCheckout as payment method$")
-    public void userChoosesVisaCheckoutAsPaymentMethod() {
-        paymentPage.choosePaymentMethod(PaymentType.visaCheckout);
-    }
-
-    @When("^User chooses PayPal as payment method$")
-    public void userChoosesPayPalAsPaymentMethod() {
-        paymentPage.choosePaymentMethod(PaymentType.payPal);
-    }
-
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
-        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
-        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
-        paymentPage.validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
+        paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, cvc, expirationDate);
     }
 }

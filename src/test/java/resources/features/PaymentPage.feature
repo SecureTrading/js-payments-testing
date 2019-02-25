@@ -1,7 +1,7 @@
-Feature: Credit Card
+Feature: Credit and debit card payments
   As a user
   I want to use various payment methods using correct and incorrect credentials
-  In order to check full payment funcionallity
+  In order to check full payment functionality
 
   Background:
     Given User opens page with payment form
@@ -82,7 +82,7 @@ Feature: Credit Card
     When User clicks tooltip icon next to CVV/CVC
     Then User will see information about this field <cvcText>
 
-  #ToDo
+    #ToDo
   Scenario: Successful payment using ApplePay payment methods
     When User chooses ApplePay as payment method
     And User enter his email on ApplePay popup
@@ -112,11 +112,8 @@ Feature: Credit Card
     And User enter his email on PayPal popup
     Then User will see information about declined payment
 
-       #ToDo
+    #ToDo
   Scenario: Wrong PayPal credentials cause payment declination
     When User chooses PayPal as payment method
     And User enter wrong email on VisaCheckout popup
     Then User will see information about declined payment
-
-
-

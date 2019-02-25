@@ -1,7 +1,6 @@
 package com.SecureTrading.stepdefs;
 
 import com.SecureTrading.pageobjects.SecureTradingPage;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import util.SeleniumExecutor;
@@ -23,6 +22,4 @@ public class SecureTradingPageSteps {
     public void page_should_contain(String expectedText) {
         secureTradingPage.checkIfPageHeaderContainsRequiredText(expectedText);
     }
-
-
 }
