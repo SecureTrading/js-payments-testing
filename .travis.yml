@@ -16,26 +16,33 @@ jobs:
   include:
     - stage: "Test"
     - name: "Behavioural test: chrome 68"
-      script: make run_wiremock &
-      script: make test_chrome_68_w10
+      script:
+        - make run_wiremock &
+        - make test_chrome_68_w10
     - name: "Behavioural test: firefox 61"
-      script: make run_wiremock &
-      script: make test_firefox_61_w10
+      script:
+        - make run_wiremock &
+        - make test_firefox_61_w10
     - name: "Behavioural test: edge 17"
-      script: make run_wiremock &
-      script: make test_edge_17_w10
+      script:
+        - make run_wiremock &
+        - make test_edge_17_w10
     - name: "Behavioural test: ie 9"
-      script: make run_wiremock &
-      script: make test_ie_9_w7
+      script:
+        - make run_wiremock &
+        - make test_ie_9_w7
     - name: "Behavioural test: ie 10"
-      script: make run_wiremock &
-      script: make test_ie_10_w8
+      script:
+        - make run_wiremock &
+        - make test_ie_10_w8
     - name: "Behavioural test: ie 11"
-      script: make run_wiremock &
-      script: make test_ie_11_w8
+      script:
+        - make run_wiremock &
+        - make test_ie_11_w8
     - name: "Behavioural test: safari 11"
-      script: make run_wiremock &
-      script: make test_safari_11_osxhs
+      script:
+        - make run_wiremock &
+        - make test_safari_11_osxhs
 env:
   global:
     - secure: W2PyTAfqcVokPJpBv9hoduC4ZmOG/TISs0BkzCFt7DnUNNGJoL8PiN4HTFWBbJqKmyzkEyejEQ/T54u1UQqZcrLZnIcl2Q99gOQQ508YB1zyq5hElHDQDsAh63+h1aHWTOK0C2qa/eLMISaGX1JQwQj5XkQ/wSxrh37ds6Hn6ILZVBv9drpWGRr2ql0SX1s7fxJa8KIGz4XY88t/3cD7PzFjLlC1rBzAih275m7acDv7XtTtc6XfuR+es1XR7Ti142c+q3tNGSqijSNCUcSCQktL4rx0Nwiw9WjYEPT1BdhBsVhzKCJDLnZEq4BOsZuKFU/RtRIiIb/+ytwsB4T+yjxd4cNo0IDttDHDZW0Pb+Z7UAJv5V6i19cTZxMdtx6ArnEH03+h7XGweiwBZuF/+UzdNXANy1HyRhxi9akoWofZeAN2/RERW/Trr1FOHbBsBB+il1DTSdIQ6gZZrfwUy91CJQNGKhCrfKGrMYfVJwVv6iTzr4pMuQ0rGgwJ2np5rcO3986k+H4twNEtWXrfd62rb6qWQ71Rwz7Im8tYpRerTR2M8cYkisw/ylnVqNp+xE254e56dbdWGyj4Q0nHaOvyjdiwU25K2Mm4vnS7bwDBrrrsY8o+5gFC5XWzhDhnHEbksF+0F2LK84HAFPrSFSFAWxcIlXYaLFp6/dJUBxc= # BS_USERNAME
