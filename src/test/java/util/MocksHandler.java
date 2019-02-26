@@ -32,21 +32,11 @@ public class MocksHandler {
         WireMock.configureFor("localhost", 8760);
         WireMock.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("response1.json")));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void stubVersion2() {
         WireMock.configureFor("localhost", 8760);
         WireMock.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("response2.json")));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
