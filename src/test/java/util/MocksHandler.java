@@ -33,7 +33,7 @@ public class MocksHandler {
         WireMock.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("response1.json")));
         try {
-            Thread.sleep(50);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class MocksHandler {
         WireMock.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("response2.json")));
         try {
-            Thread.sleep(50);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
