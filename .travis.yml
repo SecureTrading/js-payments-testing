@@ -1,5 +1,6 @@
 language: java
 before_script:
+  - make run_wiremock &
 #  - cd src/main/resources
 #  - java -jar wiremock-standalone-2.21.0.jar -port 8760 -verbose
 #  - cd $TRAVIS_BUILD_DIR
@@ -14,8 +15,6 @@ before_script:
 jobs:
   include:
     - stage: "Test"
-    - name: "run wiremock"
-      script: make run_wiremock
     - name: "Behavioural test: chrome 68"
       script: make test_chrome_68_w10
     - name: "Behavioural test: firefox 61"
