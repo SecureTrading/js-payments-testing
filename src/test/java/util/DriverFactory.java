@@ -93,7 +93,7 @@ abstract class DriverFactory {
 
             // local = new Local();
             // Map<String, String> options = new HashMap<String, String>();
-            // options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
+            // options.put("key", getProperty(PropertyType.BROWSERSTACK_ACCESS_KEY));
             // options.put("onlyAutomate", "true");
 
             // try {
@@ -110,8 +110,8 @@ abstract class DriverFactory {
         if (!getProperty(PropertyType.TARGET).equals("local")) {
             try {
                 driver = new RemoteWebDriver(
-                        new URL("https://" + getProperty(PropertyType.BS_USERNAME) + ":"
-                                + getProperty(PropertyType.BS_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"),
+                        new URL("https://" + getProperty(PropertyType.BROWSERSTACK_USERNAME) + ":"
+                                + getProperty(PropertyType.BROWSERSTACK_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"),
                         GetRemoteDriverCapabilities());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
