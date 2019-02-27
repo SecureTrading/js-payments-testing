@@ -1,15 +1,9 @@
 Feature: Test feature
 
   Scenario: Navigate to Secure Trading main page - correct version 1
-    Given User is on the website 'https://www.securetrading.com/'
-    Then The page header contains 'POWERING PAYMENTS.'
-    And User visits pet endpoint version 1
+    Given User visits pet endpoint version 1
+    Then The page content contains 'POWERING PAYMENTS.'
 
   Scenario: Navigate to Secure Trading main page - correct version 2
-    Given User is on the website 'https://www.securetrading.com/'
-    Then The page header contains 'POWERING PAYMENTS.'
-    And User visits pet endpoint version 2
-
-#  Scenario: Navigate to Secure Trading main page - error
-#    Given User is on the website 'https://www.securetrading.com/'
-#    Then The page header contains 'POWERING PAYMENTS ERROR.'
+    Given User visits pet endpoint version 2
+    Then The page content contains 'POWERING PAYMENTS.'
