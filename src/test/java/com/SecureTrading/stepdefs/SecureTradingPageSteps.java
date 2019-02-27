@@ -33,22 +33,18 @@ public class SecureTradingPageSteps {
     // Only as example to be removed
     @Given("User visits pet endpoint version 1$")
     public void user_visits_pet_endpoint_version_1() throws InterruptedException {
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
         stubVersion1();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
         SeleniumExecutor.getDriver().navigate().refresh();
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
     }
 
     // Only as example to be removed
     @Given("User visits pet endpoint version 2$")
     public void user_visits_pet_endpoint_version_2() throws InterruptedException {
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
         stubVersion2();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
         SeleniumExecutor.getDriver().navigate().refresh();
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
     }
 }

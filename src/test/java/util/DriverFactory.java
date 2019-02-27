@@ -2,7 +2,6 @@ package util;
 
 import static util.PropertiesHandler.getProperty;
 
-import com.browserstack.local.Local;
 import lombok.Getter;
 import lombok.Setter;
 import java.net.MalformedURLException;
@@ -46,8 +45,6 @@ abstract class DriverFactory {
     private static String parentWindowHandle;
     @Getter
     private static Iterator<String> windowIterator;
-    @Getter
-    protected static Local local;
 
     public DriverFactory() {
         driver = createDriver();
@@ -67,8 +64,8 @@ abstract class DriverFactory {
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Browser/device configuration
-        for (String property : new String[] { "os", "os_version", "browser", "browser_version", "resolution", "device",
-                "real_mobile" }) {
+        for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device",
+                "real_mobile"}) {
             String value = System.getProperty(property);
             if (value != null) {
                 caps.setCapability(property, value);
@@ -81,7 +78,7 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.networkLogs", true);
 
         caps.setCapability("project", "JS Payments Interface");
-        caps.setCapability("build", "working mock travis solution with maven plugin");
+        caps.setCapability("build", LocalDate.now().toString());
         caps.setCapability("name",
                 PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
@@ -95,7 +92,7 @@ abstract class DriverFactory {
     }
 
     private static WebDriver createDriver() {
-        if (!getProperty(PropertyType.TARGET).equals("local")) {
+        if (getProperty(PropertyType.TARGET).equals("remote")) {
             try {
                 driver = new RemoteWebDriver(
                         new URL("https://" + getProperty(PropertyType.BROWSERSTACK_USERNAME) + ":"
@@ -107,7 +104,7 @@ abstract class DriverFactory {
 
             PicoContainerHelper.updateInContainer(StoredElement.sessionId,
                     ((RemoteWebDriver) driver).getSessionId().toString());
-        } else {
+        } else if (getProperty(PropertyType.TARGET).equals("localChrome")) {
             System.setProperty("webdriver.chrome.driver", "./src/binary/chrome/chromedriver.exe");
             driver = new ChromeDriver();
             driver.manage().window().maximize();

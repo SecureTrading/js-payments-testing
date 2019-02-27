@@ -21,14 +21,14 @@
     <selenium.java.version>3.141.59</selenium.java.version>
     <junit.jupiter.api.version>5.4.0</junit.jupiter.api.version>
     <commons.io.version>2.6</commons.io.version>
-    <browserstack.local.version>1.0.3</browserstack.local.version>
     <lombok.version>1.18.4</lombok.version>
     <pico.container.version>2.15</pico.container.version>
     <wiremock.version>2.21.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
     <jackson.databind>2.9.8</jackson.databind>
-    <wiremock.maven.plugin>4.1.0</wiremock.maven.plugin>
     <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -58,11 +58,6 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>${commons.io.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.browserstack</groupId>
-      <artifactId>browserstack-local-java</artifactId>
-      <version>${browserstack.local.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -101,23 +96,6 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>uk.co.automatictester</groupId>
-        <artifactId>wiremock-maven-plugin</artifactId>
-        <version>${wiremock.maven.plugin}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>run</goal>
-              <goal>stop</goal>
-            </goals>
-            <configuration>
-              <dir>target/classes</dir>
-              <params>--port=8760 --verbose</params>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
