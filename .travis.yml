@@ -1,8 +1,10 @@
 language: java
 addons:
   browserstack:
-    username: ${BS_USERNAME}
-    access_key: ${BS_ACCESS_KEY}
+    username:
+      secure: ${BS_USERNAME}
+    access_key:
+      secure: ${BS_ACCESS_KEY}
 jobs:
   include:
     - stage: Test
