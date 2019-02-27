@@ -27,6 +27,7 @@
     <wiremock.version>2.21.0</wiremock.version>
     <rest.assured.version>3.3.0</rest.assured.version>
     <jackson.databind>2.9.8</jackson.databind>
+    <wiremock.maven.plugin>4.1.0</wiremock.maven.plugin>
     <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
   </properties>
 
@@ -100,6 +101,23 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>uk.co.automatictester</groupId>
+        <artifactId>wiremock-maven-plugin</artifactId>
+        <version>${wiremock.maven.plugin}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>run</goal>
+              <goal>stop</goal>
+            </goals>
+            <configuration>
+              <dir>target/classes</dir>
+              <params>--port=8760 --verbose</params>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

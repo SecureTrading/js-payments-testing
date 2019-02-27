@@ -9,9 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -83,7 +81,7 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.networkLogs", true);
 
         caps.setCapability("project", "JS Payments Interface");
-        caps.setCapability("build", LocalDate.now().toString());
+        caps.setCapability("build", "working mock travis solution with maven plugin");
         caps.setCapability("name",
                 PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
@@ -91,17 +89,6 @@ abstract class DriverFactory {
                 && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
             caps.setCapability("browserstack.local", "true");
             caps.setCapability("browserstack.localIdentifier", getProperty(PropertyType.BROWSERSTACK_LOCAL_IDENTIFIER));
-
-            // local = new Local();
-            // Map<String, String> options = new HashMap<String, String>();
-            // options.put("key", getProperty(PropertyType.BROWSERSTACK_ACCESS_KEY));
-            // options.put("onlyAutomate", "true");
-
-            // try {
-            // local.start(options);
-            // } catch (Exception e) {
-            // e.printStackTrace();
-            // }
         }
 
         return caps;
