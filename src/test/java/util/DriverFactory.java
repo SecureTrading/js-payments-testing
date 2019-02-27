@@ -90,6 +90,7 @@ abstract class DriverFactory {
         if (System.getProperty(PropertyType.LOCAL.toString()) != null
                 && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
             caps.setCapability("browserstack.local", "true");
+            caps.setCapability("browserstack.localIdentifier", getProperty(PropertyType.BROWSERSTACK_USERNAME));
 
             // local = new Local();
             // Map<String, String> options = new HashMap<String, String>();
