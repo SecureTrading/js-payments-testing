@@ -1,4 +1,8 @@
 language: java
+addons:
+  browserstack:
+    username: ${BS_USERNAME}
+    access_key: ${BS_ACCESS_KEY}
 jobs:
   include:
     - stage: Test
@@ -31,7 +35,3 @@ jobs:
       script:
         - make run_wiremock &
         - make test_safari_11_osxhs
-addons:
-  browserstack:
-    username: ${BS_USERNAME}
-    access_key: ${BS_ACCESS_KEY}
