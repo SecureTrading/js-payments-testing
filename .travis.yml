@@ -4,6 +4,7 @@ jobs:
     - stage: Test
     - name: "Behavioural test: chrome 68"
       script:
+        - echo $BS_USERNAME
         - make run_wiremock &
         - make test_chrome_68_w10
     - name: "Behavioural test: firefox 61"
