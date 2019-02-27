@@ -92,15 +92,15 @@ abstract class DriverFactory {
             caps.setCapability("browserstack.local", "true");
 
             // local = new Local();
-            Map<String, String> options = new HashMap<String, String>();
-            options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
-            options.put("onlyAutomate", "true");
+            // Map<String, String> options = new HashMap<String, String>();
+            // options.put("key", getProperty(PropertyType.BS_ACCESS_KEY));
+            // options.put("onlyAutomate", "true");
 
-            try {
-                local.start(options);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // try {
+            // local.start(options);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // }
         }
 
         return caps;
