@@ -4,7 +4,7 @@ jobs:
     - stage: Test
     - name: "Behavioural test: chrome 68"
       script:
-        - echo $BS_USERNAME
+        - echo ${BS_USERNAME}
         - make run_wiremock &
         - make test_chrome_68_w10
     - name: "Behavioural test: firefox 61"
@@ -33,5 +33,5 @@ jobs:
         - make test_safari_11_osxhs
 addons:
   browserstack:
-    username: $BS_USERNAME
-    access_key: $BS_ACCESS_KEY
+    username: ${BS_USERNAME}
+    access_key: ${BS_ACCESS_KEY}
