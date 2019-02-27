@@ -23,9 +23,9 @@ public class SecureTradingPageSteps {
 
     @Then("The page content contains '(.+)'$")
     public void page_header_contains(String expectedText) {
-        String text = SeleniumExecutor.getDriver().getPageSource().contains(expectedText);
+        String text = SeleniumExecutor.getDriver().getPageSource();
         try {
-            Assert.assertTrue(text);
+            Assert.assertTrue(text.contains(expectedText));
         } catch (Exception e) {
             PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                     "Wrong endpoint triggered e: " + expectedText + " a:" + text);
