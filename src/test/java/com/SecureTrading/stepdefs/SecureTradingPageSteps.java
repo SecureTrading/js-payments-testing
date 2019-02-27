@@ -17,7 +17,7 @@ public class SecureTradingPageSteps {
 
     private SecureTradingPage secureTradingPage;
 
-    public SecureTradingPageSteps(){
+    public SecureTradingPageSteps() {
         secureTradingPage = new SecureTradingPage();
     }
 
@@ -36,14 +36,15 @@ public class SecureTradingPageSteps {
         secureTradingPage.checkIfPageHeaderContainsRequiredText(expectedText);
     }
 
-    //Only as example to be removed
+    // Only as example to be removed
     @Then("User visits pet endpoint version 1$")
     public void user_visits_pet_endpoint_version_1() throws InterruptedException {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
         stubVersion1();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,"Wrong endpoint triggered");
+        SeleniumExecutor.getDriver().navigate().refresh();
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, "Wrong endpoint triggered");
         Assert.assertTrue(SeleniumExecutor.getDriver().getPageSource().contains("1111"));
         try {
             Thread.sleep(3000);
@@ -53,14 +54,14 @@ public class SecureTradingPageSteps {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 1");
     }
 
-    //Only as example to be removed
+    // Only as example to be removed
     @Then("User visits pet endpoint version 2$")
     public void user_visits_pet_endpoint_version_2() throws InterruptedException {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
         stubVersion2();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,"Wrong endpoint triggered");
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, "Wrong endpoint triggered");
         Assert.assertTrue(SeleniumExecutor.getDriver().getPageSource().contains("2222"));
         try {
             Thread.sleep(3000);
@@ -70,14 +71,11 @@ public class SecureTradingPageSteps {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - version 2");
     }
 
-    //Only as example to be removed
+    // Only as example to be removed
     @Then("Make rest assured pet request on local host$")
     public void make_rest_assured_request_with_proxy() {
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - restassured call");
-        System.out.println(given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get("http://localhost:8760/pet").asString());
+        System.out.println(given().contentType(ContentType.JSON).when().get("http://localhost:8760/pet").asString());
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% - restassured call");
     }
 }
