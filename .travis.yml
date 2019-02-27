@@ -1,20 +1,7 @@
 language: java
-# before_script:
-#  - make run_wiremock &
-#  - cd src/main/resources
-#  - java -jar wiremock-standalone-2.21.0.jar -port 8760 -verbose
-#  - cd $TRAVIS_BUILD_DIR
-#  - git clone https://github.com/SecureTrading/js-payments
-#  - cd js-payments
-#  - git checkout develop
-#  - npm install -g npm@latest
-#  - npm install
-#  - npm run prod
-#  - npm run start &
-#  - cd $TRAVIS_BUILD_DIR
 jobs:
   include:
-    - stage: "Test"
+    - stage: Test
     - name: "Behavioural test: chrome 68"
       script:
         - make run_wiremock &
@@ -45,6 +32,9 @@ jobs:
         - make test_safari_11_osxhs
 addons:
   browserstack:
-    username: "javascriptpaymen1"
+    username: javascriptpaymen1
     access_key:
-      secure: LS9Zh/tdjtFVnjKib90hR30YhJId+OGkTeOwDM0Bt7a8As7d6O3dyr+37ytFkA0nh4oaY3PZX6vV/FO1KyvlPDY2DC59PZvI6U0Io5odyNCf0Th+pXwRU1LyGQhPkRuDx5QIJZX6H7qfyxpc7+ZJs+QHXS8LReFK5zKat2LUs5gVE8tcHLBVWyU3wS8Nyvwrt3PjYnEPv70dAF53YYEscVGBRU9/pNyA9BWF/7BJL1fRjfYx5Vr4AtcCs/99xxHuKR+Y/8dA9amdRb9xNVo5vRBHM/IgVuAtdSD8lngTaKT1W5e9iyB8Uo2MZQKGA87+wikqmhBQpN/USYSN+NKYHcE97RLoYrpDiwrtiskB2Bs08Cwx0KYWHLDrOSh/Q6NiWk3Y+pCVTWicV1Pr8UafXfxdvgWKRFKvLOpQFGIOQrb/ERAVqAwVOs2sMnOqpRQi3Wc6AnwF4A+kpzjTP4J7eb9exu8vuwtoJVOnBpIztV79ClUO6EfkZ7tD4r04cI2RcZPCgjvn7pZiDnAnF6lGAk0LVkZHpDr8+4zwUGMtEykl2jDW4bXgbzIygW3mO9tKq8CWJSzq41zc2v6VR0Ea7AhhowhpsRqhn3ErRxL+if/T66cU4i5W9tO9N80Z9o7SeQ0H6xcop2R0ciDHOukffuuilnDq6BO0uPZoTkVXfYg=
+      secure: l1EW8dgUm/b3WC/zbSLxKLMEduSVgk9vjKt7iuJTxpm0BHjDukepJGIAHra0CBzRhhtCxrx+cNKYyrq0Pa79hFDgj5k00nFhwH+Sm6lZukgHIoYLUeK51QykQihI400D2ZnsRSBIrXB8bQ165cm1+pYBsGqsq/hYJ7FC+xvJ/EDYdOmKLjziwKWV26PLY2t72Dh5/EsSctBkxi75mcwpdylqO6HLqDAGliugINIuxDfl0D2dLOu/BRlqBN0aoGE/sgMUS8P25MYwvw7r2TwJK5+YjjYXB1Dm06fnirSofancrvN5FKwBsUitF8c6g7XSW/mXKTbMup167us8WftEZVmeJ+3H5KYGQzcL73co5YgAOLjPwTdpD9L20oJCY5KFYx5CLdJICHQ2aazTa2o7i0DPXVy7Qijyn+esmwJ41r1oVj40vivqRJyWlqAoh2VMII3BNL6zc1qaLl7hGZtpsMntDT1x0/NBQsTFw2Im7OZsbSr4Bp/zXSDp/y+MyMOBNo2mo7r/lFM0EiAagNTgnYMJ/h+KT08HBnEyVoKvyU+YE1EV3pR61Xf4ChgUbom6jkI2yzIOgKE6wSQuhR1zuOXNoH9N6KAVtCJPRDUJwh+gLS5tfpKqHWzZd7Zyf32qaFkqIgSkKzhmknxfzUT2XiTQYu3Sd885A5sheSkYhpM=
+env:
+  matrix:
+    secure: l1EW8dgUm/b3WC/zbSLxKLMEduSVgk9vjKt7iuJTxpm0BHjDukepJGIAHra0CBzRhhtCxrx+cNKYyrq0Pa79hFDgj5k00nFhwH+Sm6lZukgHIoYLUeK51QykQihI400D2ZnsRSBIrXB8bQ165cm1+pYBsGqsq/hYJ7FC+xvJ/EDYdOmKLjziwKWV26PLY2t72Dh5/EsSctBkxi75mcwpdylqO6HLqDAGliugINIuxDfl0D2dLOu/BRlqBN0aoGE/sgMUS8P25MYwvw7r2TwJK5+YjjYXB1Dm06fnirSofancrvN5FKwBsUitF8c6g7XSW/mXKTbMup167us8WftEZVmeJ+3H5KYGQzcL73co5YgAOLjPwTdpD9L20oJCY5KFYx5CLdJICHQ2aazTa2o7i0DPXVy7Qijyn+esmwJ41r1oVj40vivqRJyWlqAoh2VMII3BNL6zc1qaLl7hGZtpsMntDT1x0/NBQsTFw2Im7OZsbSr4Bp/zXSDp/y+MyMOBNo2mo7r/lFM0EiAagNTgnYMJ/h+KT08HBnEyVoKvyU+YE1EV3pR61Xf4ChgUbom6jkI2yzIOgKE6wSQuhR1zuOXNoH9N6KAVtCJPRDUJwh+gLS5tfpKqHWzZd7Zyf32qaFkqIgSkKzhmknxfzUT2XiTQYu3Sd885A5sheSkYhpM=
