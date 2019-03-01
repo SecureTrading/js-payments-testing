@@ -14,14 +14,6 @@ public class AfterHooks {
             markTestAsFailed();
         }
 
-        if (SeleniumExecutor.getLocal() != null) {
-            try {
-                SeleniumExecutor.getLocal().stop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         SeleniumExecutor.stop();
     }
 }
