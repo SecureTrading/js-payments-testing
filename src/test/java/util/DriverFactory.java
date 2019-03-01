@@ -2,16 +2,13 @@ package util;
 
 import static util.PropertiesHandler.getProperty;
 
-import com.browserstack.local.Local;
 import lombok.Getter;
 import lombok.Setter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -48,11 +45,8 @@ abstract class DriverFactory {
     private static String parentWindowHandle;
     @Getter
     private static Iterator<String> windowIterator;
-    @Getter
-    protected static Local local;
 
     public DriverFactory() {
-        PropertiesHandler.init();
         driver = createDriver();
         parentWindowHandle = driver.getWindowHandle();
     }
@@ -70,7 +64,8 @@ abstract class DriverFactory {
         DesiredCapabilities caps = new DesiredCapabilities();
 
         // Browser/device configuration
-        for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device", "real_mobile"}) {
+        for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device",
+                "real_mobile"}) {
             String value = System.getProperty(property);
             if (value != null) {
                 caps.setCapability(property, value);
@@ -84,33 +79,32 @@ abstract class DriverFactory {
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
-        caps.setCapability("name", PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
+        caps.setCapability("name",
+                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
 
-        if (System.getProperty(PropertyType.LOCAL.toString()) != null && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
+        if (System.getProperty(PropertyType.LOCAL.toString()) != null
+                && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
             caps.setCapability("browserstack.local", "true");
-            local = new Local();
-            Map<String, String> options = new HashMap<String, String>();
-            options.put("key", getProperty(PropertyType.BS_ACCESS_KEY.toString()));
-            try {
-                local.start(options);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            caps.setCapability("browserstack.localIdentifier", getProperty(PropertyType.BROWSERSTACK_LOCAL_IDENTIFIER));
         }
 
         return caps;
     }
 
     private static WebDriver createDriver() {
-        if (!getProperty(PropertyType.TARGET.toString()).equals("local")) {
+        if (getProperty(PropertyType.TARGET).equals("remote")) {
             try {
-                driver = new RemoteWebDriver(new URL("https://" + getProperty(PropertyType.BS_USERNAME.toString()) + ":" + getProperty(PropertyType.BS_ACCESS_KEY.toString()) + "@hub.browserstack.com/wd/hub"), GetRemoteDriverCapabilities());
+                driver = new RemoteWebDriver(
+                        new URL("https://" + getProperty(PropertyType.BROWSERSTACK_USERNAME) + ":"
+                                + getProperty(PropertyType.BROWSERSTACK_ACCESS_KEY) + "@hub.browserstack.com/wd/hub"),
+                        GetRemoteDriverCapabilities());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
 
-            PicoContainerHelper.addToContainer(StoredElement.sessionId, ((RemoteWebDriver) driver).getSessionId().toString());
-        } else {
+            PicoContainerHelper.updateInContainer(StoredElement.sessionId,
+                    ((RemoteWebDriver) driver).getSessionId().toString());
+        } else if (getProperty(PropertyType.TARGET).equals("localChrome")) {
             System.setProperty("webdriver.chrome.driver", "./src/binary/chrome/chromedriver.exe");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
