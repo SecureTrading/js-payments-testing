@@ -12,38 +12,33 @@ Feature: Credit and debit card payments
     And User clicks Pay button
     Then User will see information about successful payment 'Successful Payment!'
     Examples:
-      | cardNumber       | cvc | expirationDate | cardType            |
-      | 340000000000611  | 123 | 12/22          | AMEX                |
-      | 3000000000000111 | 123 | 12/22          | DINERS              |
-      | 6011000000000301 | 123 | 12/22          | DISCOVER            |
-      | 3528000000000411 | 123 | 12/22          | JCB                 |
-      | 5000000000000611 | 123 | 12/22          | MAESTRO             |
-      | 5100000000000511 | 123 | 12/22          | MASTERCARD          |
-      | 5124990000000101 | 123 | 12/22          | MASTERCARDDEBIT     |
-      | 4370000000000061 | 123 | 12/22          | VPAY                |
-      | 4111110000000211 | 123 | 12/22          | VISA aka Visa Debit |
-      | 3000000000000111 | 123 | 12/22          | DELTA1              |
-      | 4245190000000311 | 123 | 12/22          | ELECTRON            |
-      | 4484000000000411 | 123 | 12/22          | PURCHASING          |
+      | cardNumber       | cvc | expirationDate | cardType     |
+      | 340000000000611  | 123 | 12/22          | AMEX         |
+      |                  | 123 | 12/22          | ASTROPAYCARD |
+      | 3000000000000111 | 123 | 12/22          | DINERS       |
+      | 6011000000000301 | 123 | 12/22          | DISCOVER     |
+      | 3528000000000411 | 123 | 12/22          | JCB          |
+      | 5000000000000611 | 123 | 12/22          | MAESTRO      |
+      | 5100000000000511 | 123 | 12/22          | MASTERCARD   |
+      |                  | 123 | 12/22          | PIBA         |
+      | 4111110000000211 | 123 | 12/22          | VISA         |
+
 
   Scenario Outline: Credit card recognition and validate date on animated card
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
     Examples:
-      | cardNumber       | cvc | expirationDate | cardType            |
-      | 340000000000611  | 123 | 12/22          | AMEX                |
-      | 3000000000000111 | 123 | 12/22          | DINERS              |
-      | 6011000000000301 | 123 | 12/22          | DISCOVER            |
-      | 3528000000000411 | 123 | 12/22          | JCB                 |
-      | 5000000000000611 | 123 | 12/22          | MAESTRO             |
-      | 5100000000000511 | 123 | 12/22          | MASTERCARD          |
-      | 5124990000000101 | 123 | 12/22          | MASTERCARDDEBIT     |
-      | 4370000000000061 | 123 | 12/22          | VPAY                |
-      | 4111110000000211 | 123 | 12/22          | VISA aka Visa Debit |
-      | 3000000000000111 | 123 | 12/22          | DELTA1              |
-      | 4245190000000311 | 123 | 12/22          | ELECTRON            |
-      | 4484000000000411 | 123 | 12/22          | PURCHASING          |
+      | cardNumber       | cvc | expirationDate | cardType     |
+      | 340000000000611  | 123 | 12/22          | AMEX         |
+      |                  | 123 | 12/22          | ASTROPAYCARD |
+      | 3000000000000111 | 123 | 12/22          | DINERS       |
+      | 6011000000000301 | 123 | 12/22          | DISCOVER     |
+      | 3528000000000411 | 123 | 12/22          | JCB          |
+      | 5000000000000611 | 123 | 12/22          | MAESTRO      |
+      | 5100000000000511 | 123 | 12/22          | MASTERCARD   |
+      |                  | 123 | 12/22          | PIBA         |
+      | 4111110000000211 | 123 | 12/22          | VISA         |
 
   Scenario Outline: Wrong card number cause payment declination
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
@@ -52,17 +47,15 @@ Feature: Credit and debit card payments
     Examples:
       | cardNumber       | cvc | expirationDate | cardType            |
       | 340000000000512  | 123 | 12/22          | AMEX                |
+      |                  | 123 | 12/22          | ASTROPAYCARD        |
       | 3000000000000012 | 123 | 12/22          | DINERS              |
       | 6011000000000202 | 123 | 12/22          | DISCOVER            |
       | 3528000000000312 | 123 | 12/22          | JCB                 |
       | 5000000000000512 | 123 | 12/22          | MAESTRO             |
       | 5100000000000412 | 123 | 12/22          | MASTERCARD          |
       | 5124990000000002 | 123 | 12/22          | MASTERCARDDEBIT     |
-      | 4370000000000012 | 123 | 12/22          | VPAY                |
+      |                  | 123 | 12/22          | PIBA                |
       | 4111110000000112 | 123 | 12/22          | VISA aka Visa Debit |
-      | 4310720000000042 | 123 | 12/22          | DELTA1              |
-      | 4245190000000212 | 123 | 12/22          | ELECTRON            |
-      | 4484000000000312 | 123 | 12/22          | PURCHASING          |
 
   Scenario Outline: Filling payment form form with incomplete data - fields validation
     When User fills payment form with incorrect or missing data: card number <cardNumber>, cvc <cvc> and expiration date <expiration>
