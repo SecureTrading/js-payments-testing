@@ -5,30 +5,9 @@ clean_it:
 	mvn clean
 
 test_base_configs:
-	make -j test_chrome_68_w10 test_firefox_61_w10 test_edge_17_w10 test_ie_9_w7 test_ie_10_w8 test_ie_11_w8 test_safari_11_osxhs
+	make -j test_chrome_72_win10 test_chrome_72_w81
 
-test_chrome_68_w10:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=chrome -Dbrowser_version=68.0 -Dresolution=1920x1080
-
-test_firefox_61_w10:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=Firefox -Dbrowser_version=61.0 -Dresolution=1920x1080
-
-test_edge_17_w10:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=Edge -Dbrowser_version=17.0 -Dresolution=1920x1080
-
-test_ie_9_w7:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=7 -Dbrowser=IE -Dbrowser_version=9.0 -Dresolution=1920x1080
-
-test_ie_10_w8:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=8 -Dbrowser=IE -Dbrowser_version=10.0 -Dresolution=1920x1080
-
-test_ie_11_w8:
-	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=IE -Dbrowser_version=11.0 -Dresolution=1920x1080
-
-test_safari_11_osxhs:
-	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="High Sierra" -Dbrowser=Safari -Dbrowser_version=11.0 -Dresolution=1920x1080
-
-test_chrome_72_win10:
+test_chrome_72_w10:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=chrome -Dbrowser_version=72.0 -Dresolution=1920x1080
 
 test_chrome_71_w10:
@@ -47,19 +26,19 @@ test_chrome_49_wXP:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=XP -Dbrowser=chrome -Dbrowser_version=49.0 -Dresolution=1920x1080
 
 test_chrome_72_osxmoj:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Mojave -Dbrowser=chrome -Dbrowser_version=72.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=chrome -Dbrowser_version=72.0 -Dresolution=1920x1080
 
 test_chrome_71_osxmoj:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Mojave -Dbrowser=chrome -Dbrowser_version=71.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=chrome -Dbrowser_version=71.0 -Dresolution=1920x1080
 
 test_chrome_72_osxhs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="High Sierra" -Dbrowser=chrome -Dbrowser_version=72.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="High Sierra" -Dbrowser=chrome -Dbrowser_version=72.0 -Dresolution=1920x1080
 
 test_chrome_71_osxs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Sierra -Dbrowser=chrome -Dbrowser_version=71.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Sierra -Dbrowser=chrome -Dbrowser_version=71.0 -Dresolution=1920x1080
 
 test_chrome_70_osxec:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="El Capitan" -Dbrowser=chrome -Dbrowser_version=70.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="El Capitan" -Dbrowser=chrome -Dbrowser_version=70.0 -Dresolution=1920x1080
 
 test_firefox_65_w10:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
@@ -71,16 +50,16 @@ test_firefox_65_w7:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=7 -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
 
 test_firefox_65_osxmoj:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Mojave -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
 
 test_firefox_65_osxhs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="High Sierra" -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="High Sierra" -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
 
 test_firefox_64_osxs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Sierra -Dbrowser=Firefox -Dbrowser_version=64.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Sierra -Dbrowser=Firefox -Dbrowser_version=64.0 -Dresolution=1920x1080
 
 test_firefox_65_osxec:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="El Capitan" -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="El Capitan" -Dbrowser=Firefox -Dbrowser_version=65.0 -Dresolution=1920x1080
 
 test_ie_11_w10:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=IE -Dbrowser_version=11.0 -Dresolution=1920x1080
@@ -104,22 +83,22 @@ test_opera_12_15_w7:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=7 -Dbrowser=Opera -Dbrowser_version=12.15 -Dresolution=1920x1080
 
 test_opera_12_15_osxmoj:
-	mvn install -DLOCAL=true -Dos=OS X  -Dos_version=Mojave -Dbrowser=Opera -Dbrowser_version=12.15 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X"  -Dos_version=Mojave -Dbrowser=Opera -Dbrowser_version=12.15 -Dresolution=1920x1080
 
 test_opera_12_15_osxs:
-	mvn install -DLOCAL=true -Dos=OS X  -Dos_version=Sierra -Dbrowser=Opera -Dbrowser_version=12.15 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X"  -Dos_version=Sierra -Dbrowser=Opera -Dbrowser_version=12.15 -Dresolution=1920x1080
 
 test_safari_12_0_osxmoj:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Mojave -Dbrowser=Safari -Dbrowser_version=12.0 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=Safari -Dbrowser_version=12.0 -Dresolution=1920x1080
 
 test_safari_11_1_osxhs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="High Sierra" -Dbrowser=Safari -Dbrowser_version=11.1 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="High Sierra" -Dbrowser=Safari -Dbrowser_version=11.1 -Dresolution=1920x1080
 
 test_safari_10_1_osxs:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version=Sierra -Dbrowser=Safari -Dbrowser_version=10.1 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Sierra -Dbrowser=Safari -Dbrowser_version=10.1 -Dresolution=1920x1080
 
 test_safari_9_1_osec:
-	mvn install -DLOCAL=true -Dos=OS X -Dos_version="El Capitan" -Dbrowser=Safari -Dbrowser_version=9.1 -Dresolution=1920x1080
+	mvn install -DLOCAL=true -Dos="OS X" -Dos_version="El Capitan" -Dbrowser=Safari -Dbrowser_version=9.1 -Dresolution=1920x1080
 
 test_galaxyNote9_8_1:
 	mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Note 9" -Dos_version=8.1 -Dreal_mobile=true
@@ -141,9 +120,6 @@ test_galaxyS7_6_0:
 
 test_galaxyS6_5_0:
 	mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S6" -Dos_version=5.0 -Dreal_mobile=true
-
-test_galaxyS5_4_4:
-	mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S5" -Dos_version=4.4 -Dreal_mobile=true
 
 test_galaxyTabS3_7_0:
 	mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Tab S3" -Dos_version=7.0 -Dreal_mobile=true
