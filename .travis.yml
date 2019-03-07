@@ -35,8 +35,6 @@ jobs:
       script:
         - make run_wiremock &
         - make test_safari_11_osxhs
-
-
     - name: "Behavioural test: chrome 72, Windows 10"
         script:
           - make run_wiremock &
