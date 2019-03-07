@@ -17,4 +17,16 @@ public class MocksHandler {
         WireMock.stubFor(get(urlEqualTo("/pet"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("response2.json")));
     }
+
+    public static void stubCreditCardSuccessfulPayment() {
+        WireMock.configureFor("localhost", 8760);
+        WireMock.stubFor(get(urlEqualTo("/pet"))
+                .willReturn(aResponse().withStatus(200).withBodyFile("creditCardSuccessfulPayment.json")));
+    }
+
+    public static void stubCreditCardDeclinedPayment() {
+        WireMock.configureFor("localhost", 8760);
+        WireMock.stubFor(get(urlEqualTo("/pet"))
+                .willReturn(aResponse().withStatus(200).withBodyFile("creditCardDeclinedPayment.json")));
+    }
 }

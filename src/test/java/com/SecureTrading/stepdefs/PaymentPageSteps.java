@@ -1,6 +1,8 @@
 package com.SecureTrading.stepdefs;
 
+import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
+import static util.helpers.actions.CustomGetTextImpl.getText;
 
 import com.SecureTrading.pageobjects.PaymentPage;
 import cucumber.api.java.en.And;
@@ -9,6 +11,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
+import util.enums.PropertyType;
 
 public class PaymentPageSteps {
 
@@ -20,7 +23,7 @@ public class PaymentPageSteps {
 
     @Given("^User opens page with payment form$")
     public void userOpensPageWithPaymentForm() {
-        SeleniumExecutor.getDriver().get(getProperty("baseUri"));
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
 
     @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
@@ -33,25 +36,10 @@ public class PaymentPageSteps {
         paymentPage.clickSubmitButton();
     }
 
-    @Then("^User will see information about successful payment 'Successful Payment!'$")
-    public void userWillSeeInformationAboutSuccessfulPaymentSuccessfulPayment(String message) {
-        paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
-    }
-
-    @When("^User fills credit card number field with number ([^\"]*)$")
-    public void userFillsCreditCardNumberFieldWithNumberCardNumber(String cardNumber) {
-        paymentPage.fillCreditCardInputField(CardFieldType.number, cardNumber);
-    }
-
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         //ToDo
         paymentPage.validateIfCardTypeIconWasAsExpected(cardType);
-    }
-
-    @Then("^User will see information about declined payment$")
-    public void userWillSeeInformationAboutDeclinedPayment(String message) {
-        paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
@@ -83,5 +71,23 @@ public class PaymentPageSteps {
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
         paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, cvc, expirationDate);
+    }
+
+    @Then("^User will see information about payment status ([^\"]*)$")
+    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+    }
+
+    @And("^User clicks Pay button and set payment code ([^\"]*)$")
+    public void userClicksPayButtonAndSetPaymentCodePaymentCode(String paymentCode) {
+        switch (paymentCode) {
+            case "success":
+                stubCreditCardSuccessfulPayment();
+                break;
+            case "error_1015":
+                stubCreditCardDeclinedPayment();
+                break;
+        }
+        paymentPage.clickSubmitButton();
     }
 }
