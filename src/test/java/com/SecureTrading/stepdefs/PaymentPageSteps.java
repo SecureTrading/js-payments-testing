@@ -73,11 +73,6 @@ public class PaymentPageSteps {
         paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, cvc, expirationDate);
     }
 
-    @Then("^User will see information about payment status ([^\"]*)$")
-    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
-        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
-    }
-
     @And("^User clicks Pay button and set payment code ([^\"]*)$")
     public void userClicksPayButtonAndSetPaymentCodePaymentCode(String paymentCode) {
         switch (paymentCode) {
@@ -89,5 +84,10 @@ public class PaymentPageSteps {
                 break;
         }
         paymentPage.clickSubmitButton();
+    }
+
+    @Then("^User will see information about payment status \"([^\"]*)\"$")
+    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
     }
 }

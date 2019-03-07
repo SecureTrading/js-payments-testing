@@ -8,7 +8,7 @@ Feature: Credit and debit card payments
 
   @mockData
   Scenario Outline: Checking payment status for various response code
-    When User fills payment form with credit card number "4111110000000211", cvc "123" and expiration date "12/22"
+    When User fills payment form with credit card number '4111110000000211', cvc '123' and expiration date '12/22'
     And User clicks Pay button and set payment code <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
     Examples:
@@ -21,7 +21,7 @@ Feature: Credit and debit card payments
   Scenario Outline: Successful payment using most popular Credit Cards
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     And  User clicks Pay button and set payment code 'success'
-    Then User will see information about payment status 'Successful Payment!'
+    Then User will see information about payment status "Payment successful!"
     Examples:
       | cardNumber       | cvc  | expirationDate | cardType   |
       | 340000000000611  | 1234 | 12/22          | AMEX       |
@@ -35,7 +35,7 @@ Feature: Credit and debit card payments
     Examples:
       | cardNumber       | cvc  | expirationDate | cardType     |
       | 340000000000611  | 1234 | 12/22          | AMEX         |
-      |                  | 123  | 12/22          | ASTROPAYCARD |
+      | 1716610628907452 | 123  | 12/22          | ASTROPAYCARD |
       | 3000000000000111 | 123  | 12/22          | DINERS       |
       | 6011000000000301 | 123  | 12/22          | DISCOVER     |
       | 3528000000000411 | 123  | 12/22          | JCB          |
