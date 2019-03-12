@@ -57,24 +57,18 @@ public class PaymentPageSteps {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.number, message);
     }
 
-    @When("^User clicks tooltip icon next to CVV/CVC$")
-    public void userClicksTooltipIconNextToCVVCVC() {
-        paymentPage.clickCvcTooltipIcon();
-    }
-
-    @Then("^User will see information about this field ([^\"]*)$")
-    public void userWillSeeInformationAboutThisFieldCvcText(String cvcTooltipText) {
-        //ToDo
-        paymentPage.validateIfCvcTooltipTextWasAsExpected(cvcTooltipText);
-    }
-
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
         paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, cvc, expirationDate);
     }
 
-    @And("^User clicks Pay button and set payment code ([^\"]*)$")
-    public void userClicksPayButtonAndSetPaymentCodePaymentCode(String paymentCode) {
+    @Then("^User will see information about payment status \"([^\"]*)\"$")
+    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+    }
+
+    @And("^User clicks Pay button - response set to ([^\"]*)$")
+    public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
             case "success":
                 stubCreditCardSuccessfulPayment();
@@ -84,10 +78,5 @@ public class PaymentPageSteps {
                 break;
         }
         paymentPage.clickSubmitButton();
-    }
-
-    @Then("^User will see information about payment status \"([^\"]*)\"$")
-    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
-        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
     }
 }
