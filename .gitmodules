@@ -1,0 +1,3 @@
+[submodule "js-payments"]
+	path = js-payments
+	url = https://github.com/SecureTrading/js-payments
