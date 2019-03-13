@@ -47,10 +47,6 @@ jobs:
       script:
           - make run_wiremock &
           - make test_chrome_71_osxs
-    - name: "Behavioural test: chrome 70, OS X El Capitan"
-      script:
-          - make run_wiremock &
-          - make test_chrome_70_osxec
     - name: "Behavioural test: firefox 65, Windows 10"
       script:
           - make run_wiremock &
@@ -75,10 +71,6 @@ jobs:
       script:
           - make run_wiremock &
           - make test_firefox_64_osxs
-    - name: "Behavioural test: firefox 65, OS X El Capitan"
-      script:
-          - make run_wiremock &
-          - make test_firefox_65_osxec
     - name: "Behavioural test: ie 11, Windows 10"
       script:
           - make run_wiremock &
@@ -99,22 +91,6 @@ jobs:
       script:
           - make run_wiremock &
           - make test_edge_17_w10
-    - name: "Behavioural test: opera 12.16, Windows 8.1"
-      script:
-          - make run_wiremock &
-          - make test_opera_12_16_w81
-    - name: "Behavioural test: opera 12.15, Windows 7"
-      script:
-          - make run_wiremock &
-          - make test_opera_12_15_w7
-    - name: "Behavioural test: opera 12.15, OS X Mojave"
-      script:
-          - make run_wiremock &
-          - make test_opera_12_15_osxmoj
-    - name: "Behavioural test: opera 12.15, OS X Sierra"
-      script:
-          - make run_wiremock &
-          - make test_opera_12_15_osxs
     - name: "Behavioural test: safari 12.0, OS X Mojave"
       script:
           - make run_wiremock &
@@ -127,10 +103,6 @@ jobs:
       script:
           - make run_wiremock &
           - make test_safari_10_1_osxs
-    - name: "Behavioural test: safari 9.1, OS X El Capitan"
-      script:
-          - make run_wiremock &
-          - make test_safari_9_1_osec
     - name: "Behavioural test: Samsung Galaxy Note 9, Android 8.1"
       script:
           - make run_wiremock &
@@ -143,10 +115,6 @@ jobs:
       script:
           - make run_wiremock &
           - make test_galaxyS9Plus_8_0
-    - name: "Behavioural test: Samsung Galaxy S8 Plus, Android 7.0"
-      script:
-          - make run_wiremock &
-          - make test_galaxyS8Plus_7_0
     - name: "Behavioural test: Samsung Galaxy S8, Android 7.0"
       script:
           - make run_wiremock &
@@ -155,18 +123,10 @@ jobs:
       script:
           - make run_wiremock &
           - make test_galaxyS7_6_0
-    - name: "Behavioural test: Samsung Galaxy S6, Android 5.0"
-      script:
-          - make run_wiremock &
-          - make test_galaxyS6_5_0
     - name: "Behavioural test: Samsung Galaxy Tab S3, Android 7.0"
       script:
           - make run_wiremock &
           - make test_galaxyTabS3_7_0
-    - name: "Behavioural test: Google Pixel 2, Android 9.0"
-      script:
-          - make run_wiremock &
-          - make test_Pixel2_9_0
     - name: "Behavioural test: Google Pixel 3, Android 9.0"
       script:
           - make run_wiremock &
@@ -191,11 +151,27 @@ jobs:
       script:
           - make run_wiremock &
           - make test_Nexus5_4_4
-    - name: "Behavioural test: Motorola Moto X 2nd Gen, Android 6.0"
-      script:
+    - name: "Behavioural test: iPhone XS, iOS 12.0"
+        script:
           - make run_wiremock &
-          - make test_MotoX2ndGen_6_0
-    - name: "Behavioural test: Motorola Moto X 2nd Gen, Android 5.0"
-      script:
+          - make test_iPhoneXS_12_0
+    - name: "Behavioural test: iPhone X, iOS 11.0"
+        script:
           - make run_wiremock &
-          - make test_MotoX2ndGen_5_0
+          - make test_iPhoneX_11_0
+    - name: "Behavioural test: iPhone 8, iOS 11.0"
+        script:
+          - make run_wiremock &
+          - make test_iPhone8_11_0
+    - name: "Behavioural test: iPhone SE, iOS 11.0"
+        script:
+          - make run_wiremock &
+          - make test_iPhoneSE_11_0
+    - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
+        script:
+          - make run_wiremock &
+          - make test_iPadPro12_12_0
+    - name: "Behavioural test: iPad Mini 4, iOS 11.0"
+        script:
+          - make run_wiremock &
+          - make test_iPadMini4_11_0
