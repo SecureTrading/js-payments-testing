@@ -5,6 +5,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
 public class MocksHandler {
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig().httpsPort(8443));
+
 
     public static void stubVersion1() {
         WireMock.configureFor("localhost", 8760);
