@@ -18,7 +18,7 @@ import util.enums.StoredElement;
 public class PaymentPage extends BasePage {
 
     //Credit card form
-    private String creditCardNumberFrameName = "";
+    private String cardNumberFrameName = "";
     private String cvcFrameName = "";
     private String expiryDateFrameName = "";
     private String animatedCardFrameName = "";
@@ -90,10 +90,20 @@ public class PaymentPage extends BasePage {
         return iconName;
     }
 
+    public void switchToFrameByFieldType(CardFieldType fieldType) {
+        switch (fieldType) {
+            case number:
+                switchToIframe(cardNumberFrameName);
+            case cvc:
+                switchToIframe(cvcFrameName);
+            case expiryDate:
+                switchToIframe(expiryDateFrameName);
+        }
+    }
+
     public String getDataFromAnimatedCreditCard(CardFieldType fieldType) {
         String data = "";
         switchToIframe(animatedCardFrameName);
-
         switch (fieldType) {
             case number:
                 data = getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
@@ -126,7 +136,7 @@ public class PaymentPage extends BasePage {
     public void fillCreditCardInputField(CardFieldType fieldType, String value) {
         switch (fieldType) {
             case number:
-                switchToIframe(creditCardNumberFrameName);
+                switchToIframe(cardNumberFrameName);
                 sendKeys(SeleniumExecutor.getDriver().findElement(creditCardNumberInputField), value);
                 break;
             case cvc:
@@ -142,7 +152,7 @@ public class PaymentPage extends BasePage {
         switchToDefaultIframe();
     }
 
-    public void clickSubmitButton() {
+    public void clickPayButton() {
         click(SeleniumExecutor.getDriver().findElement(submitButtonField));
     }
 
@@ -151,7 +161,7 @@ public class PaymentPage extends BasePage {
 
         switch (fieldType) {
             case number:
-                switchToIframe(creditCardNumberFrameName);
+                switchToIframe(cardNumberFrameName);
                 message = getText(SeleniumExecutor.getDriver().findElement(creditCardFieldValidationMessage));
                 break;
             case cvc:
@@ -183,11 +193,6 @@ public class PaymentPage extends BasePage {
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedCardIcon, getCardTypeIconFromAnimatedCardText());
     }
 
-    public void validateIfCvcTooltipTextWasAsExpected(String expectedCvcTooltipText) {
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Cvc tooltip text is not correct, should be " + expectedCvcTooltipText + " but was: " + getCvcTooltipText());
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedCvcTooltipText, getCvcTooltipText());
-    }
-
     public void validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType fieldType, String expectedData) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData + " but was: " + getDataFromAnimatedCreditCard(fieldType));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedData, getDataFromAnimatedCreditCard(fieldType));
@@ -199,11 +204,22 @@ public class PaymentPage extends BasePage {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
     }
 
-    public void clickCvcTooltipIcon() {
-        click(SeleniumExecutor.getDriver().findElement(cvvTooltipIcon));
-    }
+    public String getCreditCardFieldValidationMessage2(CardFieldType fieldType) {
+        String message = "";
+        switchToFrameByFieldType(fieldType);
+        switch (fieldType) {
+            case number:
+                message = getText(SeleniumExecutor.getDriver().findElement(creditCardFieldValidationMessage));
+                break;
+            case cvc:
+                message = getText(SeleniumExecutor.getDriver().findElement(cvcFieldValidationMessage));
+                break;
+            case expiryDate:
+                message = getText(SeleniumExecutor.getDriver().findElement(expirationDateFieldValidationMessage));
+                break;
+        }
 
-    public String getCvcTooltipText(){
-        return getText(SeleniumExecutor.getDriver().findElement(cvvTooltipText));
+        switchToDefaultIframe();
+        return message;
     }
 }

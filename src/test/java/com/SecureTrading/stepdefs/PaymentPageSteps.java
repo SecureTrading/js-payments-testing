@@ -2,7 +2,6 @@ package com.SecureTrading.stepdefs;
 
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
-import static util.helpers.actions.CustomGetTextImpl.getText;
 
 import com.SecureTrading.pageobjects.PaymentPage;
 import cucumber.api.java.en.And;
@@ -33,7 +32,7 @@ public class PaymentPageSteps {
 
     @And("^User clicks Pay button$")
     public void userClicksPayButton() {
-        paymentPage.clickSubmitButton();
+        paymentPage.clickPayButton();
     }
 
     @Then("^User will see card icon connected to card type ([^\"]*)$")
@@ -48,13 +47,8 @@ public class PaymentPageSteps {
     }
 
     @Then("^User will see validation message ([^\"]*) under ([^\"]*) field$")
-    public void userWillSeeValidationMessageMessageUnderFieldTypeField(String message, String cardFieldType) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(cardFieldType), message);
-    }
-
-    @Then("^He will see validation message \"([^\"]*)\" under credit card number field$")
-    public void heWillSeeValidationMessageUnderCreditCardNumberField(String message) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.number, message);
+    public void userWillSeeValidationMessageMessageUnderFieldTypeField(String message, String fieldType) {
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(fieldType), message);
     }
 
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
@@ -73,10 +67,16 @@ public class PaymentPageSteps {
             case "success":
                 stubCreditCardSuccessfulPayment();
                 break;
-            case "error_1015":
+            case "30000":
+                stubCreditCardDeclinedPayment();
+                break;
+            case "50000":
+                stubCreditCardDeclinedPayment();
+                break;
+            case "70000":
                 stubCreditCardDeclinedPayment();
                 break;
         }
-        paymentPage.clickSubmitButton();
+        paymentPage.clickPayButton();
     }
 }
