@@ -1,8 +1,5 @@
 package com.SecureTrading.stepdefs;
 
-import static util.MocksHandler.stubVersion1;
-import static util.MocksHandler.stubVersion2;
-
 import com.SecureTrading.pageobjects.SecureTradingPage;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -33,7 +30,7 @@ public class SecureTradingPageSteps {
     // Only as example to be removed
     @Given("User visits pet endpoint version 1$")
     public void user_visits_pet_endpoint_version_1() throws InterruptedException {
-        stubVersion1();
+        //stubVersion1();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
         SeleniumExecutor.getDriver().navigate().refresh();
@@ -42,7 +39,7 @@ public class SecureTradingPageSteps {
     // Only as example to be removed
     @Given("User visits pet endpoint version 2$")
     public void user_visits_pet_endpoint_version_2() throws InterruptedException {
-        stubVersion2();
+        //stubVersion2();
         Thread.sleep(1000);
         SeleniumExecutor.getDriver().get("http://localhost:8760/pet");
         SeleniumExecutor.getDriver().navigate().refresh();
