@@ -1,4 +1,4 @@
-ARG  CODE_VERSION=latest
+ARG  CODE_VERSION=develop
 FROM securetrading1/js-payments:${CODE_VERSION}
 RUN apk update && apk add openjdk8 make
 COPY . /app/js-payments-testing
