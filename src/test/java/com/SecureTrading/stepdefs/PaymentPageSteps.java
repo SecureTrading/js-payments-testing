@@ -4,12 +4,14 @@ import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 
 import com.SecureTrading.pageobjects.PaymentPage;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
+import util.enums.MerchantFieldType;
 import util.enums.PropertyType;
 
 public class PaymentPageSteps {
@@ -26,8 +28,9 @@ public class PaymentPageSteps {
     }
 
     @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
-    public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) {
+    public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) throws InterruptedException {
         paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
+        Thread.sleep(5000);
     }
 
     @And("^User clicks Pay button$")
@@ -78,5 +81,11 @@ public class PaymentPageSteps {
                 break;
         }
         paymentPage.clickPayButton();
+    }
+
+
+    @When("^User fills merchant data name \"([^\"]*)\", email \"([^\"]*)\", phone \"([^\"]*)\"$")
+    public void userFillsMerchantDataNameEmailPhone(String name, String email, String phone) throws Throwable {
+        paymentPage.fillAllMerchantData(name, email, phone);
     }
 }

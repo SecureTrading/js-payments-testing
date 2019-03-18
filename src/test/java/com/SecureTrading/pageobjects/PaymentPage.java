@@ -19,9 +19,9 @@ import util.enums.StoredElement;
 public class PaymentPage extends BasePage {
 
     //Credit card form
-    private String cardNumberFrameName = "st-card-number";
-    private String cvcFrameName = "st-security-code";
-    private String expirationDateFrameName = "st-expiration-date";
+    private String cardNumberFrameName = "st-card-number-iframe";
+    private String cvcFrameName = "st-security-code-iframe";
+    private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "";
 
     private By merchantName = By.id("example-form-name");
@@ -92,11 +92,14 @@ public class PaymentPage extends BasePage {
     public void switchToFrameByFieldType(CardFieldType fieldType) {
         switch (fieldType) {
             case number:
-                switchToIframe(cardNumberFrameName);
+                switchToIframe("st-card-number-iframe");
+                break;
             case cvc:
                 switchToIframe(cvcFrameName);
+                break;
             case expiryDate:
                 switchToIframe(expirationDateFrameName);
+                break;
         }
     }
 
@@ -130,6 +133,7 @@ public class PaymentPage extends BasePage {
         fillCreditCardInputField(CardFieldType.number, cardNumber);
         fillCreditCardInputField(CardFieldType.cvc, cvc);
         fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
+        
     }
 
     public void fillAllMerchantData(String name, String email, String phone){
@@ -157,13 +161,13 @@ public class PaymentPage extends BasePage {
     public void fillMerchantInputField(MerchantFieldType fieldType, String value) {
         switch (fieldType) {
             case name:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantName), value);
                 break;
             case email:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantEmail), value);
                 break;
             case phone:
-                sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantPhone), value);
                 break;
         }
     }
