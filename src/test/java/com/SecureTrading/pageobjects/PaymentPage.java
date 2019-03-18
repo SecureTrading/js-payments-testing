@@ -19,9 +19,9 @@ import util.enums.StoredElement;
 public class PaymentPage extends BasePage {
 
     //Credit card form
-    private String cardNumberFrameName = "st-card-number";
-    private String cvcFrameName = "st-security-code";
-    private String expirationDateFrameName = "st-expiration-date";
+    private String cardNumberFrameName = "st-card-number-iframe";
+    private String cvcFrameName = "st-security-code-iframe";
+    private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "";
 
     private By merchantName = By.id("example-form-name");
@@ -43,39 +43,10 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.cssSelector("");
     private By cardTypeIconFromAnimatedCard = By.cssSelector("");
 
-    //payment confirmation view
     private By paymentStatusMessage = By.cssSelector("");
-    private By transactionReference = By.cssSelector("");
-    private By authCode = By.cssSelector("");
-    private By amount = By.cssSelector("");
-    private By currency = By.cssSelector("");
-    private By paymentType = By.cssSelector("");
-
 
     //paymentMethods
     private By creditCardPaymentMethod = By.cssSelector("");
-
-    //Get info from payment confirmation view
-    public String getTransactionReferenceText() {
-        return getText(SeleniumExecutor.getDriver().findElement(transactionReference));
-    }
-
-    public String getAuthCodeText() {
-        return getText(SeleniumExecutor.getDriver().findElement(authCode));
-    }
-
-    public String getAmountText() {
-        return getText(SeleniumExecutor.getDriver().findElement(amount));
-    }
-
-    public String getCurrencyText() {
-        return getText(SeleniumExecutor.getDriver().findElement(currency));
-    }
-
-    public String getPaymentTypeText() {
-        return getText(SeleniumExecutor.getDriver().findElement(paymentType));
-    }
-
 
     public String getPaymentStatusMessage() {
         return getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));

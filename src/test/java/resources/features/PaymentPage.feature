@@ -50,7 +50,7 @@ Feature: Credit and debit card payments
   Scenario Outline: Filling payment form with incomplete data - fields validation
     When User fills payment form with incorrect or missing data: card number <cardNumber>, cvc <cvc> and expiration date <expiration>
     And User clicks Pay button
-    Then User will see validation message '<message>' under '<fieldType>' field
+    Then User will see validation message <message> under <fieldType> field
     Examples:
       | cardNumber       | cvc | expiration | message                                       | fieldType  |
       |                  | 123 | 12/22      | "Your card number is incomplete."             | number     |
@@ -64,7 +64,7 @@ Feature: Credit and debit card payments
 
   Scenario: Filling 3-number of cvc code for AMEX card
     When User fills payment form with credit card number '340000000000611', cvc '123' and expiration date '12/22'
-    Then User will see validation message 'Your card's security code is incomplete.' under 'number' field
+    Then User will see validation message "Your card's security code is incomplete." under "number" field
 
   Scenario: Submit payment form without data - fields validation
     When User clicks Pay button

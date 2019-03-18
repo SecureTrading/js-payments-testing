@@ -4,6 +4,7 @@ import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 
 import com.SecureTrading.pageobjects.PaymentPage;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -46,8 +47,8 @@ public class PaymentPageSteps {
         paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
     }
 
-    @Then("^User will see validation message ([^\"]*) under ([^\"]*) field$")
-    public void userWillSeeValidationMessageMessageUnderFieldTypeField(String message, String fieldType) {
+    @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field$")
+    public void userWillSeeValidationMessageUnderField(String message, String fieldType) {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(fieldType), message);
     }
 
@@ -59,6 +60,13 @@ public class PaymentPageSteps {
     @Then("^User will see information about payment status \"([^\"]*)\"$")
     public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
         paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+    }
+
+    @Then("^User will see validation message \"([^\"]*)\" under all fields$")
+    public void userWillSeeValidationMessageUnderAllFields(String message) {
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.number, message);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.expiryDate, message);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.cvc, message);
     }
 
     @And("^User clicks Pay button - response set to ([^\"]*)$")
