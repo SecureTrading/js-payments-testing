@@ -8,6 +8,7 @@ addons:
 before_script:
   - docker build . --tag js-payments-testing
   - docker run -d -p 8443:8443 -p 8760:8760 -it js-payments-testing
+  - docker run mtsmfm/browserstacklocal hn/RkGxX34714hiHKc6Xx0vHoQcwMItCi6VYiijo5VSKzyxTyb+Mg3UJX51UE/6L/rPqAjooD/NvFjL3JxaFMLpI0B4XKO7rnb4e1mz15x8U9JuD8MBpH3t93v4ZeYuQxjcFf8Kf8ziW8jTTnFh+w/Xu9yUTNSIQGYMX4Hxw1+MHXBI1CdvleyyVW9r29lT5a7gAO/xWMkeeVnx+1Z3UlPPX3czCEvqC3uB1eXPt58tO203f7UJnyh5PYqYM8WaKMc6P6N6kpgvmxuqY2MiQVhj3HqXTWZmPkV8L8vwKoTZUHEvvp5Hb7xFy+UlrI3fQDSWyMHcvFsH79QMfqqJ3t5anqBUPK7nQqG4gl8SJeD15MDvLAMDjnkPGvLhYp1Uq2MlnlaSdRN+plbl4jUWSgfwiJoLKCrqxgaFmJQv8YsOATlktQktNM0W5diRfSPb99TLZkOV5atwnAtHp93zKRWKz21//+5pCwiHaub2Le9Me067AxQgR/3oqUi6FTXbo9WtVmFohqAv2YrdhCJN2gEged2VJ9TAVaOSKrrd1CeZQRT8J/Wy3T0G5sSCGk9O2/Rvss5W5oja7uu6RrK3Imsak1ipOxnh5wFAq+H/jvIkNWv25iD3r/aw+gBaXIdBWIdAs2piTYX4Tm4WMawnZXyeHqjoeSZx5FASHpAYD3E0=
 jobs:
   include:
     - stage: Test
