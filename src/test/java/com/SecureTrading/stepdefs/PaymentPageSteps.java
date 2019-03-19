@@ -88,4 +88,11 @@ public class PaymentPageSteps {
     public void userFillsMerchantDataNameEmailPhone(String name, String email, String phone) throws Throwable {
         paymentPage.fillAllMerchantData(name, email, phone);
     }
+
+    @And("^User clicks Pay button and mock data$")
+    public void userClicksPayButtonAndMockData() throws InterruptedException {
+        stubCreditCardSuccessfulPayment();
+        SeleniumExecutor.getDriver().get("http://localhost:8761/payment");
+        Thread.sleep(5000);
+    }
 }

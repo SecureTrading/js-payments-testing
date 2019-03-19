@@ -7,8 +7,8 @@ package util;
 public class MocksHandler {
 
     public static void stubCreditCardSuccessfulPayment() {
-        WireMock.configureFor("localhost", 8760);
-        WireMock.stubFor(get(urlEqualTo("/pet"))
+        WireMock.configureFor("localhost", 8761);
+        WireMock.stubFor(get(urlEqualTo("/payment"))
                 .willReturn(aResponse().withStatus(200).withBodyFile("creditCardSuccessfulPayment.json")));
     }
 
