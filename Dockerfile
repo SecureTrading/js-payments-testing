@@ -1,5 +1,5 @@
 FROM alpine:latest
-RUN apk update && apk add nodejs npm git openjdk8 make
+RUN apk update && apk add nodejs npm git openjdk8 make nss
 COPY . /app
 WORKDIR /app/js-payments
 RUN git pull --ff-only origin develop
