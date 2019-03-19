@@ -17,3 +17,6 @@ jobs:
     - name: "Behavioural test: firefox 61"
       script:
         - make test_firefox_61_w10
+    - name: "Behavioural test: edge 17"
+      script:
+      - make test_edge_17_w10
