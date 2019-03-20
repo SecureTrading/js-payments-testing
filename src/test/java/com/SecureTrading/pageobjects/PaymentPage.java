@@ -131,8 +131,8 @@ public class PaymentPage extends BasePage {
 
     public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
         fillCreditCardInputField(CardFieldType.number, cardNumber);
-        fillCreditCardInputField(CardFieldType.cvc, cvc);
         fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
+        fillCreditCardInputField(CardFieldType.cvc, cvc);
         
     }
 

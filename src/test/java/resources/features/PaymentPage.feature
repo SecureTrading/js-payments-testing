@@ -7,5 +7,6 @@ Feature: Credit and debit card payments
     Given User opens page with payment form
 
   Scenario: Test scenario
-    When User fills merchant data name "John", email "test@test.pl", phone "654456654"
+    When User fills merchant data name "John Test", email "test@test.pl", phone "654456654"
     When User fills payment form with credit card number '4111110000000211', cvc '123' and expiration date '12/22'
+    And User clicks Pay button

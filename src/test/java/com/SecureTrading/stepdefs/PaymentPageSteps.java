@@ -23,7 +23,7 @@ public class PaymentPageSteps {
     }
 
     @Given("^User opens page with payment form$")
-    public void userOpensPageWithPaymentForm() {
+    public void userOpensPageWithPaymentForm() throws InterruptedException {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
 
