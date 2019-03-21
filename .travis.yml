@@ -122,21 +122,21 @@ jobs:
     # - name: "Behavioural test: Google Nexus 5, Android 4.4"
     #   script:
     #     - make test_Nexus5_4_4
-    # - name: "Behavioural test: iPhone XS, iOS 12.0"
-    #   script:
-    #     - make test_iPhoneXS_12_0
-    # - name: "Behavioural test: iPhone X, iOS 11.0"
-    #   script:
-    #     - make test_iPhoneX_11_0
-    # - name: "Behavioural test: iPhone 8, iOS 11.0"
-    #   script:
-    #     - make test_iPhone8_11_0
-    # - name: "Behavioural test: iPhone SE, iOS 11.0"
-    #   script:
-    #     - make test_iPhoneSE_11_0
-    # - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
-    #   script:
-    #     - make test_iPadPro12_12_0
+    - name: "Behavioural test: iPhone XS, iOS 12.0"
+      script:
+        - make test_iPhoneXS_12_0
+    - name: "Behavioural test: iPhone X, iOS 11.0"
+      script:
+        - make test_iPhoneX_11_0
+    - name: "Behavioural test: iPhone 8, iOS 11.0"
+      script:
+        - make test_iPhone8_11_0
+    - name: "Behavioural test: iPhone SE, iOS 11.0"
+      script:
+        - make test_iPhoneSE_11_0
+    - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
+      script:
+        - make test_iPadPro12_12_0
     - name: "Behavioural test: iPad Mini 4, iOS 11.0"
       script:
         - make test_iPadMini4_11_0
