@@ -11,24 +11,24 @@ before_script:
 jobs:
   include:
     - stage: Test
-      name: "Behavioural test: chrome 68"
-      script:
-        - make test_chrome_68_w10
-    - name: "Behavioural test: firefox 61"
-      script:
-        - make test_firefox_61_w10
-    - name: "Behavioural test: edge 17"
-      script:
-        - make test_edge_17_w10
-    - name: "Behavioural test: ie 9"
-      script:
-        - make test_ie_9_w7
-    - name: "Behavioural test: ie 10"
-      script:
-        - make test_ie_10_w8
-    - name: "Behavioural test: ie 11"
-      script:
-        - make test_ie_11_w8
-    - name: "Behavioural test: safari 11"
-      script:
-        - make test_safari_11_osxhs
+#      name: "Behavioural test: chrome 68"
+#      script:
+#        - make test_chrome_68_w10
+#    - name: "Behavioural test: firefox 61"
+#      script:
+#        - make test_firefox_61_w10
+#    - name: "Behavioural test: edge 17"
+#      script:
+#        - make test_edge_17_w10
+#    - name: "Behavioural test: ie 9"
+#      script:
+#        - make test_ie_9_w7
+#    - name: "Behavioural test: ie 10"
+#      script:
+#        - make test_ie_10_w8
+#    - name: "Behavioural test: ie 11"
+#      script:
+#        - make test_ie_11_w8
+#    - name: "Behavioural test: safari 11"
+#      script:
+#        - make test_safari_11_osxhs
