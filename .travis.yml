@@ -5,11 +5,19 @@ addons:
       secure: FL6VmwGgfGMuC6Ic4B5N5QnCyVarDzr0RIVNLZznkbzcOV9YVC3mym/d0fpcArnM3LfYm3fJ0swX2RcX9hlBbIsVke4yu5MsN+VrfxI/NfHgv/+8dFqxNhIwNEOZYnH5bxiPrRKZjLT/JCqIN5NsB6hCPGLQUWQXHFN9PAGWqWPo1V/TjxfBdkvKEOUEQXVtUzNfYCatqirBIz8mkvAJr4iwkFOLBC0qGsljqQ33wWY0BlsmtgOpcGkkz6KRzapHz9uzWtuBiAyhegtm5p8SLWGDomKhSoCdkK3cW52PO1oCeAbHAef8QFyzfmdg5UMMjqhVpEDBKUOHxf9vc/r69xi+fbCRYhG0RPHVuYZHmq9l7D2/CuqfrUiY2kbqT07980OMDsKWIHbglLdH4+S72AdIc2a1NAGWloQiW92E3FhI4dnbDJheEi+p5QiClTrnwI9v0T5Fkk7mUcMgtbt2OL8YwCaVGpe/SQClcSAjqDqD+dd8Qf8FlaWR1jyaQ3lb1eZfIEs4ZFU7xFkbhA79d3DH00WEHrv0mNUnvHr2KFSypHnnFPUTELTehRBZWPA9JdId3L9j1qbqT9lF4g5f6NWMupz+kNRiQLlE2mDF0KfbIWxRBniGup0PBD7ilk4eGTY6AX82jgnjkARscr2ID9gWHEB2AszvZl2CMT06kXk=
     access_key:
       secure: hn/RkGxX34714hiHKc6Xx0vHoQcwMItCi6VYiijo5VSKzyxTyb+Mg3UJX51UE/6L/rPqAjooD/NvFjL3JxaFMLpI0B4XKO7rnb4e1mz15x8U9JuD8MBpH3t93v4ZeYuQxjcFf8Kf8ziW8jTTnFh+w/Xu9yUTNSIQGYMX4Hxw1+MHXBI1CdvleyyVW9r29lT5a7gAO/xWMkeeVnx+1Z3UlPPX3czCEvqC3uB1eXPt58tO203f7UJnyh5PYqYM8WaKMc6P6N6kpgvmxuqY2MiQVhj3HqXTWZmPkV8L8vwKoTZUHEvvp5Hb7xFy+UlrI3fQDSWyMHcvFsH79QMfqqJ3t5anqBUPK7nQqG4gl8SJeD15MDvLAMDjnkPGvLhYp1Uq2MlnlaSdRN+plbl4jUWSgfwiJoLKCrqxgaFmJQv8YsOATlktQktNM0W5diRfSPb99TLZkOV5atwnAtHp93zKRWKz21//+5pCwiHaub2Le9Me067AxQgR/3oqUi6FTXbo9WtVmFohqAv2YrdhCJN2gEged2VJ9TAVaOSKrrd1CeZQRT8J/Wy3T0G5sSCGk9O2/Rvss5W5oja7uu6RrK3Imsak1ipOxnh5wFAq+H/jvIkNWv25iD3r/aw+gBaXIdBWIdAs2piTYX4Tm4WMawnZXyeHqjoeSZx5FASHpAYD3E0=
+services:
+  - docker
 before_script:
-  - docker build . --tag js-payments-testing
-  - docker run -d -p 8443:8443 -p 8760:8760 -it js-payments-testing
+  - docker pull "securetrading1/js-payments-testing"
+  - docker run -d -p 8443:8443 -p 8760:8760 -it "securetrading1/js-payments-testing"
 jobs:
   include:
+    - stage: Build
+      name: "Docker build"
+      script:
+        - docker build . --tag "securetrading1/js-payments-testing"
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push "securetrading1/js-payments-testing"
     - stage: Test
       name: "Behavioural test: chrome 68"
       script:
