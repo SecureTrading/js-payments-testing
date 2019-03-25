@@ -8,7 +8,7 @@ Feature: Credit and debit card payments
 
   #ToDo - check success paymentCode
   @mockData
-  Scenario Outline: Checking payment status for various response code
+  Scenario Outline: Checking payment status for response code: <paymentCode>
     When User fills payment form with credit card number '4111110000000211', cvc '123' and expiration date '12/22'
     And User clicks Pay button - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
@@ -20,7 +20,7 @@ Feature: Credit and debit card payments
       | 70000       | "Socket receive error" |
 
   @mockData
-  Scenario Outline: Successful payment using most popular Credit Cards
+  Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     And  User clicks Pay button - response set to 'success'
     Then User will see information about payment status "Payment successful!"
@@ -30,7 +30,7 @@ Feature: Credit and debit card payments
       | 5100000000000511 | 123  | 12/22          | MASTERCARD |
       | 4111110000000211 | 123  | 12/22          | VISA       |
 
-  Scenario Outline: Credit card recognition and validate date on animated card
+  Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
@@ -47,10 +47,11 @@ Feature: Credit and debit card payments
       | 4111110000000211    | 123  | 12/22          | VISA         |
 
    #ToDo - Confirm validation messages
-  Scenario Outline: Filling payment form with incomplete data - fields validation
+  Scenario Outline: Filling payment form with incomplete data - validation of <fieldType> field
     When User fills payment form with incorrect or missing data: card number <cardNumber>, cvc <cvc> and expiration date <expiration>
     And User clicks Pay button
     Then User will see validation message <message> under <fieldType> field
+
     Examples:
       | cardNumber       | cvc | expiration | message                                       | fieldType  |
       |                  | 123 | 12/22      | "Your card number is incomplete."             | number     |

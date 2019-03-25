@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
@@ -62,6 +63,7 @@ abstract class DriverFactory {
     public static DesiredCapabilities GetRemoteDriverCapabilities() {
 
         DesiredCapabilities caps = new DesiredCapabilities();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // Browser/device configuration
         for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device",
@@ -80,7 +82,7 @@ abstract class DriverFactory {
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
         caps.setCapability("name",
-                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
+                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + simpleDateFormat.format(new Date()));
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null
                 && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {

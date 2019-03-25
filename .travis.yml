@@ -26,9 +26,6 @@ jobs:
    - name: "Behavioural test: chrome 70, Windows 7"
      script:
        - make test_chrome_70_w7
-   - name: "Behavioural test: chrome 49, Windows XP"
-     script:
-       - make test_chrome_49_wXP
    - name: "Behavioural test: chrome 72, OS X Mojave"
      script:
        - make test_chrome_72_osxmoj
