@@ -1,11 +1,9 @@
-FROM alpine:latest
-RUN apk update && apk add nodejs npm git openjdk8 make
-COPY . /app
-WORKDIR /app/js-payments
-RUN git pull --ff-only origin develop
-RUN npm install && npm run prod
-RUN cp -r dist/* /app/src/main/resources/__files
-WORKDIR /app
+ARG  CODE_VERSION=develop
+FROM securetrading1/js-payments:${CODE_VERSION}
+RUN apk update && apk add openjdk8 make nss
+COPY . /app/js-payments-testing
+WORKDIR /app/js-payments-testing
+RUN cp -r /app/js-payments/dist/* /app/js-payments-testing/src/main/resources/__files
 EXPOSE 8760
 EXPOSE 8443
-CMD ["make", "run_wiremock"]
+ENTRYPOINT ["make", "run_wiremock"]
