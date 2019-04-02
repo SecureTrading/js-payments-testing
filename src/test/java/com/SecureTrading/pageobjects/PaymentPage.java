@@ -22,7 +22,7 @@ public class PaymentPage extends BasePage {
     private String cardNumberFrameName = "st-card-number-iframe";
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
-    private String animatedCardFrameName = "";
+    private String animatedCardFrameName = "animatedCard";
 
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
@@ -38,10 +38,10 @@ public class PaymentPage extends BasePage {
     private By expirationDateFieldValidationMessage = By.id("st-expiration-date-message");
 
     //animated credit card
-    private By creditCardNumberFromAnimatedCard = By.cssSelector("");
-    private By cvcFromAnimatedCard = By.cssSelector("");
-    private By expirationDateFromAnimatedCard = By.cssSelector("");
-    private By cardTypeIconFromAnimatedCard = By.cssSelector("");
+    private By creditCardNumberFromAnimatedCard = By.id("st-animated-card-number");
+    private By cvcFromAnimatedCard = By.id("st-animated-card-security-code");
+    private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
+    private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
     private By paymentStatusMessage = By.cssSelector("");
 
@@ -55,9 +55,9 @@ public class PaymentPage extends BasePage {
     //Get info from animated credit card
     public String getCardTypeIconFromAnimatedCardText() {
         switchToIframe(animatedCardFrameName);
-        String iconName =  getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeIconFromAnimatedCard), "a");
+        String cardLogo =  getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
         switchToDefaultIframe();
-        return iconName;
+        return cardLogo;
     }
 
     public void switchToFrameByFieldType(CardFieldType fieldType) {
@@ -99,8 +99,8 @@ public class PaymentPage extends BasePage {
 
     public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
         fillCreditCardInputField(CardFieldType.number, cardNumber);
-        fillCreditCardInputField(CardFieldType.cvc, cvc);
         fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
+        fillCreditCardInputField(CardFieldType.cvc, cvc);
     }
 
     public void fillAllMerchantData(String name, String email, String phone){
@@ -183,7 +183,7 @@ public class PaymentPage extends BasePage {
 
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String cvc, String expirationDate) {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
-        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
     }
 }

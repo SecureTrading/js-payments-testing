@@ -38,7 +38,6 @@ public class PaymentPageSteps {
 
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
-        //ToDo
         paymentPage.validateIfCardTypeIconWasAsExpected(cardType);
     }
 
