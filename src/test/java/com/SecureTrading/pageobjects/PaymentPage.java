@@ -64,10 +64,13 @@ public class PaymentPage extends BasePage {
         switch (fieldType) {
             case number:
                 switchToIframe(cardNumberFrameName);
+                break;
             case cvc:
                 switchToIframe(cvcFrameName);
+                break;
             case expiryDate:
                 switchToIframe(expirationDateFrameName);
+                break;
         }
     }
 
