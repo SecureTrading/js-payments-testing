@@ -131,4 +131,4 @@ test_iPadMini4_11_0:
 	mvn install -DLOCAL=true -Ddevice="iPad Mini 4" -Dos_version=11 -Dreal_mobile=true
 
 run_wiremock:
-	cd src/main/resources && java -jar wiremock-standalone-2.21.0.jar -port 8760 -verbose
+	cd src/main/resources && java -jar wiremock-standalone-2.21.0.jar -https-port 8443 -verbose

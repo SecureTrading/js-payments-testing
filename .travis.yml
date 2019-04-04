@@ -13,7 +13,7 @@ services:
   - docker
 before_script:
   - docker pull "securetrading1/js-payments-testing"
-  - docker run -d -p 8443:8443 -p 8760:8760 -it "securetrading1/js-payments-testing"
+  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing"
 jobs:
   include:
     - stage: Build

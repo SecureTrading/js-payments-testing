@@ -23,6 +23,7 @@ public class PaymentPage extends BasePage {
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "animatedCard";
+    private String notificationFrame = "st-notification-frame-iframe";
 
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
@@ -43,13 +44,16 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
-    private By paymentStatusMessage = By.cssSelector("");
+    private By paymentStatusMessage = By.id("st-notification-frame");
 
     //paymentMethods
-    private By creditCardPaymentMethod = By.cssSelector("");
+    private By visaCheckoutMockButton = By.id("v-button");
 
     public String getPaymentStatusMessage() {
-        return getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
+        switchToIframe(notificationFrame);
+        String statusMessage = getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
+        switchToDefaultIframe();
+        return statusMessage;
     }
 
     //Get info from animated credit card
@@ -94,8 +98,8 @@ public class PaymentPage extends BasePage {
 
     public void choosePaymentMethod(PaymentType paymentType) {
         switch (paymentType) {
-            case creditCard:
-                click(SeleniumExecutor.getDriver().findElement(creditCardPaymentMethod));
+            case visaCheckout:
+                click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
                 break;
         }
     }

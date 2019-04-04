@@ -11,6 +11,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
+import util.enums.PaymentType;
 import util.enums.PropertyType;
 
 public class PaymentPageSteps {
@@ -72,18 +73,34 @@ public class PaymentPageSteps {
     public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
             case "success":
-                stubCreditCardSuccessfulPayment();
+                stubCcSuccessPaymentPayment();
                 break;
             case "30000":
-                stubCreditCardDeclinedPayment();
+                stubCcFieldErrorPayment();
                 break;
             case "50000":
-                stubCreditCardDeclinedPayment();
+                stubCcDeclineErrorPayment();
                 break;
             case "70000":
-                stubCreditCardDeclinedPayment();
+                stubCcSocketReceiveErrorPayment();
                 break;
         }
         paymentPage.clickPayButton();
+    }
+
+    @When("^User chooses \"([^\"]*)\" as payment method - response set to ([^\"]*)$")
+    public void userChoosesAsPaymentMethodResponseSetToPaymentCode(String paymentMethod, String paymentCode) {
+        switch (paymentCode) {
+            case "Success":
+                stubVisaSuccessPayment();
+                break;
+            case "Error":
+                stubVisaErrorPayment();
+                break;
+            case "Cancel":
+                stubVisaCancelPayment();
+                break;
+        }
+        paymentPage.choosePaymentMethod(PaymentType.fromString(paymentMethod));
     }
 }
