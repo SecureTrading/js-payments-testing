@@ -24,127 +24,125 @@ jobs:
         - docker push "securetrading1/js-payments-testing"
     - stage: Test
     - name: "Behavioural test: chrome 72, Windows 10"
-     script:
+      script:
         - make test_chrome_72_w10
     - name: "Behavioural test: chrome 71, Windows 10"
-     script:
-       - make test_chrome_71_w10
+      script:
+        - make test_chrome_71_w10
     - name: "Behavioural test: chrome 72, Windows 8.1"
-     script:
-       - make test_chrome_72_w81
+      script:
+        - make test_chrome_72_w81
     - name: "Behavioural test: chrome 71, Windows 8"
-     script:
-       - make test_chrome_71_w8
+      script:
+        - make test_chrome_71_w8
     - name: "Behavioural test: chrome 70, Windows 7"
-     script:
-       - make test_chrome_70_w7
+      script:
+        - make test_chrome_70_w7
     - name: "Behavioural test: chrome 72, OS X Mojave"
-     script:
-       - make test_chrome_72_osxmoj
+      script:
+        - make test_chrome_72_osxmoj
     - name: "Behavioural test: chrome 71, OS X Mojave"
-     script:
-       - make test_chrome_71_osxmoj
+      script:
+        - make test_chrome_71_osxmoj
     - name: "Behavioural test: chrome 72, OS X High Sierra"
-     script:
-       - make test_chrome_72_osxhs
+      script:
+        - make test_chrome_72_osxhs
     - name: "Behavioural test: chrome 71, OS X Sierra"
-     script:
-       - make test_chrome_71_osxs
+      script:
+        - make test_chrome_71_osxs
     - name: "Behavioural test: firefox 65, Windows 10"
-     script:
-       - make test_firefox_65_w10
+      script:
+        - make test_firefox_65_w10
     - name: "Behavioural test: firefox 64, Windows 8.1"
-     script:
-       - make test_firefox_64_w81
+      script:
+        - make test_firefox_64_w81
     - name: "Behavioural test: firefox 65, Windows 7"
-     script:
-       - make test_firefox_65_w7
+      script:
+        - make test_firefox_65_w7
     - name: "Behavioural test: firefox 65, OS X Mojave"
-     script:
-       - make test_firefox_65_osxmoj
+      script:
+        - make test_firefox_65_osxmoj
     - name: "Behavioural test: firefox 65, OS X High Sierra"
-     script:
-       - make test_firefox_65_osxhs
+      script:
+        - make test_firefox_65_osxhs
     - name: "Behavioural test: firefox 64, OS X Sierra"
-     script:
-       - make test_firefox_64_osxs
+      script:
+        - make test_firefox_64_osxs
     - name: "Behavioural test: ie 11, Windows 10"
-     script:
-       - make test_ie_11_w10
+      script:
+        - make test_ie_11_w10
     - name: "Behavioural test: ie 10, Windows 8"
-     script:
-       - make test_ie_10_w8
+      script:
+        - make test_ie_10_w8
     - name: "Behavioural test: ie 11, Windows 7"
-     script:
-       - make test_ie_11_w7
+      script:
+        - make test_ie_11_w7
     - name: "Behavioural test: edge 18, Windows 10"
-     script:
-       - make test_edge_18_w10
+      script:
+        - make test_edge_18_w10
     - name: "Behavioural test: edge 17, Windows 10"
-     script:
-       - make test_edge_17_w10
+      script:
+        - make test_edge_17_w10
     - name: "Behavioural test: safari 12.0, OS X Mojave"
-     script:
-       - make test_safari_12_0_osxmoj
+      script:
+        - make test_safari_12_0_osxmoj
     - name: "Behavioural test: safari 11.1, OS X High Sierra"
-     script:
-       - make test_safari_11_1_osxhs
+      script:
+        - make test_safari_11_1_osxhs
     - name: "Behavioural test: safari 10.1, OS X Sierra"
-     script:
-       - make test_safari_10_1_osxs
+      script:
+        - make test_safari_10_1_osxs
     - name: "Behavioural test: Samsung Galaxy Note 9, Android 8.1"
-     script:
-       - make test_galaxyNote9_8_1
+      script:
+        - make test_galaxyNote9_8_1
     - name: "Behavioural test: Samsung Galaxy S9, Android 8.0"
-     script:
-       - make test_galaxyS9_8_0
+      script:
+        - make test_galaxyS9_8_0
     - name: "Behavioural test: Samsung Galaxy S9 Plus, Android 8.0"
-     script:
-       - make test_galaxyS9Plus_8_0
+      script:
+        - make test_galaxyS9Plus_8_0
     - name: "Behavioural test: Samsung Galaxy S8, Android 7.0"
-     script:
-       - make test_galaxyS8_7_0
+      script:
+        - make test_galaxyS8_7_0
     - name: "Behavioural test: Samsung Galaxy S7, Android 6.0"
-     script:
-       - make test_galaxyS7_6_0
+      script:
+        - make test_galaxyS7_6_0
     - name: "Behavioural test: Samsung Galaxy Tab S3, Android 7.0"
-     script:
-       - make test_galaxyTabS3_7_0
+      script:
+        - make test_galaxyTabS3_7_0
     - name: "Behavioural test: Google Pixel 3, Android 9.0"
-     script:
-       - make test_Pixel3_9_0
+      script:
+        - make test_Pixel3_9_0
     - name: "Behavioural test: Google Pixel, Android 8.0"
-     script:
-       - make test_Pixel_8_0
+      script:
+        - make test_Pixel_8_0
     - name: "Behavioural test: Google Pixel, Android 7.1"
-     script:
-       - make test_Pixel_7_1
+      script:
+        - make test_Pixel_7_1
     - name: "Behavioural test: Google Nexus 6, Android 6.0"
-     script:
-       - make test_Nexus6_6_0
+      script:
+        - make test_Nexus6_6_0
     - name: "Behavioural test: Google Nexus 9, Android 5.1"
-     script:
-       - make test_Nexus9_5_1
+      script:
+        - make test_Nexus9_5_1
     - name: "Behavioural test: Google Nexus 5, Android 4.4"
-     script:
-       - make test_Nexus5_4_4
+      script:
+        - make test_Nexus5_4_4
     - name: "Behavioural test: iPhone XS, iOS 12.0"
-     script:
-       - make test_iPhoneXS_12_0
+      script:
+        - make test_iPhoneXS_12_0
     - name: "Behavioural test: iPhone X, iOS 11.0"
-     script:
-       - make test_iPhoneX_11_0
+      script:
+        - make test_iPhoneX_11_0
     - name: "Behavioural test: iPhone 8, iOS 11.0"
-     script:
-       - make test_iPhone8_11_0
+      script:
+        - make test_iPhone8_11_0
     - name: "Behavioural test: iPhone SE, iOS 11.0"
-     script:
-       - make test_iPhoneSE_11_0
+      script:
+        - make test_iPhoneSE_11_0
     - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
-     script:
-       - make test_iPadPro12_12_0
+      script:
+        - make test_iPadPro12_12_0
     - name: "Behavioural test: iPad Mini 4, iOS 11.0"
-     script:
-       - make test_iPadMini4_11_0
-
-
+      script:
+        - make test_iPadMini4_11_0
