@@ -22,7 +22,7 @@ public class PaymentPage extends BasePage {
     private String cardNumberFrameName = "st-card-number-iframe";
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
-    private String animatedCardFrameName = "animatedCard";
+    private String animatedCardFrameName = "st-animated-card-iframe";
     private String notificationFrame = "st-notification-frame-iframe";
 
     private By merchantName = By.id("example-form-name");
