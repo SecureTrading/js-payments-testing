@@ -30,20 +30,21 @@ Feature: Credit and debit card payments
       | 5100000000000511 | 123  | 12/22          | MASTERCARD |
       | 4111110000000211 | 123  | 12/22          | VISA       |
 
+  @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number <cardNumber>, cvc <cvc> and expiration date <expirationDate>
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
     Examples:
       | cardNumber          | cvc  | expirationDate | cardType     |
-      | 340000000000611     | 1234 | 12/22          | AMEX         |
-      | 1801000000000901    | 123  | 12/22          | ASTROPAYCARD |
-      | 3000000000000111    | 123  | 12/22          | DINERS       |
-      | 6011000000000301    | 123  | 12/22          | DISCOVER     |
-      | 3528000000000411    | 123  | 12/22          | JCB          |
+#      | 340000000000611     | 1234 | 12/22          | AMEX         |
+#      | 1801000000000901    | 123  | 12/22          | ASTROPAYCARD |
+#      | 3000000000000111    | 123  | 12/22          | DINERS       |
+#      | 6011000000000301    | 123  | 12/22          | DISCOVER     |
+#      | 3528000000000411    | 123  | 12/22          | JCB          |
       | 5000000000000611    | 123  | 12/22          | MAESTRO      |
       | 5100000000000511    | 123  | 12/22          | MASTERCARD   |
-      | 3089500000000000021 | 123  | 12/22          | PIBA         |
+#      | 3089500000000000021 | 123  | 12/22          | PIBA         |
       | 4111110000000211    | 123  | 12/22          | VISA         |
 
    #ToDo - Confirm validation messages
@@ -74,6 +75,16 @@ Feature: Credit and debit card payments
   @visaTest
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
     When User chooses "visaCheckout" as payment method - response set to <paymentCode>
+    Then User will see information about payment status <paymentStatusMessage>
+    Examples:
+      | paymentCode | paymentStatusMessage                      |
+      | Success     | "Payment has been successfully proceeded" |
+#      | Error       | "An error occurred"                       |
+#      | Cancel      | "Payment has been canceled"               |
+
+  @appleTest
+  Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
+    When User chooses "applePay" as payment method - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
     Examples:
       | paymentCode | paymentStatusMessage                      |

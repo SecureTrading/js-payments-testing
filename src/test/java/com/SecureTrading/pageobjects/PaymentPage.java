@@ -48,6 +48,7 @@ public class PaymentPage extends BasePage {
 
     //paymentMethods
     private By visaCheckoutMockButton = By.id("v-button");
+    private By applePay = By.id("");
 
     public String getPaymentStatusMessage() {
         switchToIframe(notificationFrame);
@@ -100,6 +101,9 @@ public class PaymentPage extends BasePage {
         switch (paymentType) {
             case visaCheckout:
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
+                break;
+            case applePay:
+                click(SeleniumExecutor.getDriver().findElement(applePay));
                 break;
         }
     }
