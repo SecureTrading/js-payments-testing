@@ -79,8 +79,8 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage                      |
       | Success     | "Payment has been successfully proceeded" |
-#      | Error       | "An error occurred"                       |
-#      | Cancel      | "Payment has been canceled"               |
+      | Error       | "An error occurred"                       |
+      | Cancel      | "Payment has been canceled"               |
 
   @appleTest
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
