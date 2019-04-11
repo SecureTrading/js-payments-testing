@@ -75,16 +75,16 @@ public class PaymentPageSteps {
     public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
             case "success":
-                stubCcSuccessPaymentPayment();
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSuccess.json");
                 break;
             case "30000":
-                stubCcFieldErrorPayment();
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccFieldErrors.json");
                 break;
             case "50000":
-                stubCcDeclineErrorPayment();
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
                 break;
             case "70000":
-                stubCcSocketReceiveErrorPayment();
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSocketError.json");
                 break;
         }
         paymentPage.clickPayButton();
@@ -94,13 +94,13 @@ public class PaymentPageSteps {
     public void userChoosesAsPaymentMethodResponseSetToPaymentCode(String paymentMethod, String paymentCode) {
         switch (paymentCode) {
             case "Success":
-                stubVisaSuccessPayment();
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
                 break;
             case "Error":
-                stubVisaErrorPayment();
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaError.json");
                 break;
             case "Cancel":
-                stubVisaCancelPayment();
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
                 break;
         }
         paymentPage.choosePaymentMethod(PaymentType.fromString(paymentMethod));

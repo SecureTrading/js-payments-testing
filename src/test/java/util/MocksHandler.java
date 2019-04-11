@@ -8,46 +8,10 @@ package util;
 
 public class MocksHandler {
 
-    public static void stubCcSuccessPaymentPayment() {
+    public static void stubPaymentStatus(PropertyType mockUrl, String mockJson) {
         WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.CC_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("ccSuccess.json")));
-    }
-
-    public static void stubCcFieldErrorPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.CC_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("ccFieldError.json")));
-    }
-
-    public static void stubCcDeclineErrorPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.CC_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("ccDeclineError.json")));
-    }
-
-    public static void stubCcSocketReceiveErrorPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.CC_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("ccSocketError.json")));
-    }
-
-    public static void stubVisaSuccessPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.VISA_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("visaSuccess.json")));
-    }
-
-    public static void stubVisaErrorPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.VISA_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("visaError.json")));
-    }
-
-    public static void stubVisaCancelPayment() {
-        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
-        WireMock.stubFor(get(urlEqualTo(getProperty(PropertyType.VISA_MOCK_URI)))
-                .willReturn(aResponse().withStatus(200).withBodyFile("visaCancel.json")));
+        WireMock.stubFor(get(urlEqualTo(getProperty(mockUrl)))
+                .willReturn(aResponse().withStatus(200).withBodyFile(mockJson)));
     }
 }
 
