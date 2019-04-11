@@ -37,14 +37,8 @@ Feature: Credit and debit card payments
     And User will see the same provided data on animated credit card <cardNumber>, <cvc> and <expirationDate>
     Examples:
       | cardNumber          | cvc  | expirationDate | cardType     |
-#      | 340000000000611     | 1234 | 12/22          | AMEX         |
-#      | 1801000000000901    | 123  | 12/22          | ASTROPAYCARD |
-#      | 3000000000000111    | 123  | 12/22          | DINERS       |
-#      | 6011000000000301    | 123  | 12/22          | DISCOVER     |
-#      | 3528000000000411    | 123  | 12/22          | JCB          |
-      | 5000000000000611    | 123  | 12/22          | MAESTRO      |
-      | 5100000000000511    | 123  | 12/22          | MASTERCARD   |
-#      | 3089500000000000021 | 123  | 12/22          | PIBA         |
+      | 1801000000000901    | 123  | 12/22          | ASTROPAYCARD |
+      | 3000000000000111    | 123  | 12/22          | DINERS       |
       | 4111110000000211    | 123  | 12/22          | VISA         |
 
    #ToDo - Confirm validation messages
@@ -79,8 +73,6 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage                      |
       | Success     | "Payment has been successfully proceeded" |
-#      | Error       | "An error occurred"                       |
-#      | Cancel      | "Payment has been canceled"               |
 
   @appleTest
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
