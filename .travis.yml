@@ -26,9 +26,9 @@ jobs:
     - name: "Behavioural test: chrome 72, Windows 10"
       script:
         - make test_chrome_72_w10
-    - name: "Behavioural test: chrome 71, Windows 10"
-      script:
-        - make test_chrome_71_w10
+#    - name: "Behavioural test: chrome 71, Windows 10"
+#      script:
+#        - make test_chrome_71_w10
 #    - name: "Behavioural test: chrome 72, Windows 8.1"
 #      script:
 #        - make test_chrome_72_w81
