@@ -9,11 +9,14 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
+import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
 import util.enums.PaymentType;
 import util.enums.PropertyType;
+import util.enums.StoredElement;
 
 public class PaymentPageSteps {
 
@@ -28,10 +31,15 @@ public class PaymentPageSteps {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
 
-    @When("^User fills payment form with credit card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
-    public void userFillsPaymentFormWithCreditCardNumberCardNumberCvcCvcAndExpirationDateExpirationDate(String cardNumber, String cvc, String expirationDate) {
+    @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
+    public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(String cardNumber, String expirationDate, String cvc) {
         ((JavascriptExecutor) SeleniumExecutor.getDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
+        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
+    }
+
+    @When("^User fills merchant data with name \"([^\"]*)\", email \"([^\"]*)\", phone \"([^\"]*)\"$")
+    public void userFillsMerchantDataWithNameEmailPhone(String name, String email, String phone) {
+        paymentPage.fillAllMerchantData(name, email, phone);
     }
 
     @And("^User clicks Pay button$")
@@ -41,12 +49,18 @@ public class PaymentPageSteps {
 
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
-        paymentPage.validateIfCardTypeIconWasAsExpected(cardType);
+        PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
+        paymentPage.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
     }
 
-    @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), cvc ([^\"]*) and expiration date ([^\"]*)$")
-    public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberCvcCvcAndExpirationDateExpiration(String cardNumber, String cvc, String expirationDate) {
-        paymentPage.fillAllCardData(cardNumber, cvc, expirationDate);
+    @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
+    public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) {
+        paymentPage.validateIfAnimatedCardIsFlipped(cardType);
+    }
+
+    @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
+    public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc(String cardNumber, String expirationDate, String cvc) {
+        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field$")
@@ -55,8 +69,8 @@ public class PaymentPageSteps {
     }
 
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
-    public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberCvcAndExpirationDate(String cardNumber, String cvc, String expirationDate) {
-        paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, cvc, expirationDate);
+    public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber, String expirationDate, String cvc) {
+        paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
     }
 
     @Then("^User will see information about payment status \"([^\"]*)\"$")
@@ -104,5 +118,10 @@ public class PaymentPageSteps {
                 break;
         }
         paymentPage.choosePaymentMethod(PaymentType.fromString(paymentMethod));
+    }
+
+    @And("^User will see that notification frame has ([^\"]*) color$")
+    public void userWillSeeThatNotificationFrameHasColorColor(String color) {
+        paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
     }
 }
