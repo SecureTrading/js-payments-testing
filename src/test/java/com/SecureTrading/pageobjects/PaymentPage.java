@@ -7,6 +7,7 @@ import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 
+import cucumber.api.Scenario;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
@@ -39,8 +40,10 @@ public class PaymentPage extends BasePage {
     private By expirationDateFieldValidationMessage = By.id("st-expiration-date-message");
 
     //animated credit card
+    private By animatedCard = By.id("st-animated-card");
     private By creditCardNumberFromAnimatedCard = By.id("st-animated-card-number");
-    private By cvcFromAnimatedCard = By.id("st-animated-card-security-code");
+    private By cvcBackSideAnimatedCard = By.id("st-animated-card-security-code");
+    private By cvcFrontSideAnimatedCard = By.id("st-animated-card-security-code-front-field");
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
@@ -57,12 +60,31 @@ public class PaymentPage extends BasePage {
         return statusMessage;
     }
 
+    public String getColorOfNotificationFrame() {
+        switchToIframe(notificationFrame);
+        String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
+        switchToDefaultIframe();
+        return frameColor;
+    }
+
     //Get info from animated credit card
     public String getCardTypeIconFromAnimatedCardText() {
         switchToIframe(animatedCardFrameName);
         String cardLogo =  getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
         switchToDefaultIframe();
         return cardLogo;
+    }
+
+    public boolean checkIfAnimatedCardIsFlipped() {
+        switchToIframe(animatedCardFrameName);
+        boolean isFlipped = false;
+        String cardSide =  getAttribute(SeleniumExecutor.getDriver().findElement(animatedCard), "class");
+
+        if(cardSide.contains("flip_card")){
+            isFlipped = true;
+        }
+        switchToDefaultIframe();
+        return isFlipped;
     }
 
     public void switchToFrameByFieldType(CardFieldType fieldType) {
@@ -87,7 +109,11 @@ public class PaymentPage extends BasePage {
                 data = getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
                 break;
             case cvc:
-                data = getText(SeleniumExecutor.getDriver().findElement(cvcFromAnimatedCard));
+                if(PicoContainerHelper.getFromContainer(StoredElement.cardType).toString().contains("AMEX")){
+                    data = getText(SeleniumExecutor.getDriver().findElement(cvcFrontSideAnimatedCard));
+                } else {
+                    data = getText(SeleniumExecutor.getDriver().findElement(cvcBackSideAnimatedCard));
+                }
                 break;
             case expiryDate:
                 data = getText(SeleniumExecutor.getDriver().findElement(expirationDateFromAnimatedCard));
@@ -108,7 +134,7 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void fillAllCardData(String cardNumber, String cvc, String expiryDate){
+    public void fillAllCardData(String cardNumber, String expiryDate, String cvc){
         fillCreditCardInputField(CardFieldType.number, cardNumber);
         fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
         fillCreditCardInputField(CardFieldType.cvc, cvc);
@@ -139,13 +165,13 @@ public class PaymentPage extends BasePage {
     public void fillMerchantInputField(MerchantFieldType fieldType, String value) {
         switch (fieldType) {
             case name:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantName), value);
                 break;
             case email:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantEmail), value);
                 break;
             case phone:
-                sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
+                sendKeys(SeleniumExecutor.getDriver().findElement(merchantPhone), value);
                 break;
         }
     }
@@ -192,7 +218,22 @@ public class PaymentPage extends BasePage {
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedData, getDataFromAnimatedCreditCard(fieldType));
     }
 
-    public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String cvc, String expirationDate) {
+    public void validateIfColorOfNotificationFrameWasAsExpected(String color) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Color of notification frame is not correct, should be " + color + " but was: " + getColorOfNotificationFrame());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), color, getColorOfNotificationFrame());
+    }
+
+    public void validateIfAnimatedCardIsFlipped(String cardType) {
+        if(cardType.equals("AMEX")){
+            PicoContainerHelper.updateInContainer(StoredElement.errorMessage, "Animated card is flipped for AMEX but shouldn't be");
+            Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), checkIfAnimatedCardIsFlipped());
+        } else {
+            PicoContainerHelper.updateInContainer(StoredElement.errorMessage, "Animated card is not flipped but should be");
+            Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), checkIfAnimatedCardIsFlipped());
+        }
+    }
+
+    public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate, String cvc) {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);

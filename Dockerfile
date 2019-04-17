@@ -1,4 +1,4 @@
-ARG  CODE_VERSION=feature-ST-20-animated-card
+ARG  CODE_VERSION=develop
 FROM securetrading1/js-payments:${CODE_VERSION}
 RUN apk update && apk add openjdk8 make nss
 COPY . /app/js-payments-testing
