@@ -2,10 +2,12 @@ package com.SecureTrading.pageobjects;
 
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
+import static util.helpers.WebElementHandler.isElementDisplayed;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
+import static util.helpers.actions.CustomWaitImpl.*;
 
 import cucumber.api.Scenario;
 import org.junit.Assert;
@@ -25,6 +27,7 @@ public class PaymentPage extends BasePage {
     private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "st-animated-card-iframe";
     private String notificationFrame = "st-notification-frame-iframe";
+    private By cardinalCommerceFrame = By.id("Cardinal-collector");
 
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
@@ -48,6 +51,7 @@ public class PaymentPage extends BasePage {
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
     private By paymentStatusMessage = By.id("st-notification-frame");
+    private By cardinalCommerceAuthModal = By.id("Cardinal-CCA-IFrame");
 
     //paymentMethods
     private By visaCheckoutMockButton = By.id("v-button");
@@ -194,6 +198,15 @@ public class PaymentPage extends BasePage {
         click(SeleniumExecutor.getDriver().findElement(payButton));
     }
 
+    public boolean checkIfCardinalAuthModalIsDisplayed() throws InterruptedException {
+        waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
+        return isElementDisplayed(cardinalCommerceAuthModal);
+    }
+
+    public void waitUntilNetworwTrafficIsCompleted() throws InterruptedException {
+        waitUntilNetworkIsCompleted(cardinalCommerceFrame);
+    }
+
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: " + getCreditCardFieldValidationMessage(fieldType));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedMessage, getCreditCardFieldValidationMessage(fieldType));
@@ -227,6 +240,11 @@ public class PaymentPage extends BasePage {
             PicoContainerHelper.updateInContainer(StoredElement.errorMessage, "Animated card is not flipped but should be");
             Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), checkIfAnimatedCardIsFlipped());
         }
+    }
+
+    public void validateIfCardinalCommerceAuthenticationModalIsDisplayed() throws InterruptedException {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Cardinal commerce authentication modal is not displayed");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), checkIfCardinalAuthModalIsDisplayed());
     }
 
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate, String cvc) {

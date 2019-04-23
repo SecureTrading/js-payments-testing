@@ -43,7 +43,8 @@ public class PaymentPageSteps {
     }
 
     @And("^User clicks Pay button$")
-    public void userClicksPayButton() {
+    public void userClicksPayButton() throws InterruptedException {
+        paymentPage.waitUntilNetworwTrafficIsCompleted();
         paymentPage.clickPayButton();
     }
 
@@ -88,17 +89,20 @@ public class PaymentPageSteps {
     @And("^User clicks Pay button - response set to ([^\"]*)$")
     public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
-            case "success":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSuccess.json");
+            case "0":
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccOK.json");
                 break;
             case "30000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccFieldErrors.json");
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccInvalidField.json");
                 break;
             case "50000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSocketError.json");
+                break;
+            case "60022":
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccUnauthenticated.json");
                 break;
             case "70000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSocketError.json");
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
                 break;
         }
         paymentPage.clickPayButton();
@@ -123,5 +127,10 @@ public class PaymentPageSteps {
     @And("^User will see that notification frame has ([^\"]*) color$")
     public void userWillSeeThatNotificationFrameHasColorColor(String color) {
         paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
+    }
+
+    @Then("^User will see Cardinal Commerce authentication modal$")
+    public void userWillSeeCardinalCommerceAuthenticationModal() throws InterruptedException {
+        paymentPage.validateIfCardinalCommerceAuthenticationModalIsDisplayed();
     }
 }
