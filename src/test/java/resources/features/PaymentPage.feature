@@ -9,16 +9,18 @@ Feature: Credit and debit card payments
   @cardinalCommerce @mockData
   Scenario Outline: Checking payment status for response code: <paymentCode>
     When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
-    And User fills payment form with credit card number "4111110000000211", expiration date "12/22" and cvc "123"
+    And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
     And User clicks Pay button - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage   |
-      | success     | "Successful Payment!"  |
-      | 30000       | "Field error"          |
-      | 50000       | "Decline error"        |
-      | 70000       | "Socket receive error" |
+      | paymentCode | paymentStatusMessage   | color  |
+      | 0           | "OK"                   | green  |
+#      | 30000       | "Invalid field"        | yellow |
+#      | 50000       | "Socket receive error" | red    |
+#      | 60022       | Unauthenticated        | red    |
+#      | 70000       | "Decline"              | red    |
+#      | 99999       | "Unknown error"        | red    |
 
   @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
@@ -94,3 +96,10 @@ Feature: Credit and debit card payments
       | paymentCode | paymentStatusMessage                      | color  |
       | Success     | "Payment has been successfully proceeded" | green  |
       | Error       | "An error occurred"                       | red    |
+
+  @prod @withoutMock
+  Scenario: Check if Cardinal Commerce authentication modal is displayed
+    When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
+    And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
+    And User clicks Pay button
+    Then User will see Cardinal Commerce authentication modal

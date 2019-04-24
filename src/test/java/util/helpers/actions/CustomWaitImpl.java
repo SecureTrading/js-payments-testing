@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.SeleniumExecutor;
 
+import static util.helpers.WebElementHandler.isElementDisplayed;
 import static util.helpers.WebElementHandler.isElementPresent;
 
 public class CustomWaitImpl {
@@ -163,5 +164,21 @@ public class CustomWaitImpl {
         do {
             list = SeleniumExecutor.getDriver().findElements(by);
         } while (list.size() != 0);
+    }
+
+    public static void waitUntilModalIsDisplayed(By by) throws InterruptedException {
+        for(int i=0; i < 5; i++){
+            if(isElementDisplayed(by)){
+                break;
+            } else {
+                Thread.sleep(1000);
+            }
+        }
+    }
+
+    public static void waitUntilNetworkIsCompleted(By by) throws InterruptedException {
+        WebDriverWait wait = SeleniumExecutor.getWaitDriver();
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+        Thread.sleep(2000);
     }
 }

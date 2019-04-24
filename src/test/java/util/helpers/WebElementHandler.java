@@ -1,5 +1,6 @@
 package util.helpers;
 
+import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
 
 import java.util.List;

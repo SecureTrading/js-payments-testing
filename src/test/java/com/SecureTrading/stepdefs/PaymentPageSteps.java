@@ -4,13 +4,10 @@ import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 
 import com.SecureTrading.pageobjects.PaymentPage;
-import cucumber.api.PendingException;
-import cucumber.api.Scenario;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
@@ -44,8 +41,9 @@ public class PaymentPageSteps {
     }
 
     @And("^User clicks Pay button$")
-    public void userClicksPayButton() {
-        paymentPage.clickPayButton();
+    public void userClicksPayButton() throws InterruptedException {
+        paymentPage.waitUntilNetworwTrafficIsCompleted();
+        paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 
     @Then("^User will see card icon connected to card type ([^\"]*)$")
@@ -89,20 +87,23 @@ public class PaymentPageSteps {
     @And("^User clicks Pay button - response set to ([^\"]*)$")
     public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
-            case "success":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSuccess.json");
+            case "0":
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccOK.json");
                 break;
             case "30000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccFieldErrors.json");
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccInvalidField.json");
                 break;
             case "50000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
-                break;
-            case "70000":
                 stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSocketError.json");
                 break;
+            case "60022":
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccUnauthenticated.json");
+                break;
+            case "70000":
+                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
+                break;
         }
-        paymentPage.clickPayButton();
+        paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 
     @When("^User chooses Visa Checkout as payment method - response set to ([^\"]*)$")
@@ -118,7 +119,7 @@ public class PaymentPageSteps {
                 stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
                 break;
         }
-        paymentPage.choosePaymentMethod(PaymentType.visaCheckout);
+        paymentPage.choosePaymentMethodWithMock(PaymentType.visaCheckout);
     }
 
     @When("^User chooses ApplePay as payment method - response set to ([^\"]*)$")
@@ -131,11 +132,16 @@ public class PaymentPageSteps {
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleError.json");
                 break;
         }
-        paymentPage.choosePaymentMethod(PaymentType.applePay);
+        paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
     }
 
     @And("^User will see that notification frame has ([^\"]*) color$")
     public void userWillSeeThatNotificationFrameHasColorColor(String color) {
         paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
+    }
+
+    @Then("^User will see Cardinal Commerce authentication modal$")
+    public void userWillSeeCardinalCommerceAuthenticationModal() throws InterruptedException {
+        paymentPage.validateIfCardinalCommerceAuthenticationModalIsDisplayed();
     }
 }
