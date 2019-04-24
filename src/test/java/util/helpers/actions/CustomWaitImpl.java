@@ -169,7 +169,6 @@ public class CustomWaitImpl {
     public static void waitUntilModalIsDisplayed(By by) throws InterruptedException {
         for(int i=0; i < 5; i++){
             if(isElementDisplayed(by)){
-                Thread.sleep(4000);
                 break;
             } else {
                 Thread.sleep(1000);

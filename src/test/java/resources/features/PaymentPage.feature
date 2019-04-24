@@ -87,7 +87,7 @@ Feature: Credit and debit card payments
       | Error       | "An error occurred"                       | red    |
       | Cancel      | "Payment has been canceled"               | yellow |
 
-  @prod
+  @prod @withoutMock
   Scenario: Check if Cardinal Commerce authentication modal is displayed
     When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
     And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"

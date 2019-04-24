@@ -9,7 +9,6 @@ import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 import static util.helpers.actions.CustomWaitImpl.*;
 
-import cucumber.api.Scenario;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
@@ -27,7 +26,8 @@ public class PaymentPage extends BasePage {
     private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "st-animated-card-iframe";
     private String notificationFrame = "st-notification-frame-iframe";
-    private By cardinalCommerceFrame = By.id("Cardinal-collector");
+    private String cardinalFrame = "Cardinal-CCA-IFrame";
+    private By cardinalCollector = By.id("Cardinal-collector");
 
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
@@ -36,7 +36,7 @@ public class PaymentPage extends BasePage {
     private By cardNumberInputField = By.id("st-card-number-input");
     private By cvcInputField = By.id("st-security-code-input");
     private By expirationDateInputField = By.id("st-expiration-date-input");
-    private By payButton = By.xpath("//button[@type='submit']");
+    private By payMockButton = By.xpath("//button[@type='submit']");
 
     private By creditCardFieldValidationMessage = By.id("st-card-number-message");
     private By cvcFieldValidationMessage = By.id("st-security-code-message");
@@ -51,7 +51,7 @@ public class PaymentPage extends BasePage {
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
     private By paymentStatusMessage = By.id("st-notification-frame");
-    private By cardinalCommerceAuthModal = By.id("Cardinal-CCA-IFrame");
+    private By cardinalCommerceAuthModal = By.id("authWindow");
 
     //paymentMethods
     private By visaCheckoutMockButton = By.id("v-button");
@@ -126,10 +126,13 @@ public class PaymentPage extends BasePage {
         return data;
     }
 
-    public void choosePaymentMethod(PaymentType paymentType) {
+    public void choosePaymentMethodWithMock(PaymentType paymentType) {
         switch (paymentType) {
             case visaCheckout:
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
+                break;
+            case cardinalCommerce:
+                click(SeleniumExecutor.getDriver().findElement(payMockButton));
                 break;
         }
     }
@@ -194,17 +197,14 @@ public class PaymentPage extends BasePage {
         return message;
     }
 
-    public void clickPayButton() {
-        click(SeleniumExecutor.getDriver().findElement(payButton));
-    }
-
     public boolean checkIfCardinalAuthModalIsDisplayed() throws InterruptedException {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
+        switchToIframe(cardinalFrame);
         return isElementDisplayed(cardinalCommerceAuthModal);
     }
 
     public void waitUntilNetworwTrafficIsCompleted() throws InterruptedException {
-        waitUntilNetworkIsCompleted(cardinalCommerceFrame);
+        waitUntilNetworkIsCompleted(cardinalCollector);
     }
 
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
