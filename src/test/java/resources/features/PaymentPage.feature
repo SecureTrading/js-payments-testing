@@ -94,4 +94,3 @@ Feature: Credit and debit card payments
       | paymentCode | paymentStatusMessage                      | color  |
       | Success     | "Payment has been successfully proceeded" | green  |
       | Error       | "An error occurred"                       | red    |
-      | Cancel      | "Payment has been canceled"               | yellow |

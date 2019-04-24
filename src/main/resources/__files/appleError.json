@@ -1,0 +1,9 @@
+{
+  "errorcode": "3000",
+  "errormessage": "Invalid field",
+  "requestid": "J-3bhw30gu",
+  "requesttypedescription": "WALLETVERIFY",
+  "transactionstartedtimestamp": "2019-04-18 12:11:26",
+  "walletsession": "",
+  "walletsource": "APPLEPAY"
+}

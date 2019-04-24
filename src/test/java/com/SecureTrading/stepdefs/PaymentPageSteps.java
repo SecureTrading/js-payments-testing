@@ -122,16 +122,13 @@ public class PaymentPageSteps {
     }
 
     @When("^User chooses ApplePay as payment method - response set to ([^\"]*)$")
-    public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
+    public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) throws InterruptedException {
         switch (paymentCode) {
             case "Success":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "visaSuccess.json");
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
                 break;
             case "Error":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "visaError.json");
-                break;
-            case "Cancel":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "visaCancel.json");
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleError.json");
                 break;
         }
         paymentPage.choosePaymentMethod(PaymentType.applePay);

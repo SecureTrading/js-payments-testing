@@ -51,7 +51,7 @@ public class PaymentPage extends BasePage {
 
     //paymentMethods
     private By visaCheckoutMockButton = By.id("v-button");
-    private By applePay = By.id("");
+    private By applePay = By.id("st-apple-pay-mock");
 
     public String getPaymentStatusMessage() {
         switchToIframe(notificationFrame);
