@@ -11,6 +11,7 @@ import static util.helpers.actions.CustomWaitImpl.*;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
@@ -134,6 +135,7 @@ public class PaymentPage extends BasePage {
                 break;
             case applePay:
                 click(SeleniumExecutor.getDriver().findElement(applePay));
+                break;
             case cardinalCommerce:
                 click(SeleniumExecutor.getDriver().findElement(payMockButton));
                 break;
