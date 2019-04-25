@@ -84,6 +84,28 @@ public class PaymentPageSteps {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.cvc, message);
     }
 
+    @And("^User clicks Pay button - response after authentication set to ([^\"]*)$")
+    public void userClicksPayButtonResponseAfterAuthenticationSetToPaymentCode(String paymentCode) {
+        switch (paymentCode) {
+            case "0":
+                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccOK.json");
+                break;
+            case "30000":
+                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccInvalidField.json");
+                break;
+            case "50000":
+                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccSocketError.json");
+                break;
+            case "60022":
+                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccUnauthenticated.json");
+                break;
+            case "70000":
+                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccDeclineError.json");
+                break;
+        }
+        paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
+    }
+
     @And("^User clicks Pay button - response set to ([^\"]*)$")
     public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {

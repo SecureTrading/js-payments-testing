@@ -6,8 +6,26 @@ Feature: Credit and debit card payments
   Background:
     Given User opens page with payment form
 
+    #ToDo - confirm responseCode amd complete mock json
   @cardinalCommerce @mockData
-  Scenario Outline: Checking payment status for response code: <paymentCode>
+  Scenario Outline: Cardincal Commerce (card enrolled, AUTH) - checking payment status for response code: <paymentCode>
+    When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
+    And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
+    And User clicks Pay button - response after authentication set to <paymentCode>
+    Then User will see information about payment status <paymentStatusMessage>
+    And User will see that notification frame has <color> color
+    Examples:
+      | paymentCode | paymentStatusMessage   | color  |
+      | 0           | "OK"                   | green  |
+      | 30000       | "Invalid field"        | yellow |
+      | 50000       | "Socket receive error" | red    |
+      | 60022       | Unauthenticated        | red    |
+      | 70000       | "Decline"              | red    |
+      | 99999       | "Unknown error"        | red    |
+
+    #ToDo - confirm responseCode amd complete mock json
+  @cardinalCommerce @mockData
+  Scenario Outline: Cardincal Commerce (card not enrolled) - checking payment status for response code: <paymentCode>
     When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
     And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
     And User clicks Pay button - response set to <paymentCode>
@@ -16,16 +34,16 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage   | color  |
       | 0           | "OK"                   | green  |
-#      | 30000       | "Invalid field"        | yellow |
-#      | 50000       | "Socket receive error" | red    |
-#      | 60022       | Unauthenticated        | red    |
-#      | 70000       | "Decline"              | red    |
-#      | 99999       | "Unknown error"        | red    |
+      | 30000       | "Invalid field"        | yellow |
+      | 50000       | "Socket receive error" | red    |
+      | 60022       | Unauthenticated        | red    |
+      | 70000       | "Decline"              | red    |
+      | 99999       | "Unknown error"        | red    |
 
   @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
-    And  User clicks Pay button - response set to 'success'
+    And User clicks Pay button - response after authentication set to '0'
     Then User will see information about payment status "Payment successful!"
     Examples:
       | cardNumber       | expirationDate | cvc  | cardType   |
