@@ -17,9 +17,9 @@ public class BeforeHooks {
     @Before(order=0)
     public void beforeScenarioCheckIosSystemForApplePay(Scenario scenario) {
         if(scenario.getName().contains("ApplePay")){
-            if((System.getProperty("device") == null && !System.getProperty("os").equals("OS X")) ||
-                    (System.getProperty("os") == null && !System.getProperty("device").startsWith("i"))){
-                Assume.assumeTrue("SKIP SCENARIO as iOS system is required for Apple pay test: " + scenario.getName(),false);
+            if((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
+                    (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i"))){
+                Assume.assumeTrue("SKIP SCENARIO as iOS system and Safari is required for Apple pay test: " + scenario.getName(),false);
             }
         }
     }
