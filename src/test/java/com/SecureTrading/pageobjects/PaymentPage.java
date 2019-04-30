@@ -49,7 +49,7 @@ public class PaymentPage extends BasePage {
     private By cvcBackSideAnimatedCard = By.id("st-animated-card-security-code");
     private By cvcFrontSideAnimatedCard = By.id("st-animated-card-security-code-front-field");
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
-    private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
+    private By cardTypeLogoFromAnimatedCard = By.id("st-notification-frame");
 
     private By paymentStatusMessage = By.id("st-notification-frame");
     private By cardinalCommerceAuthModal = By.id("authWindow");
@@ -67,7 +67,7 @@ public class PaymentPage extends BasePage {
 
     public String getColorOfNotificationFrame() {
         switchToIframe(notificationFrame);
-        String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
+        String frameColor = SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard).getCssValue("background-color");
         switchToDefaultIframe();
         return frameColor;
     }
