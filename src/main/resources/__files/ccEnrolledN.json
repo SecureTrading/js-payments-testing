@@ -1,0 +1,26 @@
+{
+      "transactionstartedtimestamp": "2019-04-30 06:29:46",
+      "livestatus": "1",
+      "pareq":
+      "P.a188782bd0ed4bf6b75087d309d440a9d8d2a726d4694cb4cccb4a503df0dfb0819160268729061efe57ca8f4149d8af3204d408909e8589ec950ac36952cca9c8db7f71911a89c702dfc709f2b9c5d4",
+      "settleduedate": "2019-04-30",
+      "errorcode": "0",
+      "tid": "27882200",
+      "merchantnumber": "11223344",
+      "merchantcountryiso2a": "GB",
+      "transactionreference": "42-2-81585",
+      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
+      "paymenttypedescription": "VISA",
+      "acsurl": "https://0eafstag.cardinalcommerce.com/EAFService/jsp/v1/redirect",
+      "accounttypedescription": "ECOM",
+      "requesttypedescription": "THREEDQUERY",
+      "acquirerresponsemessage": "P4FPWiPfcVfH1t9owyV0",
+      "md": "Om1kZkV4NXFobWJadWNIdDVPalFyMUlNeFVETHV2L1k5aWNkbzN2V2o2RDhabz0=",
+      "maskedpan": "411111######1111",
+      "errormessage": "Ok",
+      "issuercountryiso2a": "ZZ",
+      "enrolled": "N",
+      "operatorname": "live2_autojwt",
+      "settlestatus": "0"
+
+}
