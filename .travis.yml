@@ -13,7 +13,7 @@ before_script:
 jobs:
   include:
     - stage: Build
-      name: "Docker build"
+      name: Docker build
       script:
         - docker build . --tag "securetrading1/js-payments-testing"
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
