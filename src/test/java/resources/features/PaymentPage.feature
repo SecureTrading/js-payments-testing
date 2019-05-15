@@ -90,12 +90,12 @@ Feature: Credit and debit card payments
   @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
     When User chooses ApplePay as payment method - response set to <paymentCode>
-    Then User will see information about payment status <paymentStatusMessage>
-    And User will see that notification frame has <color> color
+#    Then User will see information about payment status <paymentStatusMessage>
+#    And User will see that notification frame has <color> color
     Examples:
       | paymentCode | paymentStatusMessage                      | color  |
       | Success     | "Payment has been successfully proceeded" | green  |
-      | Error       | "An error occurred"                       | red    |
+#      | Error       | "An error occurred"                       | red    |
 
   @prod @withoutMock
   Scenario: Check if Cardinal Commerce authentication modal is displayed
