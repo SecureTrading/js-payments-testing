@@ -37,7 +37,7 @@ public class CustomGetTextImpl {
      * @return text
      */
     public static String getText(WebElement e) {
-        waitForJsJq();
+        //waitForJsJq();
         waitForElementDisplayed(e);
         return e.getText();
     }

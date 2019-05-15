@@ -1,4 +1,4 @@
-ARG  CODE_VERSION=feature-ST-116-applepay-endpoint-overridden
+ARG  CODE_VERSION=bugfix-ST-201-mocks-issues
 FROM securetrading1/js-payments:${CODE_VERSION}
 RUN apk update && apk add openjdk8 make nss
 COPY . /app/js-payments-testing

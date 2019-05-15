@@ -26,7 +26,7 @@ public class PaymentPage extends BasePage {
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "st-animated-card-iframe";
-    private String notificationFrame = "st-notification-frame-iframe";
+    private String notificationFrameName = "st-notification-frame-iframe";
     private String cardinalFrame = "Cardinal-CCA-IFrame";
     private By cardinalCollector = By.id("Cardinal-collector");
 
@@ -51,6 +51,8 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-notification-frame");
 
+    private By notificationFrame = By.id("st-notification-frame");
+
     private By paymentStatusMessage = By.id("st-notification-frame");
     private By cardinalCommerceAuthModal = By.id("authWindow");
 
@@ -59,15 +61,15 @@ public class PaymentPage extends BasePage {
     private By applePay = By.id("st-apple-pay-mock");
 
     public String getPaymentStatusMessage() {
-        switchToIframe(notificationFrame);
-        String statusMessage = getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
+        switchToIframe(notificationFrameName);
+        String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
         return statusMessage;
     }
 
     public String getColorOfNotificationFrame() {
-        switchToIframe(notificationFrame);
-        String frameColor = SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard).getCssValue("background-color");
+        switchToIframe(notificationFrameName);
+        String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(notificationFrame), "data-notification-color");
         switchToDefaultIframe();
         return frameColor;
     }

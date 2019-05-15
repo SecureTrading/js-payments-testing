@@ -13,7 +13,7 @@ public class CustomGetAttributeImpl {
      * @return value
      */
     public static String getAttribute(WebElement e, String attribute) {
-        waitForJsJq();
+        //waitForJsJq();
         return e.getAttribute(attribute);
     }
 
