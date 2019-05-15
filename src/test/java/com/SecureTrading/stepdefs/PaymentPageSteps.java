@@ -4,6 +4,7 @@ import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 
 import com.SecureTrading.pageobjects.PaymentPage;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -84,52 +85,60 @@ public class PaymentPageSteps {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.cvc, message);
     }
 
-    @And("^User clicks Pay button - response after authentication set to ([^\"]*)$")
-    public void userClicksPayButtonResponseAfterAuthenticationSetToPaymentCode(String paymentCode) {
-        switch (paymentCode) {
-            case "0":
-                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccOK.json");
+    @And("^THREEDQUERY response set to \"([^\"]*)\"$")
+    public void threedqueryResponseSetTo(String response) {
+        switch (response) {
+            case "entrolled Y":
+                stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledY.json");
+                break;
+            case "not-entrolled N":
+                stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledN.json");
+                break;
+            case "not-entrolled U":
+                stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledU.json");
                 break;
             case "30000":
-                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccInvalidField.json");
+                stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQnvalidField.json");
                 break;
-            case "50000":
-                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccSocketError.json");
-                break;
-            case "60022":
-                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccUnauthenticated.json");
-                break;
-            case "70000":
-                stubPaymentStatus(PropertyType.CC_MOCK_AUTH_URI, "ccDeclineError.json");
+            case "60031":
+                stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQInvalidAcquirer.json");
                 break;
         }
-        paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 
-    @And("^User clicks Pay button - response set to ([^\"]*)$")
-    public void userClicksPayButtonResponseSetToPaymentCode(String paymentCode) {
+    @And("^ACS response set to \"([^\"]*)\"$")
+    public void acsResponseSetTo(String response) {
+        switch (response) {
+            case "OK":
+                stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSoK.json");
+                break;
+        }
+    }
+
+    @And("^User clicks Pay button - AUTH response set to ([^\"]*)$")
+    public void userClicksPayButtonAUTHResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
             case "0":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccOK.json");
+                stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHoK.json");
                 break;
             case "30000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccInvalidField.json");
+                stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHInvalidField.json");
                 break;
             case "50000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccSocketError.json");
+                stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHSocketError.json");
                 break;
             case "60022":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccUnauthenticated.json");
+                stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHUnauthenticated.json");
                 break;
             case "70000":
-                stubPaymentStatus(PropertyType.CC_MOCK_URI, "ccDeclineError.json");
+                stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHDeclineError.json");
                 break;
         }
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 
     @When("^User chooses \"([^\"]*)\" as payment method - response set to ([^\"]*)$")
-    public void userChoosesAsPaymentMethodResponseSetToPaymentCode(String paymentMethod, String paymentCode) {
+    public void userChoosesAsPaymentMethodResponseSetToPaymentCode(String paymentMethod, String paymentCode) throws InterruptedException {
         switch (paymentCode) {
             case "Success":
                 stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");

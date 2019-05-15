@@ -20,29 +20,29 @@ import util.enums.StoredElement;
 
 public class PaymentPage extends BasePage {
 
-    //Credit card form
+    //iFrame locators
     private String cardNumberFrameName = "st-card-number-iframe";
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
     private String animatedCardFrameName = "st-animated-card-iframe";
-    private String notificationFrame = "st-notification-frame-iframe";
+    private String notificationFrameName = "st-notification-frame-iframe";
     private String cardinalFrame = "Cardinal-CCA-IFrame";
     private By cardinalCollector = By.id("Cardinal-collector");
 
+    //input fields locators
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
     private By merchantPhone = By.id("example-form-phone");
-
     private By cardNumberInputField = By.id("st-card-number-input");
     private By cvcInputField = By.id("st-security-code-input");
     private By expirationDateInputField = By.id("st-expiration-date-input");
-    private By payMockButton = By.xpath("//button[@type='submit']");
 
+    //Fields validation messages
     private By creditCardFieldValidationMessage = By.id("st-card-number-message");
     private By cvcFieldValidationMessage = By.id("st-security-code-message");
     private By expirationDateFieldValidationMessage = By.id("st-expiration-date-message");
 
-    //animated credit card
+    //animated card locators
     private By animatedCard = By.id("st-animated-card");
     private By creditCardNumberFromAnimatedCard = By.id("st-animated-card-number");
     private By cvcBackSideAnimatedCard = By.id("st-animated-card-security-code");
@@ -50,22 +50,38 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
-    private By paymentStatusMessage = By.id("st-notification-frame");
+    private By notificationFrame = By.id("st-notification-frame");
     private By cardinalCommerceAuthModal = By.id("authWindow");
 
     //paymentMethods
+    private By payMockButton = By.xpath("//button[@type='submit']");
     private By visaCheckoutMockButton = By.id("v-button");
 
-    public String getPaymentStatusMessage() {
-        switchToIframe(notificationFrame);
-        String statusMessage = getText(SeleniumExecutor.getDriver().findElement(paymentStatusMessage));
+
+    public void switchToFrameByFieldType(CardFieldType fieldType) {
+        switch (fieldType) {
+            case number:
+                switchToIframe(cardNumberFrameName);
+                break;
+            case cvc:
+                switchToIframe(cvcFrameName);
+                break;
+            case expiryDate:
+                switchToIframe(expirationDateFrameName);
+                break;
+        }
+    }
+
+    public String getTextFromNotificationFrame() {
+        switchToIframe(notificationFrameName);
+        String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
         return statusMessage;
     }
 
     public String getColorOfNotificationFrame() {
-        switchToIframe(notificationFrame);
-        String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
+        switchToIframe(notificationFrameName);
+        String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(notificationFrame), "data-notification-color");
         switchToDefaultIframe();
         return frameColor;
     }
@@ -88,20 +104,6 @@ public class PaymentPage extends BasePage {
         }
         switchToDefaultIframe();
         return isFlipped;
-    }
-
-    public void switchToFrameByFieldType(CardFieldType fieldType) {
-        switch (fieldType) {
-            case number:
-                switchToIframe(cardNumberFrameName);
-                break;
-            case cvc:
-                switchToIframe(cvcFrameName);
-                break;
-            case expiryDate:
-                switchToIframe(expirationDateFrameName);
-                break;
-        }
     }
 
     public String getDataFromAnimatedCreditCard(CardFieldType fieldType) {
@@ -213,8 +215,8 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) {
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " payment status message is not correct, should be " + expectedMessage + " but was: " + getPaymentStatusMessage());
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedMessage, getPaymentStatusMessage());
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " payment status message is not correct, should be " + expectedMessage + " but was: " + getTextFromNotificationFrame());
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), expectedMessage, getTextFromNotificationFrame());
     }
 
     public void validateIfCardTypeIconWasAsExpected(String expectedCardIcon) {

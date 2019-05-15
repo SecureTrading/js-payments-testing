@@ -1,0 +1,13 @@
+{
+  "requestreference": "W23-5rd2wbjv",
+  "version": "1.00",
+  "response": [
+    {
+      "errorcode": "60031",
+      "requesttypedescription": "ERROR",
+      "transactionstartedtimestamp": "2019-05-09 07:43:33",
+      "errormessage": "Invalid acquirer for 3-D Secure",
+    }
+  ],
+  "secrand": "Vbxu3x6kUCoQ3"
+}

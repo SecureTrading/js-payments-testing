@@ -1,0 +1,34 @@
+{
+  "requestreference": "W23-mjuwx1f5",
+  "version": "1.00",
+  "response": [
+    {
+      "transactionstartedtimestamp": "2016-12-13 11:00:44",
+      "parenttransactionreference": "1-2-345678",
+      "livestatus": "0",
+      "issuer": "SecureTrading Test Issuer1",
+      "splitfinalnumber": "1",
+      "dccenabled": "0",
+      "settleduedate": "2016-12-13",
+      "errorcode": "60022",
+      "tid": "27882788",
+      "merchantnumber": "00000000",
+      "merchantcountryiso2a": "GB",
+      "status": "N",
+      "transactionreference": "1-2-345679",
+      "merchantname": "Test Merchant",
+      "paymenttypedescription": "VISA",
+      "baseamount": "1050",
+      "accounttypedescription": "ECOM",
+      "requesttypedescription": "AUTH",
+      "currencyiso3a": "GBP",
+      "maskedpan": "411111######0211",
+      "errormessage": "Unauthenticated",
+      "operatorname": "webservices@example.com",
+      "enrolled": "Y",
+      "issuercountryiso2a": "US",
+      "settlestatus": "3"
+    }
+  ],
+  "secrand": "3J"
+}
