@@ -13,14 +13,4 @@ public class BeforeHooks {
         PicoContainerHelper.cleanContainer();
         PicoContainerHelper.updateInContainer(StoredElement.scenarioName, scenario.getName());
     }
-
-    @Before(order=0)
-    public void beforeScenarioCheckIosSystemForApplePay(Scenario scenario) {
-        if(scenario.getName().contains("ApplePay")){
-            if((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
-                    (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i"))){
-                Assume.assumeTrue("SKIP SCENARIO as iOS system and Safari is required for Apple pay test: " + scenario.getName(),false);
-            }
-        }
-    }
 }

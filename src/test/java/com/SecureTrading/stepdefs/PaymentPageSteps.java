@@ -26,7 +26,10 @@ public class PaymentPageSteps {
 
     @Given("^User opens page with payment form$")
     public void userOpensPageWithPaymentForm() {
-        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")){
+            System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else
+            SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
@@ -74,7 +77,10 @@ public class PaymentPageSteps {
 
     @Then("^User will see information about payment status \"([^\"]*)\"$")
     public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
-        paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")){
+            System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else
+            paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields$")
@@ -123,21 +129,28 @@ public class PaymentPageSteps {
     }
 
     @When("^User chooses ApplePay as payment method - response set to ([^\"]*)$")
-    public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) throws InterruptedException {
-        switch (paymentCode) {
-            case "Success":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                break;
-            case "Error":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleError.json");
-                break;
+    public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
+        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")){
+            System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else {
+            switch (paymentCode) {
+                case "Success":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                    break;
+                case "Error":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleError.json");
+                    break;
+            }
+            paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
         }
-        paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
     }
 
     @And("^User will see that notification frame has ([^\"]*) color$")
     public void userWillSeeThatNotificationFrameHasColorColor(String color) {
-        paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
+        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")){
+            System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else
+            paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
     }
 
     @Then("^User will see Cardinal Commerce authentication modal$")
