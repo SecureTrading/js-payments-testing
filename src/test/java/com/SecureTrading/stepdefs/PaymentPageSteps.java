@@ -33,6 +33,7 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+        SeleniumExecutor.getDriver().navigate().refresh();
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
@@ -121,7 +122,13 @@ public class PaymentPageSteps {
 
     @When("^User chooses Visa Checkout as payment method - response set to ([^\"]*)$")
     public void userChoosesVisaCheckoutAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
-        stubSTRequestType("jsinit.json", "JSINIT");
+        // TODO consider moving JSINIT stub to BeforeHook
+        stubSTRequestType("jsinit.json", "JSINIT"); // Stub so Cardinal can init but don't use cardinal
+        // TODO update visaAuthSuccess.json with a real VISACHECKOUT AUTH (currently
+        // using a normal card payment auth)
+        // TODO should be auth but need to change js-payments to
+        // not have step: true
+        stubSTRequestType("visaAuthSuccess.json", "CACHETOKENISE");
         switch (paymentCode) {
         case "Success":
             stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");

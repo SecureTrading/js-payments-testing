@@ -14,7 +14,8 @@
       "requesttypedescription": "JSINIT",
       "currencyiso3a": "GBP",
       "errormessage": "Ok",
-      "operatorname": "live2_autojwt"
+      "operatorname": "live2_autojwt",
+      "threedinit": "somejwt"
     }
   ],
   "secrand": "mc4T0wgPUA0NPr"

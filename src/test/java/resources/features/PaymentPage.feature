@@ -82,10 +82,10 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage                           | color  |
-      | Success     | "Paymentaaaaa has been successfully proceeded" | green  |
-      | Error       | "An error occurred"                            | red    |
-      | Cancel      | "Payment has been canceled"                    | yellow |
+      | paymentCode | paymentStatusMessage                           | color |
+      | Success     | "Paymentaaaaa has been successfully proceeded" | green |
+  #    | Error       | "An error occurred"                            | red    |
+  #    | Cancel      | "Payment has been canceled"                    | yellow |
 
   @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
