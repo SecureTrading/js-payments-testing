@@ -83,7 +83,7 @@ Feature: Credit and debit card payments
     And User will see that notification frame has <color> color
     Examples:
       | paymentCode | paymentStatusMessage                      | color |
-      | Success     | "Payment has been successfully proceeded" | green |
+      | Success     | "Payment has been successfully processed" | green |
   #    | Error       | "An error occurred"                       | red    |
   #    | Cancel      | "Payment has been canceled"               | yellow |
 
@@ -94,7 +94,7 @@ Feature: Credit and debit card payments
     And User will see that notification frame has <color> color
     Examples:
       | paymentCode | paymentStatusMessage                      | color |
-      | Success     | "Payment has been successfully proceeded" | green |
+      | Success     | "Payment has been successfully processed" | green |
   #      | Error       | "An error occurred"                       | red    |
 
   @prod @withoutMock
