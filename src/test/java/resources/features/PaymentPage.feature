@@ -85,7 +85,7 @@ Feature: Credit and debit card payments
       | paymentCode | paymentStatusMessage                      | color  |
       | Success     | "Payment has been successfully processed" | green  |
       | Error       | "An error occurred"                       | red    |
-      | Cancel      | "Payment has been canceled"               | yellow |
+      | Cancel      | "Payment has been cancelled"              | yellow |
 
   @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
