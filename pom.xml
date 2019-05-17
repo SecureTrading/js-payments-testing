@@ -172,7 +172,7 @@
               <monochrome>true</monochrome>
               <!-- The tags to run, maps to CucumberOptions.tags property -->
               <tags>
-                <!-- <tag>@visaTest</tag> -->
+                <tag>@visaTest</tag>
                 <tag>@appleTest</tag>
               </tags>
               <parallelScheme>FEATURE</parallelScheme>
