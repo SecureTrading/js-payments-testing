@@ -33,7 +33,6 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
-        SeleniumExecutor.getDriver().navigate().refresh();
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
