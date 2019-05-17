@@ -95,7 +95,7 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage                      | color |
       | Success     | "Payment has been successfully processed" | green |
-  #      | Error       | "An error occurred"                       | red    |
+      | Error       | "An error occurred"                       | red   |
 
   @prod @withoutMock
   Scenario: Check if Cardinal Commerce authentication modal is displayed
