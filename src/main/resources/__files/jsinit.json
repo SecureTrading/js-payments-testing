@@ -1,0 +1,21 @@
+{
+  "requestreference": "W42-afw1kgbu",
+  "version": "1.00",
+  "response": [
+    {
+      "transactionstartedtimestamp": "2019-04-19 08:08:22",
+      "livestatus": "1",
+      "errorcode": "0",
+      "transactionreference": "42-14-119",
+      "cachetoken": "acachetoken",
+      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
+      "baseamount": "1000",
+      "accounttypedescription": "ECOM",
+      "requesttypedescription": "JSINIT",
+      "currencyiso3a": "GBP",
+      "errormessage": "Ok",
+      "operatorname": "live2_autojwt"
+    }
+  ],
+  "secrand": "mc4T0wgPUA0NPr"
+}

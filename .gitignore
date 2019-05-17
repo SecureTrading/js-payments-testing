@@ -28,3 +28,9 @@ hs_err_pid*
 # Target directory
 /target/*
 /build/*
+
+# VSCode auto generated files
+.classpath
+.factorypath
+.project
+.settings/*
