@@ -144,6 +144,13 @@ public class PaymentPageSteps {
 
     @When("^User chooses ApplePay as payment method - response set to ([^\"]*)$")
     public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
+        // TODO consider moving JSINIT stub to BeforeHook
+        stubSTRequestType("jsinit.json", "JSINIT"); // Stub so Cardinal can init but don't use cardinal
+        // TODO update visaAuthSuccess.json with a real VISACHECKOUT AUTH (currently
+        // using a normal card payment auth)
+        // TODO should be auth but need to change js-payments to
+        // not have step: true
+        stubSTRequestType("appleAuthSuccess.json", "CACHETOKENISE");
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
