@@ -121,13 +121,9 @@ public class PaymentPageSteps {
 
     @When("^User chooses Visa Checkout as payment method - response set to ([^\"]*)$")
     public void userChoosesVisaCheckoutAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
-        // TODO consider moving JSINIT stub to BeforeHook
-        stubSTRequestType("jsinit.json", "JSINIT"); // Stub so Cardinal can init but don't use cardinal
         // TODO update visaAuthSuccess.json with a real VISACHECKOUT AUTH (currently
         // using a normal card payment auth)
-        // TODO should be auth but need to change js-payments to
-        // not have step: true
-        stubSTRequestType("visaAuthSuccess.json", "CACHETOKENISE");
+        stubSTRequestType("visaAuthSuccess.json", "AUTH");
         switch (paymentCode) {
         case "Success":
             stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
@@ -144,8 +140,6 @@ public class PaymentPageSteps {
 
     @When("^User chooses ApplePay as payment method - response set to ([^\"]*)$")
     public void userChoosesApplePayAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
-        // TODO consider moving JSINIT stub to BeforeHook
-        stubSTRequestType("jsinit.json", "JSINIT"); // Stub so Cardinal can init but don't use cardinal
         stubSTRequestType("appleSuccess.json", "WALLETVERIFY"); // Stub so wallet verify works
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
@@ -153,25 +147,20 @@ public class PaymentPageSteps {
             switch (paymentCode) {
             case "Success":
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                // TODO should be auth but need to change js-payments to
-                // not have step: true
-                stubSTRequestType("appleAuthSuccess.json", "CACHETOKENISE");
+                stubSTRequestType("appleAuthSuccess.json", "AUTH");
                 break;
             case "Error":
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
                 // TODO update sttransport to handle this and automatically do the success
                 // message too then applepay/visa become simpler
                 // TODO once this works comment back in in .feature file and add visa equivalent
-                stubSTRequestTypeServerError("CACHETOKENISE");
+                stubSTRequestTypeServerError("AUTH");
                 break;
             case "Decline":
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                // TODO should be auth but need to change js-payments to
-                // not have step: true
-                stubSTRequestType("appleAuthError.json", "CACHETOKENISE");
+                stubSTRequestType("appleAuthError.json", "AUTH");
                 break;
             case "Cancel":
-                // TODO this response is wrong
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
                 break;
             }
