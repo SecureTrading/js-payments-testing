@@ -33,7 +33,7 @@ Feature: Credit and debit card payments
       | 5100000000000511 | 12/22          | 123  | MASTERCARD |
       | 4111110000000211 | 12/22          | 123  | VISA       |
 
-  @passingTests @animatedCard
+  @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
