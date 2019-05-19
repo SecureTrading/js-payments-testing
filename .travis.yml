@@ -16,16 +16,16 @@ addons:
 services:
   - docker
 before_script:
-  - docker pull "securetrading1/js-payments-testing:$DOCKER_BRANCH"
-  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing:$DOCKER_BRANCH"
+  - docker pull "securetrading1/js-payments-testing"
+  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing"
 jobs:
   include:
     - stage: Build
       name: "Docker build"
       script:
-        - docker build . --tag "securetrading1/js-payments-testing:$DOCKER_BRANCH"
+        - docker build . --tag "securetrading1/js-payments-testing"
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push "securetrading1/js-payments-testing:$DOCKER_BRANCH"
+        - docker push "securetrading1/js-payments-testing"
     - stage: Test
     - name: "Behavioural test: chrome 72, Windows 10"
       script:
