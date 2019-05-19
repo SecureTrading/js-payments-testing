@@ -1,4 +1,4 @@
-ARG  CODE_VERSION=bugfix-ST-applepay-mock
+ARG  CODE_VERSION=develop
 FROM securetrading1/js-payments:${CODE_VERSION}
 COPY . /app/js-payments-testing
 WORKDIR /app/js-payments-testing

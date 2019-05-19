@@ -76,7 +76,7 @@ Feature: Credit and debit card payments
     When User clicks Pay button
     Then User will see validation message "TODO" under all fields
 
-  @walletTest @visaTest @mockData
+  @passingTests @walletTest @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
     When User chooses Visa Checkout as payment method - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
@@ -87,7 +87,7 @@ Feature: Credit and debit card payments
       | Error       | "An error occurred"                       | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
 
-  @walletTest @appleTest @mockData
+  @passingTests @walletTest @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
     When User chooses ApplePay as payment method - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
