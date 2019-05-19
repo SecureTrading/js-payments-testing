@@ -3,15 +3,16 @@
   "version": "1.00",
   "response": [
     {
+      "walletsource": "APPLEPAY",
       "transactionstartedtimestamp": "2019-04-19 08:10:02",
-      "livestatus": "1",
+      "livestatus": "0",
       "settleduedate": "2019-04-19",
       "errorcode": "70000",
       "tid": "27882200",
       "merchantnumber": "11223344",
       "merchantcountryiso2a": "GB",
       "transactionreference": "42-2-81391",
-      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
+      "merchantname": "Test merchant",
       "paymenttypedescription": "VISA",
       "baseamount": "1000",
       "accounttypedescription": "ECOM",
