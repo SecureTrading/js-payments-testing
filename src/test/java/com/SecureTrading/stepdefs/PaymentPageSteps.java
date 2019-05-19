@@ -121,8 +121,6 @@ public class PaymentPageSteps {
 
     @When("^User chooses Visa Checkout as payment method - response set to ([^\"]*)$")
     public void userChoosesVisaCheckoutAsPaymentMethodResponseSetToPaymentCode(String paymentCode) {
-        // TODO update visaAuthSuccess.json with a real VISACHECKOUT AUTH (currently
-        // using a normal card payment auth)
         stubSTRequestType("visaAuthSuccess.json", "AUTH");
         switch (paymentCode) {
         case "Success":
