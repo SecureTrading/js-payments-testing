@@ -1,4 +1,8 @@
 language: java
+env:
+  global:
+    - DOCKER_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+    - DOCKER_BRANCH=${DOCKER_BRANCH//[\@\/]/-}
 addons:
   browserstack:
     username:
@@ -12,16 +16,16 @@ addons:
 services:
   - docker
 before_script:
-  - docker pull "securetrading1/js-payments-testing"
-  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing"
+  - docker pull "securetrading1/js-payments-testing:$DOCKER_BRANCH"
+  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing:$DOCKER_BRANCH"
 jobs:
   include:
     - stage: Build
       name: "Docker build"
       script:
-        - docker build . --tag "securetrading1/js-payments-testing"
+        - docker build . --tag "securetrading1/js-payments-testing:$DOCKER_BRANCH"
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push "securetrading1/js-payments-testing"
+        - docker push "securetrading1/js-payments-testing:$DOCKER_BRANCH"
     - stage: Test
     - name: "Behavioural test: chrome 72, Windows 10"
       script:
