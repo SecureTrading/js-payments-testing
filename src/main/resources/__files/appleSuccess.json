@@ -1,9 +1,4 @@
 {
-  "errorcode": "0",
-  "errormessage": "Ok",
-  "requestid": "J-3bhw30gu",
-  "requesttypedescription": "WALLETVERIFY",
-  "transactionstartedtimestamp": "2019-04-18 12:11:26",
-  "walletsession": "{\"epochTimestamp\":1555589486829,\"expiresAt\":1555593086829,\"merchantSessionIdentifier\":\"SSH54A9E73B26674B71A27E44E4BC07E22B_916523AAED1343F5\"}",
-  "walletsource": "APPLEPAY"
+  "payment": "mockapplepaydata",
+  "status": "SUCCESS"
 }

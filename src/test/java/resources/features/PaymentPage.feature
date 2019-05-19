@@ -14,13 +14,13 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage   | color  |
-      | 0           | "OK"                   | green  |
-#      | 30000       | "Invalid field"        | yellow |
-#      | 50000       | "Socket receive error" | red    |
-#      | 60022       | Unauthenticated        | red    |
-#      | 70000       | "Decline"              | red    |
-#      | 99999       | "Unknown error"        | red    |
+      | paymentCode | paymentStatusMessage | color |
+      | 0           | "OK"                 | green |
+  #      | 30000       | "Invalid field"        | yellow |
+  #      | 50000       | "Socket receive error" | red    |
+  #      | 60022       | Unauthenticated        | red    |
+  #      | 70000       | "Decline"              | red    |
+  #      | 99999       | "Unknown error"        | red    |
 
   @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
@@ -51,7 +51,7 @@ Feature: Credit and debit card payments
       | 3089500000000000021 | 12/22          | 123  | PIBA         |
       | 4111110000000211    | 12/22          | 123  | VISA         |
 
-   #ToDo - Confirm validation messages
+  #ToDo - Confirm validation messages
   Scenario Outline: Filling payment form with incomplete data - validation of <fieldType> field
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
     And User clicks Pay button
@@ -76,26 +76,28 @@ Feature: Credit and debit card payments
     When User clicks Pay button
     Then User will see validation message "TODO" under all fields
 
-  @visaTest @mockData
+  @walletTest @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
     When User chooses Visa Checkout as payment method - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
       | paymentCode | paymentStatusMessage                      | color  |
-      | Success     | "Payment has been successfully proceeded" | green  |
+      | Success     | "Payment has been successfully processed" | green  |
       | Error       | "An error occurred"                       | red    |
-      | Cancel      | "Payment has been canceled"               | yellow |
+      | Cancel      | "Payment has been cancelled"              | yellow |
 
-  @appleTest @mockData
+  @walletTest @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
     When User chooses ApplePay as payment method - response set to <paymentCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
       | paymentCode | paymentStatusMessage                      | color  |
-      | Success     | "Payment has been successfully proceeded" | green  |
-#      | Error       | "An error occurred"                       | red    |
+      | Success     | "Payment has been successfully processed" | green  |
+      #    | Error       | "An error occurred"                       | red    |
+      | Decline     | "Decline"                                 | red    |
+      | Cancel      | "Payment has been cancelled"              | yellow |
 
   @prod @withoutMock
   Scenario: Check if Cardinal Commerce authentication modal is displayed
