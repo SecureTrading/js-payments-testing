@@ -18,6 +18,14 @@ public class MocksHandler {
                         .withHeader("Access-Control-Allow-Methods", "GET, POST").withBodyFile(mockJson)));
     }
 
+    public static void stubSTRequestTypeServerError(String requestType) {
+        String gatewayUrl = "/jwt/";// TODO add to property
+        MocksHandler.stubUrlOptionsForCors(gatewayUrl);
+        WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
+        WireMock.stubFor(post(urlEqualTo(gatewayUrl)).withRequestBody(containing(requestType))
+                .willReturn(aResponse().withStatus(500)));
+    }
+
     public static void stubUrlOptionsForCors(String mockUrl) {
         WireMock.configureFor("https", "localhost", Integer.parseInt(getProperty(PropertyType.PORT)));
         WireMock.stubFor(options(urlEqualTo(mockUrl)).willReturn(aResponse().withStatus(200)
