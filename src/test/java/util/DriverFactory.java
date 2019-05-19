@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
@@ -62,6 +63,7 @@ abstract class DriverFactory {
     public static DesiredCapabilities GetRemoteDriverCapabilities() {
 
         DesiredCapabilities caps = new DesiredCapabilities();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // Browser/device configuration
         for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device",
@@ -76,11 +78,22 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.console", "errors");
         caps.setCapability("browserstack.debug", true);
         caps.setCapability("browserstack.networkLogs", true);
+        caps.setCapability("acceptSslCerts", "true");
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
+
+        //This method is for describing apple pay test as skipped if is not running on ios and safari
+        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("ApplePay")){
+            if((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
+                    (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i"))){
+                PicoContainerHelper.cleanContainer();
+                PicoContainerHelper.updateInContainer(StoredElement.scenarioName, "SCENARIO SKIPPED as iOS system and Safari is required for ApplePay test");
+            }
+        }
+
         caps.setCapability("name",
-                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + new Date());
+                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + simpleDateFormat.format(new Date()));
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null
                 && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {

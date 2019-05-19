@@ -1,0 +1,38 @@
+{
+  "requestreference": "W23-tw29qere",
+  "version": "1.00",
+  "response": [
+    {
+      "walletsource": "APPLEPAY",
+      "transactionstartedtimestamp": "2017-11-02 14:24:32",
+      "livestatus": "0",
+      "splitfinalnumber": "1",
+      "dccenabled": "0",
+      "settleduedate": "2017-11-02",
+      "errorcode": "0",
+      "baseamount": "200",
+      "tid": "27882788",
+      "merchantnumber": "00000000",
+      "merchantcountryiso2a": "GB",
+      "transactionreference": "23-9-141",
+      "merchantname": "Test Merchant",
+      "paymenttypedescription": "VISA",
+      "orderreference": "My_Order_123",
+      "eci": "07",
+      "accounttypedescription": "ECOM",
+      "cavv": "AqjLSnAAzVXOwsfABfO0MAACAAA=",
+      "acquirerresponsecode": "00",
+      "requesttypedescription": "AUTH",
+      "securityresponsesecuritycode": "0",
+      "currencyiso3a": "GBP",
+      "authcode": "TEST83",
+      "errormessage": "Ok",
+      "securityresponsepostcode": "0",
+      "maskedpan": "481852######5473",
+      "securityresponseaddress": "0",
+      "operatorname": "webservices@example.com",
+      "settlestatus": "0"
+    }
+  ],
+  "secrand": "T"
+}

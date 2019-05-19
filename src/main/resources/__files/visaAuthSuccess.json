@@ -1,0 +1,40 @@
+{
+  "requestreference": "W23-tw29qere",
+  "version": "1.00",
+  "response": [
+    {
+      "walletsource": "VISACHECKOUT",
+      "walletid": "12345678",
+      "transactionstartedtimestamp": "2018-09-27 14:19:03",
+      "tokenisedpayment": "0",
+      "livestatus": "0",
+      "issuer": "Test Issuer",
+      "splitfinalnumber": "1",
+      "dccenabled": "0",
+      "settleduedate": "2018-09-27",
+      "errorcode": "0",
+      "baseamount": "1099",
+      "tid": "27882788",
+      "merchantnumber": "00000000",
+      "merchantcountryiso2a": "GB",
+      "transactionreference": "1-2-345",
+      "merchantname": "Test Merchant",
+      "paymenttypedescription": "VISA",
+      "orderreference": "MyOrder123",
+      "accounttypedescription": "ECOM",
+      "acquirerresponsecode": "00",
+      "requesttypedescription": "AUTH",
+      "securityresponsesecuritycode": "0",
+      "currencyiso3a": "GBP",
+      "authcode": "TEST24",
+      "errormessage": "Ok",
+      "operatorname": "webservices@example.com",
+      "securityresponsepostcode": "0",
+      "maskedpan": "411111######1111",
+      "securityresponseaddress": "0",
+      "issuercountryiso2a": "US",
+      "settlestatus": "0"
+    }
+  ],
+  "secrand": "T"
+}
