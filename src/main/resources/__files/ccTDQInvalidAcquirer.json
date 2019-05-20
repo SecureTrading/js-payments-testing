@@ -1,27 +1,27 @@
 {
-  "requestreference":"W23-gugcgjay",
-  "version":"1.00",
-  "response":[
+  "requestreference": "W23-gugcgjay",
+  "version": "1.00",
+  "response": [
     {
-      "transactionreference":"23-9-80478",
-      "merchantname":"Test Unittest Site",
-      "paymenttypedescription":"PRINCIPLE",
-      "dccenabled":"0",
-      "settleduedate":"2019-05-10",
-      "maskedpan":"982614######0941",
-      "transactionstartedtimestamp":"2019-05-10 13:44:55",
-      "errormessage":"Invalid acquirer for 3-D Secure",
-      "accounttypedescription":"ECOM",
-      "errorcode":"60031",
-      "issuercountryiso2a":"ZZ",
-      "merchantcountryiso2a":"GB",
-      "tid":"27880000",
-      "requesttypedescription":"THREEDQUERY",
-      "operatorname":"live2_autojwt",
-      "merchantnumber":"00000000",
-      "livestatus":"0",
-      "settlestatus":"0"
+      "transactionreference": "23-9-80478",
+      "merchantname": "Test Unittest Site",
+      "paymenttypedescription": "PRINCIPLE",
+      "dccenabled": "0",
+      "settleduedate": "2019-05-10",
+      "maskedpan": "982614######0941",
+      "transactionstartedtimestamp": "2019-05-10 13:44:55",
+      "errormessage": "Invalid acquirer for 3-D Secure",
+      "accounttypedescription": "ECOM",
+      "errorcode": "60031",
+      "issuercountryiso2a": "ZZ",
+      "merchantcountryiso2a": "GB",
+      "tid": "27880000",
+      "requesttypedescription": "THREEDQUERY",
+      "operatorname": "live2_autojwt",
+      "merchantnumber": "00000000",
+      "livestatus": "0",
+      "settlestatus": "0"
     }
   ],
-  "secrand":"YkdjAzLLot5Fh6"
+  "secrand": "YkdjAzLLot5Fh6"
 }
