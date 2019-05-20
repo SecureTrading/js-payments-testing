@@ -124,6 +124,17 @@ public class PaymentPageSteps {
         case "OK":
             stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSoK.json");
             break;
+        case "NOACTION":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSnoaction.json");
+            stubSTRequestType("ccAUTHoK.json", "AUTH");
+            break;
+        case "FAILURE":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSfailure.json");
+            stubSTRequestType("ccAUTHMerchantDeclineError.json", "AUTH");
+            break;
+        case "ERROR":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSerror.json");
+            break;
         }
     }
 

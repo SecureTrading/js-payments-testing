@@ -61,18 +61,19 @@ Feature: Credit and debit card payments
       | 30000       | "Invalid field"                   | red   |
       | 60031       | "Invalid acquirer for 3-D Secure" | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "<paymentCode>"
+    And ACS response set to "<actionCode>"
     And User clicks Pay button
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      |             |                      | red   |
-      |             |                      | red   |
+      | actionCode | paymentStatusMessage                      | color |
+      | NOACTION   | "Payment has been successfully processed" | green |
+      | FAILURE    | "Merchant decline"                        | red   |
+      | ERROR      | "An error occurred"                       | red   |
 
   @passingTests @testEnv @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
@@ -154,10 +155,3 @@ Feature: Credit and debit card payments
       #    | Error       | "An error occurred"                       | red    |
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
-
-  @prod @withoutMock
-  Scenario: Check if Cardinal Commerce authentication modal is displayed
-    When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
-    And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
-    And User clicks Pay button
-    Then User will see Cardinal Commerce authentication modal

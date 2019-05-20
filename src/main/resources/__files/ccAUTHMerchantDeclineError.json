@@ -1,0 +1,33 @@
+{
+  "requestreference": "W42-c7k03r0e",
+  "version": "1.00",
+  "response": [
+    {
+      "transactionstartedtimestamp": "2019-04-19 08:10:02",
+      "livestatus": "1",
+      "settleduedate": "2019-04-19",
+      "errorcode": "70001",
+      "tid": "27882200",
+      "merchantnumber": "11223344",
+      "merchantcountryiso2a": "GB",
+      "transactionreference": "42-2-81391",
+      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
+      "paymenttypedescription": "VISA",
+      "baseamount": "1000",
+      "accounttypedescription": "ECOM",
+      "acquirerresponsecode": "05",
+      "requesttypedescription": "AUTH",
+      "securityresponsesecuritycode": "1",
+      "currencyiso3a": "GBP",
+      "authcode": "46-DECLINED",
+      "errormessage": "Merchant decline",
+      "operatorname": "live2_autojwt",
+      "securityresponsepostcode": "0",
+      "maskedpan": "400000######0002",
+      "securityresponseaddress": "0",
+      "issuercountryiso2a": "ZZ",
+      "settlestatus": "3"
+    }
+  ],
+  "secrand": "oYOkqDCfvM"
+}
