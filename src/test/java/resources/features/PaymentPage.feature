@@ -74,18 +74,17 @@ Feature: Credit and debit card payments
       |             |                      | red   |
       |             |                      | red   |
 
-  @testEnv @mockData
+  @passingTests @testEnv @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     And THREEDQUERY response set to "not-entrolled N"
     And User clicks Pay button - AUTH response set to <paymentCode>
-    And User clicks Pay button
-    Then User will see information about payment status "Payment successful!"
+    Then User will see information about payment status "Payment has been successfully processed"
     Examples:
-      | cardNumber       | expirationDate | cvc  | cardType   |
-      | 340000000000611  | 12/22          | 1234 | AMEX       |
-      | 5100000000000511 | 12/22          | 123  | MASTERCARD |
-      | 4111110000000211 | 12/22          | 123  | VISA       |
+      | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
+      | 0           | 340000000000611  | 12/22          | 1234 | AMEX       |
+      | 0           | 5100000000000511 | 12/22          | 123  | MASTERCARD |
+      | 0           | 4111110000000211 | 12/22          | 123  | VISA       |
 
   @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
