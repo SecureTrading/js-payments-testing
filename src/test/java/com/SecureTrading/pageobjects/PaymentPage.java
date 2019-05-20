@@ -11,7 +11,7 @@ import static util.helpers.actions.CustomWaitImpl.*;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.JavascriptExecutor;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
@@ -144,7 +144,6 @@ public class PaymentPage extends BasePage {
             click(SeleniumExecutor.getDriver().findElement(payMockButton));
             break;
         }
-
     }
 
     public void fillAllCardData(String cardNumber, String expiryDate, String cvc) {
