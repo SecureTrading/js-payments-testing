@@ -146,6 +146,9 @@ public class PaymentPageSteps {
         case "70000":
             stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
             break;
+        case "99999":
+            stubSTRequestType("ccAUTHUnknownError.json", "AUTH");
+            break;
         }
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }

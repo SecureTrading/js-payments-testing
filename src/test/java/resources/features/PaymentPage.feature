@@ -12,17 +12,18 @@ Feature: Credit and debit card payments
     And THREEDQUERY response set to "entrolled Y"
     And ACS response set to "OK"
     And User clicks Pay button - AUTH response set to <paymentCode>
+    Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage   | color |
-      | 0           | "OK"                   | green |
-      | 30000       | "Invalid field"        | red   |
-      | 50000       | "Socket receive error" | red   |
-      | 60022       | "Unauthenticated"      | red   |
-      | 70000       | "Decline"              | red   |
-      | 99999       | "Unknown error"        | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 30000       | "Invalid field"                           | red   |
+      | 50000       | "Socket receive error"                    | red   |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
+      | 99999       | "Unknown error"                           | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled N"
@@ -30,10 +31,10 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 0           | "OK"                 | green |
-      | 60022       | Unauthenticated      | red   |
-      | 70000       | "Decline"            | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
 
   @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
@@ -45,7 +46,7 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage | color |
       | 0           | "OK"                 | green |
-      | 60022       | Unauthenticated      | red   |
+      | 60022       | "Unauthenticated"    | red   |
       | 70000       | "Decline"            | red   |
 
   @testEnv @cardinalCommerce @mockData
