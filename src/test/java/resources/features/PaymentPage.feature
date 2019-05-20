@@ -36,7 +36,7 @@ Feature: Credit and debit card payments
       | 60022       | "Unauthenticated"                         | red   |
       | 70000       | "Decline"                                 | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled U"
@@ -44,10 +44,10 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 0           | "OK"                 | green |
-      | 60022       | "Unauthenticated"    | red   |
-      | 70000       | "Decline"            | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
 
   @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce - check THREEDQUERY response for code: <paymentCode>
