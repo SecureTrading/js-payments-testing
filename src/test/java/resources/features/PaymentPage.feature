@@ -6,7 +6,7 @@ Feature: Credit and debit card payments
   Background:
     Given User opens page with payment form
 
-  @testEnv @cardinalCommerce @mockData
+  @current @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
@@ -16,11 +16,11 @@ Feature: Credit and debit card payments
     Examples:
       | paymentCode | paymentStatusMessage   | color |
       | 0           | "OK"                   | green |
-      | 30000       | "Invalid field"        | red   |
-      | 50000       | "Socket receive error" | red   |
-      | 60022       | Unauthenticated        | red   |
-      | 70000       | "Decline"              | red   |
-      | 99999       | "Unknown error"        | red   |
+  #    | 30000       | "Invalid field"        | red   |
+  #    | 50000       | "Socket receive error" | red   |
+  #    | 60022       | Unauthenticated        | red   |
+  #    | 70000       | "Decline"              | red   |
+  #    | 99999       | "Unknown error"        | red   |
 
   @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code

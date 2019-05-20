@@ -102,19 +102,19 @@ public class PaymentPageSteps {
     public void threedqueryResponseSetTo(String response) {
         switch (response) {
         case "entrolled Y":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledY.json");
+            stubSTRequestType("ccTDQEnrolledY.json", "THREEDQUERY");
             break;
         case "not-entrolled N":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledN.json");
+            stubSTRequestType("ccTDQEnrolledN.json", "THREEDQUERY");
             break;
         case "not-entrolled U":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledU.json");
+            stubSTRequestType("ccTDQEnrolledU.json", "THREEDQUERY");
             break;
         case "30000":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQnvalidField.json");
+            stubSTRequestType("ccTDQnvalidField.json", "THREEDQUERY");
             break;
         case "60031":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQInvalidAcquirer.json");
+            stubSTRequestType("ccTDQInvalidAcquirer.json", "THREEDQUERY");
             break;
         }
     }
@@ -132,19 +132,19 @@ public class PaymentPageSteps {
     public void userClicksPayButtonAUTHResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
         case "0":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHoK.json");
+            stubSTRequestType("ccAUTHoK.json", "AUTH");
             break;
         case "30000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHInvalidField.json");
+            stubSTRequestType("ccAUTHInvalidField.json", "AUTH");
             break;
         case "50000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHSocketError.json");
+            stubSTRequestType("ccAUTHSocketError.json", "AUTH");
             break;
         case "60022":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHUnauthenticated.json");
+            stubSTRequestType("ccAUTHUnauthenticated.json", "AUTH");
             break;
         case "70000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHDeclineError.json");
+            stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
             break;
         }
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
