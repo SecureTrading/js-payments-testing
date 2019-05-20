@@ -15,6 +15,7 @@ import static util.helpers.WebElementHandler.isElementPresent;
 public class CustomWaitImpl {
     /**
      * Wait for jQuery and Javascript to load
+     * 
      * @return true if finished
      */
     public static boolean waitForJsJq() {
@@ -36,8 +37,8 @@ public class CustomWaitImpl {
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                return ((JavascriptExecutor) webDriver).executeScript("return document.readyState")
-                        .toString().equals("complete");
+                return ((JavascriptExecutor) webDriver).executeScript("return document.readyState").toString()
+                        .equals("complete");
             }
         };
 
@@ -46,6 +47,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element to be displayed
+     * 
      * @param e WebElement
      */
     public static void waitForElementDisplayed(WebElement e) {
@@ -59,6 +61,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element to be enabled
+     * 
      * @param e WebElement
      */
     public static void waitForElementEnabled(WebElement e) {
@@ -68,6 +71,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element to be clickable
+     * 
      * @param e WebElement
      */
     public static void waitForElementClickable(WebElement e) {
@@ -77,6 +81,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element to disappear
+     * 
      * @param e WebElement
      */
     public static void waitForElementNotDisplayed(WebElement e) {
@@ -87,6 +92,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element located by to disappear
+     * 
      * @param by locator
      */
     public static void waitForElementNotDisplayed(By by) {
@@ -102,7 +108,8 @@ public class CustomWaitImpl {
 
     /**
      * Wait for element not to contain text
-     * @param e WebElement
+     * 
+     * @param e    WebElement
      * @param text string to look for
      */
     public static void waitForElementTextNotContains(WebElement e, String text) {
@@ -112,6 +119,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for page title to contain title
+     * 
      * @param title string to look for
      */
     public static void waitForPageTitleContains(String title) {
@@ -123,6 +131,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for list of elements to be displayed
+     * 
      * @param list list of WebElements
      */
     public static void waitForElementsDisplayed(List<WebElement> list) {
@@ -132,6 +141,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for list of elements to disappear
+     * 
      * @param list list of WebElements
      */
     public static void waitForElementsNotDisplayed(List<WebElement> list) {
@@ -144,7 +154,8 @@ public class CustomWaitImpl {
      */
     public static void waitForAnyNotParentWindow() {
         WebDriverWait waitDriver = SeleniumExecutor.getWaitDriver();
-        waitDriver.until((Function<? super WebDriver, Boolean>) e -> SeleniumExecutor.getDriver().getWindowHandles().size() > 1);
+        waitDriver.until(
+                (Function<? super WebDriver, Boolean>) e -> SeleniumExecutor.getDriver().getWindowHandles().size() > 1);
     }
 
     /**
@@ -156,6 +167,7 @@ public class CustomWaitImpl {
 
     /**
      * Wait for spinner/progress bar to disappear
+     * 
      * @param by locator
      */
     public static void waitUntilSpinnerNotDisplayed(By by) {
@@ -167,18 +179,12 @@ public class CustomWaitImpl {
     }
 
     public static void waitUntilModalIsDisplayed(By by) throws InterruptedException {
-        for(int i=0; i < 5; i++){
-            if(isElementDisplayed(by)){
+        for (int i = 0; i < 5; i++) {
+            if (isElementDisplayed(by)) {
                 break;
             } else {
                 Thread.sleep(1000);
             }
         }
-    }
-
-    public static void waitUntilNetworkIsCompleted(By by) throws InterruptedException {
-        WebDriverWait wait = SeleniumExecutor.getWaitDriver();
-        wait.until(ExpectedConditions.presenceOfElementLocated(by));
-        Thread.sleep(2000);
     }
 }

@@ -51,7 +51,6 @@ public class PaymentPageSteps {
 
     @And("^User clicks Pay button$")
     public void userClicksPayButton() throws InterruptedException {
-        paymentPage.waitUntilNetworwTrafficIsCompleted();
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 

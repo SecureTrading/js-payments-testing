@@ -49,7 +49,7 @@ Feature: Credit and debit card payments
       | 60022       | "Unauthenticated"                         | red   |
       | 70000       | "Decline"                                 | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce - check THREEDQUERY response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "<paymentCode>"
