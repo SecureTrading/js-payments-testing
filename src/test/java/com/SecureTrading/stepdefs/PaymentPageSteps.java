@@ -3,6 +3,7 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static util.models.JsonHandler.getTranslationFromJson;
 
 import cucumber.api.PendingException;
 import com.SecureTrading.pageobjects.PaymentPage;
@@ -19,6 +20,8 @@ import util.enums.CardFieldType;
 import util.enums.PaymentType;
 import util.enums.PropertyType;
 import util.enums.StoredElement;
+
+import java.io.IOException;
 
 public class PaymentPageSteps {
 
@@ -209,5 +212,20 @@ public class PaymentPageSteps {
     @Then("^User will see Cardinal Commerce authentication modal$")
     public void userWillSeeCardinalCommerceAuthenticationModal() throws InterruptedException {
         paymentPage.validateIfCardinalCommerceAuthenticationModalIsDisplayed();
+    }
+
+    @When("^User changes page language to ([^\"]*)$")
+    public void userChangesPageLanguageToLanguage(String language) {
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+    }
+
+    @Then("^User will see all labels displayed on page translated into ([^\"]*)$")
+    public void userWillSeeAllLabelsDisplayedOnPageTranslatedIntoLanguage(String language) throws IOException {
+        paymentPage.validateIfLabelsTranslationWasAsExpected(language);
+    }
+
+    @Then("^User will see information about \"([^\"]*)\" payment status translated into ([^\"]*)$")
+    public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language) throws Throwable {
+        paymentPage.validateIfPaymentStatusTranslationWasAsExpected(paymentStatus, language);
     }
 }

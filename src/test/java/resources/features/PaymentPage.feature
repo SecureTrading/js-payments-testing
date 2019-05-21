@@ -161,3 +161,94 @@ Feature: Credit and debit card payments
     And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
     And User clicks Pay button
     Then User will see Cardinal Commerce authentication modal
+
+  @translations
+  Scenario Outline: Checking labels translations for <language>
+    When User changes page language to <language>
+    Then User will see all labels displayed on page translated into <language>
+    Examples:
+      | language |
+      | en_GB    |
+      | fr-FR    |
+      | de-DE    |
+#      | en-US    |
+#      | cy-GB    |
+#      | da-DK    |
+#      | es-ES    |
+#      | nl-NL    |
+#      | no-NO    |
+#      | sv-SE    |
+
+  #ToDo - Waiting for STJS-26
+#  @translations
+#  Scenario Outline: Checking fields error translatios for <language>
+#    When User changes merchant language to <language>
+#    And User clicks Pay button
+#    Then User will see validation message under all fields translated into <language>
+#    Examples:
+#      | language |
+#      | en_GB    |
+#      | fr-FR    |
+#      | de-DE    |
+#      | en-US    |
+#      | cy-GB    |
+#      | da-DK    |
+#      | es-ES    |
+#      | nl-NL    |
+#      | no-NO    |
+#      | sv-SE    |
+
+  @testEnv @translations
+  Scenario Outline: Visa Checkout - checking translation for "Success" payment status for <language>
+    When User changes page language to <language>
+    And User chooses "visaCheckout" as payment method - response set to "Success"
+    Then User will see information about "Success" payment status translated into <language>
+    Examples:
+      | language |
+      | en_GB    |
+      | fr-FR    |
+      | de-DE    |
+#      | en-US    |
+#      | cy-GB    |
+#      | da-DK    |
+#      | es-ES    |
+#      | nl-NL    |
+#      | no-NO    |
+#      | sv-SE    |
+
+  @testEnv @translations
+  Scenario Outline: Visa Checkout - checking translations for "Error" status for <language>
+    When User changes page language to <language>
+    And User chooses "visaCheckout" as payment method - response set to "Success"
+    Then User will see information about "Error" payment status translated into <language>
+    Examples:
+      | language |
+      | en_GB    |
+      | fr-FR    |
+      | de-DE    |
+#      | en-US    |
+#      | cy-GB    |
+#      | da-DK    |
+#      | es-ES    |
+#      | nl-NL    |
+#      | no-NO    |
+#      | sv-SE    |
+
+  @testEnv @translations
+  Scenario Outline: Visa Checkout - checking translations for "Cancel" status for <language>
+    When User changes page language to <language>
+    And User chooses "visaCheckout" as payment method - response set to "Success"
+    Then User will see information about "Cancel" payment status translated into <language>
+    Examples:
+      | language |
+      | en_GB    |
+      | fr-FR    |
+      | de-DE    |
+#      | en-US    |
+#      | cy-GB    |
+#      | da-DK    |
+#      | es-ES    |
+#      | nl-NL    |
+#      | no-NO    |
+#      | sv-SE    |
+

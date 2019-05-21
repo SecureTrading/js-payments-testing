@@ -3,7 +3,10 @@ package util.enums;
 public enum CardFieldType {
     number("number"),
     cvc("cvc"),
-    expiryDate("expiryDate");
+    expiryDate("expiryDate"),
+    animatedCard("animatedCard"),
+    notificationFrame("notificationFrame");
+
 
     private String text;
 

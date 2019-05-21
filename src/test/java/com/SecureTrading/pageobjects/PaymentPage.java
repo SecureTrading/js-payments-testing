@@ -8,6 +8,7 @@ import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 import static util.helpers.actions.CustomWaitImpl.*;
+import static util.models.JsonHandler.getTranslationFromJson;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -18,6 +19,8 @@ import util.enums.CardFieldType;
 import util.enums.MerchantFieldType;
 import util.enums.PaymentType;
 import util.enums.StoredElement;
+
+import java.io.IOException;
 
 public class PaymentPage extends BasePage {
 
@@ -60,6 +63,18 @@ public class PaymentPage extends BasePage {
     private By payMockButton = By.xpath("//button[@type='submit']");
     private By visaCheckoutMockButton = By.id("v-button");
     private By applePay = By.id("st-apple-pay");
+
+    // Labels
+    private By cardNumberLabel = By.xpath("//label[@for='st-card-number-input']");
+    private By expirationDateLabel = By.xpath("//label[@for='st-expiration-date-input']");
+    private By securityCodeLabel = By.xpath("//label[@for='st-security-code-input']");
+    private By merchantNameLabel = By.xpath("//label[@for='example-form-name']");
+    private By merchantEmailLabel = By.xpath("//label[@for='example-form-email']");
+    private By merchantPhoneLabel = By.xpath("//label[@for='example-form-phone']");
+    private By payButtonLabel = By.xpath("//button[@type='submit']");
+    private By animatedCardNumberLabel = By.xpath("//div[@class='st-animated-card__pan']/label");
+    private By animatedExpirationDateLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
+
 
     public String getPaymentStatusMessage() { // TODO was called public String getTextFromNotificationFrame() {
         switchToIframe(notificationFrameName);
@@ -105,6 +120,12 @@ public class PaymentPage extends BasePage {
             switchToIframe(cvcFrameName);
             break;
         case expiryDate:
+            switchToIframe(expirationDateFrameName);
+            break;
+        case animatedCard:
+            switchToIframe(expirationDateFrameName);
+            break;
+        case notificationFrame:
             switchToIframe(expirationDateFrameName);
             break;
         }
@@ -216,6 +237,16 @@ public class PaymentPage extends BasePage {
         waitUntilNetworkIsCompleted(cardinalCollector);
     }
 
+    public String getElementTranslation(CardFieldType fieldType, By element) {
+        if(fieldType != null)
+            switchToFrameByFieldType(fieldType);
+
+        String translation = getText(SeleniumExecutor.getDriver().findElement(element));
+        switchToDefaultIframe();
+        return translation;
+    }
+
+
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: "
@@ -281,5 +312,37 @@ public class PaymentPage extends BasePage {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+    }
+
+    public void validateIfElelemtTranslationWasAsExpected(String translation, CardFieldType fieldType, By element) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Translation is not correct, should be " + translation + " but was: " + getElementTranslation(fieldType, element));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), translation, getElementTranslation(fieldType, element));
+    }
+
+    //ToDo - Complete translations key for: PayButton, name, email, phone
+    public void validateIfLabelsTranslationWasAsExpected(String translation) throws IOException {
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation), CardFieldType.number, cardNumberLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation), CardFieldType.expiryDate, expirationDateLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation), CardFieldType.cvc, securityCodeLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation), null, merchantNameLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation), null, merchantEmailLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation), null, merchantPhoneLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation), null, payButtonLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(), CardFieldType.animatedCard, animatedCardNumberLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(), CardFieldType.animatedCard, animatedExpirationDateLabel);
+    }
+
+    public void validateIfPaymentStatusTranslationWasAsExpected(String paymentStatus, String translation) throws IOException {
+        switch (paymentStatus) {
+            case "Success":
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Payment has been successfully processed", translation), CardFieldType.notificationFrame, notificationFrame);
+                break;
+            case "Error":
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("An error occurred", translation), CardFieldType.notificationFrame, notificationFrame);
+                break;
+            case "Cancel":
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Payment has been cancelled", translation), CardFieldType.notificationFrame, notificationFrame);
+                break;
+        }
     }
 }
