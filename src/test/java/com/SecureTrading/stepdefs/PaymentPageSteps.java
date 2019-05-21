@@ -3,6 +3,8 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
+import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
 import cucumber.api.PendingException;
 import com.SecureTrading.pageobjects.PaymentPage;
@@ -39,8 +41,6 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) {
-        ((JavascriptExecutor) SeleniumExecutor.getDriver())
-                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
@@ -87,8 +87,11 @@ public class PaymentPageSteps {
     public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else
+        } else {
+            scrollToTopOfPage();
             paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+        }
+
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields$")
@@ -164,6 +167,7 @@ public class PaymentPageSteps {
             stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
             break;
         }
+        scrollToBottomOfPage();
         paymentPage.choosePaymentMethodWithMock(PaymentType.visaCheckout);
     }
 
@@ -193,6 +197,7 @@ public class PaymentPageSteps {
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
                 break;
             }
+            scrollToBottomOfPage();
             paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
         }
 
