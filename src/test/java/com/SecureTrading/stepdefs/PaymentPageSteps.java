@@ -4,8 +4,8 @@ import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static util.models.JsonHandler.getTranslationFromJson;
-
-import cucumber.api.PendingException;
+import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
+import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 import com.SecureTrading.pageobjects.PaymentPage;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
@@ -42,8 +42,6 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) {
-        ((JavascriptExecutor) SeleniumExecutor.getDriver())
-                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
@@ -54,7 +52,6 @@ public class PaymentPageSteps {
 
     @And("^User clicks Pay button$")
     public void userClicksPayButton() throws InterruptedException {
-        paymentPage.waitUntilNetworwTrafficIsCompleted();
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
 
@@ -90,8 +87,11 @@ public class PaymentPageSteps {
     public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else
+        } else {
+            scrollToTopOfPage();
             paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
+        }
+
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields$")
@@ -105,19 +105,19 @@ public class PaymentPageSteps {
     public void threedqueryResponseSetTo(String response) {
         switch (response) {
         case "entrolled Y":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledY.json");
+            stubSTRequestType("ccTDQEnrolledY.json", "THREEDQUERY");
             break;
         case "not-entrolled N":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledN.json");
+            stubSTRequestType("ccTDQEnrolledN.json", "THREEDQUERY");
             break;
         case "not-entrolled U":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQEnrolledU.json");
+            stubSTRequestType("ccTDQEnrolledU.json", "THREEDQUERY");
             break;
         case "30000":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQnvalidField.json");
+            stubSTRequestType("ccTDQnvalidField.json", "THREEDQUERY");
             break;
         case "60031":
-            stubPaymentStatus(PropertyType.CC_MOCK_THREEDQUERY_URI, "ccTDQInvalidAcquirer.json");
+            stubSTRequestType("ccTDQInvalidAcquirer.json", "THREEDQUERY");
             break;
         }
     }
@@ -128,6 +128,17 @@ public class PaymentPageSteps {
         case "OK":
             stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSoK.json");
             break;
+        case "NOACTION":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSnoaction.json");
+            stubSTRequestType("ccAUTHoK.json", "AUTH");
+            break;
+        case "FAILURE":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSfailure.json");
+            stubSTRequestType("ccAUTHMerchantDeclineError.json", "AUTH");
+            break;
+        case "ERROR":
+            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSerror.json");
+            break;
         }
     }
 
@@ -135,19 +146,22 @@ public class PaymentPageSteps {
     public void userClicksPayButtonAUTHResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
         case "0":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHoK.json");
+            stubSTRequestType("ccAUTHoK.json", "AUTH");
             break;
         case "30000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHInvalidField.json");
+            stubSTRequestType("ccAUTHInvalidField.json", "AUTH");
             break;
         case "50000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHSocketError.json");
+            stubSTRequestType("ccAUTHSocketError.json", "AUTH");
             break;
         case "60022":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHUnauthenticated.json");
+            stubSTRequestType("ccAUTHUnauthenticated.json", "AUTH");
             break;
         case "70000":
-            stubPaymentStatus(PropertyType.CC_AUTH_URI, "ccAUTHDeclineError.json");
+            stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
+            break;
+        case "99999":
+            stubSTRequestType("ccAUTHUnknownError.json", "AUTH");
             break;
         }
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
@@ -167,6 +181,7 @@ public class PaymentPageSteps {
             stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
             break;
         }
+        scrollToBottomOfPage();
         paymentPage.choosePaymentMethodWithMock(PaymentType.visaCheckout);
     }
 
@@ -196,6 +211,7 @@ public class PaymentPageSteps {
                 stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
                 break;
             }
+            scrollToBottomOfPage();
             paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
         }
 
