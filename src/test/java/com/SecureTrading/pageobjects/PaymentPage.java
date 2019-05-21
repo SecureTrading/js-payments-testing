@@ -12,7 +12,6 @@ import static util.helpers.actions.CustomWaitImpl.*;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-
 import org.openqa.selenium.JavascriptExecutor;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
@@ -299,7 +298,7 @@ public class PaymentPage extends BasePage {
                     "Animated card is not flipped but should be");
             Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                     checkIfAnimatedCardIsFlipped());
-        }
+        }feature/STJS-91-debit-credit-card-payments
     }
 
     public void validateIfCardinalCommerceAuthenticationModalIsDisplayed() throws InterruptedException {
