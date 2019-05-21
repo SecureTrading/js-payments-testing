@@ -1,4 +1,4 @@
-ARG CODE_VERSION=feature-STJS-100-cc-automated-tests
+ARG CODE_VERSION=develop
 FROM securetrading1/js-payments:${CODE_VERSION}
 COPY . /app/js-payments-testing
 WORKDIR /app/js-payments-testing
