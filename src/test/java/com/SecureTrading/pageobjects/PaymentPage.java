@@ -6,12 +6,14 @@ import static util.helpers.WebElementHandler.isElementDisplayed;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
+import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 import static util.helpers.actions.CustomWaitImpl.*;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import org.openqa.selenium.JavascriptExecutor;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.CardFieldType;
@@ -144,19 +146,33 @@ public class PaymentPage extends BasePage {
             click(SeleniumExecutor.getDriver().findElement(payMockButton));
             break;
         }
+    }
 
+    public void enterTextByJavaScript(By inputLocator, String value) {
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').value='" +value+ "'");
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').dispatchEvent(new Event('input'))");
     }
 
     public void fillAllCardData(String cardNumber, String expiryDate, String cvc) {
-        fillCreditCardInputField(CardFieldType.number, cardNumber);
-        fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
-        fillCreditCardInputField(CardFieldType.cvc, cvc);
+        if(System.getProperty("device") != null && System.getProperty("device").startsWith("i")){
+            fillCreditCardInputFieldByJavaScript(CardFieldType.number, cardNumber);
+            fillCreditCardInputFieldByJavaScript(CardFieldType.expiryDate, expiryDate);
+            scrollToBottomOfPage();
+            fillCreditCardInputFieldByJavaScript(CardFieldType.cvc, cvc);
+        } else {
+            fillCreditCardInputField(CardFieldType.number, cardNumber);
+            fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
+            scrollToBottomOfPage();
+            fillCreditCardInputField(CardFieldType.cvc, cvc);
+        }
     }
 
     public void fillAllMerchantData(String name, String email, String phone) {
-        fillMerchantInputField(MerchantFieldType.name, name);
-        fillMerchantInputField(MerchantFieldType.email, email);
-        fillMerchantInputField(MerchantFieldType.phone, phone);
+            fillMerchantInputField(MerchantFieldType.name, name);
+            fillMerchantInputField(MerchantFieldType.email, email);
+            fillMerchantInputField(MerchantFieldType.phone, phone);
     }
 
     public void fillCreditCardInputField(CardFieldType fieldType, String value) {
@@ -171,6 +187,22 @@ public class PaymentPage extends BasePage {
         case expiryDate:
             sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
             break;
+        }
+        switchToDefaultIframe();
+    }
+
+    public void fillCreditCardInputFieldByJavaScript(CardFieldType fieldType, String value) {
+        switchToFrameByFieldType(fieldType);
+        switch (fieldType) {
+            case number:
+                enterTextByJavaScript(cardNumberInputField,value);
+                break;
+            case cvc:
+                enterTextByJavaScript(cvcInputField, value);
+                break;
+            case expiryDate:
+                enterTextByJavaScript(expirationDateInputField, value);
+                break;
         }
         switchToDefaultIframe();
     }
