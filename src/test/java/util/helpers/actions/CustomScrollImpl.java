@@ -17,4 +17,14 @@ public class CustomScrollImpl {
 
         return e;
     }
+
+    public static void scrollToBottomOfPage() {
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    public static void scrollToTopOfPage() {
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("window.scrollTo(0, -document.body.scrollHeight)");
+    }
 }

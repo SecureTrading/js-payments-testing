@@ -6,23 +6,24 @@ Feature: Credit and debit card payments
   Background:
     Given User opens page with payment form
 
-  @current @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
     And ACS response set to "OK"
     And User clicks Pay button - AUTH response set to <paymentCode>
+    Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage   | color |
-      | 0           | "OK"                   | green |
-  #    | 30000       | "Invalid field"        | red   |
-  #    | 50000       | "Socket receive error" | red   |
-  #    | 60022       | Unauthenticated        | red   |
-  #    | 70000       | "Decline"              | red   |
-  #    | 99999       | "Unknown error"        | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 30000       | "Invalid field"                           | red   |
+      | 50000       | "Socket receive error"                    | red   |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
+      | 99999       | "Unknown error"                           | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled N"
@@ -30,12 +31,12 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 0           | "OK"                 | green |
-      | 60022       | Unauthenticated      | red   |
-      | 70000       | "Decline"            | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled U"
@@ -43,12 +44,12 @@ Feature: Credit and debit card payments
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 0           | "OK"                 | green |
-      | 60022       | Unauthenticated      | red   |
-      | 70000       | "Decline"            | red   |
+      | paymentCode | paymentStatusMessage                      | color |
+      | 0           | "Payment has been successfully processed" | green |
+      | 60022       | "Unauthenticated"                         | red   |
+      | 70000       | "Decline"                                 | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce - check THREEDQUERY response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "<paymentCode>"
@@ -60,33 +61,33 @@ Feature: Credit and debit card payments
       | 30000       | "Invalid field"                   | red   |
       | 60031       | "Invalid acquirer for 3-D Secure" | red   |
 
-  @testEnv @cardinalCommerce @mockData
+  @passingTests @testEnv @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "<paymentCode>"
+    And ACS response set to "<actionCode>"
     And User clicks Pay button
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      |             |                      | red   |
-      |             |                      | red   |
+      | actionCode | paymentStatusMessage                      | color |
+      | NOACTION   | "Payment has been successfully processed" | green |
+      | FAILURE    | "Merchant decline"                        | red   |
+      | ERROR      | "An error occurred"                       | red   |
 
-  @testEnv @mockData
+  @passingTests @testEnv @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     And THREEDQUERY response set to "not-entrolled N"
     And User clicks Pay button - AUTH response set to <paymentCode>
-    And User clicks Pay button
-    Then User will see information about payment status "Payment successful!"
+    Then User will see information about payment status "Payment has been successfully processed"
     Examples:
-      | cardNumber       | expirationDate | cvc  | cardType   |
-      | 340000000000611  | 12/22          | 1234 | AMEX       |
-      | 5100000000000511 | 12/22          | 123  | MASTERCARD |
-      | 4111110000000211 | 12/22          | 123  | VISA       |
+      | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
+      | 0           | 340000000000611  | 12/22          | 1234 | AMEX       |
+      | 0           | 5100000000000511 | 12/22          | 123  | MASTERCARD |
+      | 0           | 4111110000000211 | 12/22          | 123  | VISA       |
 
-  @animatedCard
+  @passingTests @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
@@ -154,10 +155,3 @@ Feature: Credit and debit card payments
       #    | Error       | "An error occurred"                       | red    |
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
-
-  @prod @withoutMock
-  Scenario: Check if Cardinal Commerce authentication modal is displayed
-    When User fills merchant data with name "John Smith", email "john@test.com", phone "48456789987"
-    And User fills payment form with credit card number "4000000000000002", expiration date "01/22" and cvc "123"
-    And User clicks Pay button
-    Then User will see Cardinal Commerce authentication modal
