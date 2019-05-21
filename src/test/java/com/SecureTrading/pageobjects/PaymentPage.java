@@ -298,7 +298,7 @@ public class PaymentPage extends BasePage {
                     "Animated card is not flipped but should be");
             Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                     checkIfAnimatedCardIsFlipped());
-        }feature/STJS-91-debit-credit-card-payments
+        }
     }
 
     public void validateIfCardinalCommerceAuthenticationModalIsDisplayed() throws InterruptedException {
