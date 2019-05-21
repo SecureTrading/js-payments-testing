@@ -6,6 +6,7 @@ import static util.helpers.WebElementHandler.isElementDisplayed;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
+import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 import static util.helpers.actions.CustomWaitImpl.*;
 
@@ -21,7 +22,7 @@ import util.enums.StoredElement;
 
 public class PaymentPage extends BasePage {
 
-    // Credit card form
+    // iFrame locators
     private String cardNumberFrameName = "st-card-number-iframe";
     private String cvcFrameName = "st-security-code-iframe";
     private String expirationDateFrameName = "st-expiration-date-iframe";
@@ -30,15 +31,17 @@ public class PaymentPage extends BasePage {
     private String cardinalFrame = "Cardinal-CCA-IFrame";
     private By cardinalCollector = By.id("Cardinal-collector");
 
+    // input fields locators
     private By merchantName = By.id("example-form-name");
     private By merchantEmail = By.id("example-form-email");
     private By merchantPhone = By.id("example-form-phone");
 
+    // Credit card form
     private By cardNumberInputField = By.id("st-card-number-input");
     private By cvcInputField = By.id("st-security-code-input");
     private By expirationDateInputField = By.id("st-expiration-date-input");
-    private By payMockButton = By.xpath("//button[@type='submit']");
 
+    // Fields validation messages
     private By creditCardFieldValidationMessage = By.id("st-card-number-message");
     private By cvcFieldValidationMessage = By.id("st-security-code-message");
     private By expirationDateFieldValidationMessage = By.id("st-expiration-date-message");
@@ -51,16 +54,15 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
-    private By notificationFrame = By.id("st-notification-frame");
-
-    private By paymentStatusMessage = By.id("st-notification-frame");
+    private By notificationFrame = By.id("st-notification-frame"); // TODO was called paymentStatusMessage
     private By cardinalCommerceAuthModal = By.id("authWindow");
 
     // paymentMethods
+    private By payMockButton = By.xpath("//button[@type='submit']");
     private By visaCheckoutMockButton = By.id("v-button");
     private By applePay = By.id("st-apple-pay");
 
-    public String getPaymentStatusMessage() {
+    public String getPaymentStatusMessage() { // TODO was called public String getTextFromNotificationFrame() {
         switchToIframe(notificationFrameName);
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
@@ -145,16 +147,31 @@ public class PaymentPage extends BasePage {
         }
     }
 
+    public void enterTextByJavaScript(By inputLocator, String value) {
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').value='" +value+ "'");
+        ((JavascriptExecutor) SeleniumExecutor.getDriver())
+                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').dispatchEvent(new Event('input'))");
+    }
+
     public void fillAllCardData(String cardNumber, String expiryDate, String cvc) {
-        fillCreditCardInputField(CardFieldType.number, cardNumber);
-        fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
-        fillCreditCardInputField(CardFieldType.cvc, cvc);
+        if(System.getProperty("device") != null && System.getProperty("device").startsWith("i")){
+            fillCreditCardInputFieldByJavaScript(CardFieldType.number, cardNumber);
+            fillCreditCardInputFieldByJavaScript(CardFieldType.expiryDate, expiryDate);
+            scrollToBottomOfPage();
+            fillCreditCardInputFieldByJavaScript(CardFieldType.cvc, cvc);
+        } else {
+            fillCreditCardInputField(CardFieldType.number, cardNumber);
+            fillCreditCardInputField(CardFieldType.expiryDate, expiryDate);
+            scrollToBottomOfPage();
+            fillCreditCardInputField(CardFieldType.cvc, cvc);
+        }
     }
 
     public void fillAllMerchantData(String name, String email, String phone) {
-        fillMerchantInputField(MerchantFieldType.name, name);
-        fillMerchantInputField(MerchantFieldType.email, email);
-        fillMerchantInputField(MerchantFieldType.phone, phone);
+            fillMerchantInputField(MerchantFieldType.name, name);
+            fillMerchantInputField(MerchantFieldType.email, email);
+            fillMerchantInputField(MerchantFieldType.phone, phone);
     }
 
     public void fillCreditCardInputField(CardFieldType fieldType, String value) {
@@ -169,6 +186,22 @@ public class PaymentPage extends BasePage {
         case expiryDate:
             sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
             break;
+        }
+        switchToDefaultIframe();
+    }
+
+    public void fillCreditCardInputFieldByJavaScript(CardFieldType fieldType, String value) {
+        switchToFrameByFieldType(fieldType);
+        switch (fieldType) {
+            case number:
+                enterTextByJavaScript(cardNumberInputField,value);
+                break;
+            case cvc:
+                enterTextByJavaScript(cvcInputField, value);
+                break;
+            case expiryDate:
+                enterTextByJavaScript(expirationDateInputField, value);
+                break;
         }
         switchToDefaultIframe();
     }
@@ -209,10 +242,6 @@ public class PaymentPage extends BasePage {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
         switchToIframe(cardinalFrame);
         return isElementDisplayed(cardinalCommerceAuthModal);
-    }
-
-    public void waitUntilNetworwTrafficIsCompleted() throws InterruptedException {
-        waitUntilNetworkIsCompleted(cardinalCollector);
     }
 
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {

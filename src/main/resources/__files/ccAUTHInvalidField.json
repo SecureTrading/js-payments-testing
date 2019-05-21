@@ -1,0 +1,16 @@
+{
+  "requestreference": "W23-5rd2wbjv",
+  "version": "1.00",
+  "response": [
+    {
+      "errorcode": "30000",
+      "requesttypedescription": "ERROR",
+      "transactionstartedtimestamp": "2019-05-09 07:43:33",
+      "errormessage": "Invalid field",
+      "errordata": [
+        "jwt"
+      ]
+    }
+  ],
+  "secrand": "Vbxu3x6kUCoQ3"
+}

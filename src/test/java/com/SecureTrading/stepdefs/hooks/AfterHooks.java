@@ -13,7 +13,6 @@ public class AfterHooks {
         if (scenario.isFailed()) {
             markTestAsFailed();
         }
-
         SeleniumExecutor.stop();
     }
 }

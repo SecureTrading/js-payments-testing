@@ -15,7 +15,7 @@
       "currencyiso3a": "GBP",
       "errormessage": "Ok",
       "operatorname": "live2_autojwt",
-      "threedinit": "somejwt"
+      "threedinit": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJSZWZlcmVuY2VJZCI6IjIzLWNmODk2MWFhYzY4Mzg2NmQwNWEyMTEwNjA1NzQyMTNkZDc5N2ExNmIxYzMxYWE0YjRkZWIyNGY0MzE5NzRmZDciLCJpc3MiOiI1YzEyODg0NWMxMWI5MjIwZGMwNDZlOGUiLCJqdGkiOiIyMy1jZjg5NjFhYWM2ODM4NjZkMDVhMjExMDYwNTc0MjEzZGQ3OTdhMTZiMWMzMWFhNGI0ZGViMjRmNDMxOTc0ZmQ3IiwiaWF0IjoxNTU4MzU4ODQxLCJQYXlsb2FkIjp7Ik9yZGVyRGV0YWlscyI6eyJBbW91bnQiOjEwMDAsIkN1cnJlbmN5Q29kZSI6IjgyNiJ9fSwiT3JnVW5pdElkIjoiNWMxMTNlOGU2ZmUzZDEyNDYwMTQxODY4In0.UqqizRZE9U6Bjia-yB1kHz0Xt_jdciQTEsF4CQ4ypY8"
     }
   ],
   "secrand": "mc4T0wgPUA0NPr"
