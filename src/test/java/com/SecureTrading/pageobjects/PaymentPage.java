@@ -244,10 +244,6 @@ public class PaymentPage extends BasePage {
         return isElementDisplayed(cardinalCommerceAuthModal);
     }
 
-    public void waitUntilNetworwTrafficIsCompleted() throws InterruptedException {
-        waitUntilNetworkIsCompleted(cardinalCollector);
-    }
-
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: "
