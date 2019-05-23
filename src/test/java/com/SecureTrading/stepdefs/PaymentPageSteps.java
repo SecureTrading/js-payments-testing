@@ -71,9 +71,9 @@ public class PaymentPageSteps {
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
-    @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field$")
-    public void userWillSeeValidationMessageUnderField(String message, String fieldType) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(fieldType), message);
+    @And("^User will see \"([^\"]*)\" message under field: \"([^\"]*)\"$")
+    public void userWillSeeMessageUnderField(String message, String field) throws Throwable {
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(CardFieldType.fromString(field), message);
     }
 
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
@@ -90,7 +90,6 @@ public class PaymentPageSteps {
             scrollToTopOfPage();
             paymentPage.validateIfPaymentStatusMessageWasAsExpected(paymentStatusMessage);
         }
-
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields$")
@@ -213,10 +212,9 @@ public class PaymentPageSteps {
             scrollToBottomOfPage();
             paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
         }
-
     }
 
-    @And("^User will see that notification frame has ([^\"]*) color$")
+    @And("^User will see that notification frame has \"([^\"]*)\" color$")
     public void userWillSeeThatNotificationFrameHasColorColor(String color) {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
@@ -224,8 +222,35 @@ public class PaymentPageSteps {
             paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
     }
 
-    @Then("^User will see Cardinal Commerce authentication modal$")
-    public void userWillSeeCardinalCommerceAuthenticationModal() throws InterruptedException {
-        paymentPage.validateIfCardinalCommerceAuthenticationModalIsDisplayed();
+    @Then("^User will see notification frame with message: \"([^\"]*)\"$")
+    public void userWillSeeNotificationFrameWithMessage(String message) throws Throwable {
+        paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
+    }
+
+    @And("^User will see that ([^\"]*) field is highlighted$")
+    public void userWillSeeThatFieldFieldIsHighlighted(String field) {
+        paymentPage.validateIfFieldIsHighlighted(CardFieldType.fromString(field));
+    }
+
+    @And("^User will see that all fields are highlighted$")
+    public void userWillSeeThatAllFieldsAreHighlighted() {
+        paymentPage.validateIfFieldIsHighlighted(CardFieldType.number);
+        paymentPage.validateIfFieldIsHighlighted(CardFieldType.expiryDate);
+        paymentPage.validateIfFieldIsHighlighted(CardFieldType.cvc);
+    }
+
+    @And("^InvalidField response set for ([^\"]*)")
+    public void invalidfieldResponseSetForField(String fieldType) {
+        switch (fieldType) {
+            case "number":
+                stubSTRequestType("numberInvalidField.json", "THREEDQUERY");
+                break;
+            case "expiryDate":
+                stubSTRequestType("expiryDateInvalidField.json", "THREEDQUERY");
+                break;
+            case "cvc":
+                stubSTRequestType("cvvInvalidField.json", "THREEDQUERY");
+                break;
+        }
     }
 }

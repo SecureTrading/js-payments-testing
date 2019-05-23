@@ -238,6 +238,30 @@ public class PaymentPage extends BasePage {
         return message;
     }
 
+    public boolean checkIfFieldIsHighlighted(CardFieldType fieldType) {
+        boolean highlight = false;
+        String className = "";
+        switchToFrameByFieldType(fieldType);
+        switch (fieldType) {
+            case number:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField),"class");
+                break;
+            case cvc:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(cvcInputField),"class");
+                break;
+            case expiryDate:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(expirationDateInputField),"class");
+                break;
+        }
+
+        if(className.contains("error-field")){
+            highlight = true;
+        }
+        switchToDefaultIframe();
+        return highlight;
+    }
+
+
     public boolean checkIfCardinalAuthModalIsDisplayed() throws InterruptedException {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
         switchToIframe(cardinalFrame);
@@ -297,17 +321,17 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void validateIfCardinalCommerceAuthenticationModalIsDisplayed() throws InterruptedException {
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                " Cardinal commerce authentication modal is not displayed");
-        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfCardinalAuthModalIsDisplayed());
-    }
-
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate,
             String cvc) {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+    }
+
+    public void validateIfFieldIsHighlighted(CardFieldType fieldType) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                " Field is not highlighted but should be");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfFieldIsHighlighted(fieldType));
     }
 }
