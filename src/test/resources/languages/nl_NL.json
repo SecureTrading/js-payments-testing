@@ -1,0 +1,9 @@
+input.cardNumber=CARD NUMBER
+input.expirationDate=EXPIRATION DATE
+input.securityCode=SECURITY CODE
+merchant.name=NAME
+merchant.email=E-MAIL
+merchant.phone=PHONE
+payButton=PAY
+animatedCard.cardNumber=CARD NUMBER
+animatedCard.expirationDate=EXPIRATION DATE
