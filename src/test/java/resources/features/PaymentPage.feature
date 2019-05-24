@@ -126,6 +126,7 @@ Feature: Credit and debit card payments
   @passingTests @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
+    And User clicks Pay button
     And User will see "Value mismatch pattern" message under field: "<field>"
     And User will see that <field> field is highlighted
     Examples:
@@ -133,6 +134,8 @@ Feature: Credit and debit card payments
       | 40000000         | 12/22      | 123 | number     |
       | 4000000000001000 | 12         | 123 | expiryDate |
       | 4000000000001000 | 12/22      | 12  | cvc        |
+      | 4000000000009999 | 12/22      | 123 | number     |
+      | 4000000000001000 | 44/22      | 123 | expiryDate     |
 
   @passingTests @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
@@ -148,6 +151,12 @@ Feature: Credit and debit card payments
       | 4000000000001000 | 12/22      | 123 | number     |
       | 4000000000001000 | 12/15      | 123 | expiryDate |
       | 4000000000001000 | 12/22      | 000 | cvc        |
+
+  @passingTests @fieldsValidation
+  Scenario: Filling 3-number of cvc code for AMEX card
+    When User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
+    And User clicks Pay button
+    And User will see "Value mismatch pattern" message under field: "cvc"
 
   @passingTests @walletTest @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
