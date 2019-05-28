@@ -11,7 +11,7 @@ Feature: Credit and debit card payments
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
     And ACS response set to "OK"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
@@ -27,7 +27,7 @@ Feature: Credit and debit card payments
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
@@ -40,7 +40,7 @@ Feature: Credit and debit card payments
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled U"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
@@ -79,7 +79,7 @@ Feature: Credit and debit card payments
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status "Payment has been successfully processed"
     Examples:
       | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
@@ -180,3 +180,11 @@ Feature: Credit and debit card payments
       #    | Error       | "An error occurred"                       | red    |
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
+
+  #ToDo - unblocking button after payment functionality required
+  Scenario: Checking submit button state during and after payment
+    When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
+    And THREEDQUERY response set to "not-entrolled N"
+    And User clicks Pay button - AUTH response set to "0"
+    Then User will see that Submit button is disabled during payment process
+#    And User will see that Submit button is enabled after payment
