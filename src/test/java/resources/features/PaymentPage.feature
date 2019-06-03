@@ -133,7 +133,7 @@ Feature: Credit and debit card payments
     When User clicks Pay button
     Then User will see validation message "TODO" under all fields
 
-  @passingTests @walletTest @visaTest @mockData
+  @passingTests @walletTest @testEnv @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
     When User chooses Visa Checkout as payment method - response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
@@ -144,7 +144,7 @@ Feature: Credit and debit card payments
       | Error       | "An error occurred"                       | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
 
-  @passingTests @walletTest @appleTest @mockData
+  @passingTests @walletTest @testEnv @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
     When User chooses ApplePay as payment method - response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
@@ -156,7 +156,7 @@ Feature: Credit and debit card payments
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
 
-    #ToDo - Complete labels translation: Pay buttton, name, email. phone
+  #ToDo - Complete labels translation: Pay buttton, name, email. phone
   @passingTests @translations
   Scenario Outline: Checking labels translations for <language>
     When User changes page language to <language>
@@ -166,13 +166,13 @@ Feature: Credit and debit card payments
       | en_GB    |
       | fr_FR    |
       | de_DE    |
-#      | en_US    |
-#      | cy_GB    |
-#      | da_DK    |
-#      | es_ES    |
-#      | nl_NL    |
-#      | no_NO    |
-#      | sv_SE    |
+  #      | en_US    |
+  #      | cy_GB    |
+  #      | da_DK    |
+  #      | es_ES    |
+  #      | nl_NL    |
+  #      | no_NO    |
+  #      | sv_SE    |
 
   #ToDo - ST-26 must be completed
   @translations
@@ -186,8 +186,8 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - ST-26 must be completed
-    #ToDo - Complete translation - "Value mismatch pattern"
+  #ToDo - ST-26 must be completed
+  #ToDo - Complete translation - "Value mismatch pattern"
   @translations
   Scenario Outline: Checking translation for fields validation translated into <language>
     When User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
@@ -199,12 +199,12 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - Need marge with ST-171
-    #ToDo - Complete translation - "Invalid field"
+  #ToDo - Need marge with ST-171
+  #ToDo - Complete translation - "Invalid field"
   @translations
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-#    And InvalidField response set for <field>
+    #    And InvalidField response set for <field>
     And User clicks Pay button
     Then User will see information about "Invalid field" payment status translated into <language>
     Then User will see validation message "Invalid field" under "number" field translated into <language>
@@ -227,7 +227,7 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - Complete translation - "Unknown error"
+  #ToDo - Complete translation - "Unknown error"
   @translations
   Scenario Outline: Cardincal Commerce - checking translation for "Unknown error" status for <language>
     When User changes page language to <language>
@@ -241,7 +241,7 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - Complete translation - "Unauthenticated"
+  #ToDo - Complete translation - "Unauthenticated"
   @translations
   Scenario Outline: Cardincal Commerce - checking translation for "Unauthenticated" status for <language>
     When User changes page language to <language>
@@ -311,7 +311,7 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - Complete translation - "Decline"
+  #ToDo - Complete translation - "Decline"
   @translations
   Scenario Outline: ApplePay - checking translation for "Decline" status for <language>
     When User changes page language to <language>

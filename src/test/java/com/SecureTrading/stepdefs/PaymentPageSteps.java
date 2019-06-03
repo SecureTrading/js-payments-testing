@@ -3,8 +3,11 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static util.JsonHandler.getTranslationFromJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
+
+import cucumber.api.PendingException;
 import com.SecureTrading.pageobjects.PaymentPage;
 
 import cucumber.api.PendingException;
@@ -170,15 +173,15 @@ public class PaymentPageSteps {
     public void userChoosesVisaCheckoutAsPaymentMethodResponseSetTo(String paymentCode) throws Throwable {
         stubSTRequestType("visaAuthSuccess.json", "AUTH");
         switch (paymentCode) {
-            case "Success":
-                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
-                break;
-            case "Error":
-                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaError.json");
-                break;
-            case "Cancel":
-                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
-                break;
+        case "Success":
+            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
+            break;
+        case "Error":
+            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaError.json");
+            break;
+        case "Cancel":
+            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
+            break;
         }
         scrollToBottomOfPage();
         paymentPage.choosePaymentMethodWithMock(PaymentType.visaCheckout);
@@ -191,24 +194,24 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             switch (paymentCode) {
-                case "Success":
-                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                    stubSTRequestType("appleAuthSuccess.json", "AUTH");
-                    break;
-                case "Error":
-                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                    // TODO update sttransport to handle this and automatically do the success
-                    // message too then applepay/visa become simpler
-                    // TODO once this works comment back in in .feature file and add visa equivalent
-                    stubSTRequestTypeServerError("AUTH");
-                    break;
-                case "Decline":
-                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                    stubSTRequestType("appleAuthError.json", "AUTH");
-                    break;
-                case "Cancel":
-                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
-                    break;
+            case "Success":
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                stubSTRequestType("appleAuthSuccess.json", "AUTH");
+                break;
+            case "Error":
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                // TODO update sttransport to handle this and automatically do the success
+                // message too then applepay/visa become simpler
+                // TODO once this works comment back in in .feature file and add visa equivalent
+                stubSTRequestTypeServerError("AUTH");
+                break;
+            case "Decline":
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                stubSTRequestType("appleAuthError.json", "AUTH");
+                break;
+            case "Cancel":
+                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
+                break;
             }
             scrollToBottomOfPage();
             paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
@@ -230,26 +233,31 @@ public class PaymentPageSteps {
 
     @When("^User changes page language to ([^\"]*)$")
     public void userChangesPageLanguageToLanguage(String language) throws IOException, ParseException {
-        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+        SeleniumExecutor.getDriver()
+                .get(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
     }
 
     @Then("^User will see all labels displayed on page translated into ([^\"]*)$")
-    public void userWillSeeAllLabelsDisplayedOnPageTranslatedIntoLanguage(String language) throws IOException, ParseException {
+    public void userWillSeeAllLabelsDisplayedOnPageTranslatedIntoLanguage(String language)
+            throws IOException, ParseException {
         paymentPage.validateIfLabelsTranslationWasAsExpected(language);
     }
 
     @Then("^User will see information about \"([^\"]*)\" payment status translated into ([^\"]*)$")
-    public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language) throws Throwable {
+    public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language)
+            throws Throwable {
         paymentPage.validateIfPaymentStatusTranslationWasAsExpected(paymentStatus, language);
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field translated into ([^\"]*)$")
-    public void userWillSeeValidationMessageUnderFieldTranslatedIntoLanguage(String message, String fieldType, String language) throws Throwable {
+    public void userWillSeeValidationMessageUnderFieldTranslatedIntoLanguage(String message, String fieldType,
+            String language) throws Throwable {
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected(fieldType, language, message);
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields translated into ([^\"]*)$")
-    public void userWillSeeValidationMessageUnderAllFieldsTranslatedIntoLanguage(String message, String language) throws Throwable {
+    public void userWillSeeValidationMessageUnderAllFieldsTranslatedIntoLanguage(String message, String language)
+            throws Throwable {
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("number", language, message);
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("expiryDate", language, message);
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("cvc", language, message);
