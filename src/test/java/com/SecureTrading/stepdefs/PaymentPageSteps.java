@@ -246,7 +246,11 @@ public class PaymentPageSteps {
     @Then("^User will see information about \"([^\"]*)\" payment status translated into ([^\"]*)$")
     public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language)
             throws Throwable {
-        paymentPage.validateIfPaymentStatusTranslationWasAsExpected(paymentStatus, language);
+        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+            System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else {
+            paymentPage.validateIfPaymentStatusTranslationWasAsExpected(paymentStatus, language);
+        }
     }
 
     @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field translated into ([^\"]*)$")
