@@ -28,60 +28,57 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push "securetrading1/js-payments-testing"
     - stage: Test
-    - name: "Behavioural test: chrome 72, Windows 10"
+    - name: "Behavioural test: chrome 74, Windows 10"
       script:
-        - make test_chrome_72_w10
-    #    - name: "Behavioural test: chrome 71, Windows 10"
+        - make test_chrome_74_w10
+    #    - name: "Behavioural test: chrome 73, Windows 10"
     #      script:
-    #        - make test_chrome_71_w10
-    #    - name: "Behavioural test: chrome 72, Windows 8.1"
+    #        - make test_chrome_73_w10
+    #    - name: "Behavioural test: chrome 74, Windows 8.1"
     #      script:
-    #        - make test_chrome_72_w81
-    #    - name: "Behavioural test: chrome 71, Windows 8"
+    #        - make test_chrome_74_w81
+    #    - name: "Behavioural test: chrome 73, Windows 8"
     #      script:
-    #        - make test_chrome_71_w8
-    #    - name: "Behavioural test: chrome 70, Windows 7"
+    #        - make test_chrome_73_w8
+    #    - name: "Behavioural test: chrome 74, Windows 7"
     #      script:
-    #        - make test_chrome_70_w7
-    #    - name: "Behavioural test: chrome 72, OS X Mojave"
+    #        - make test_chrome_74_w7
+    #    - name: "Behavioural test: chrome 74, OS X Mojave"
     #      script:
-    #        - make test_chrome_72_osxmoj
-    #    - name: "Behavioural test: chrome 71, OS X Mojave"
+    #        - make test_chrome_74_osxmoj
+    #    - name: "Behavioural test: chrome 73, OS X Mojave"
     #      script:
-    #        - make test_chrome_71_osxmoj
-    #    - name: "Behavioural test: chrome 72, OS X High Sierra"
+    #        - make test_chrome_73_osxmoj
+    #    - name: "Behavioural test: chrome 74, OS X High Sierra"
     #      script:
-    #        - make test_chrome_72_osxhs
-    #    - name: "Behavioural test: chrome 71, OS X Sierra"
+    #        - make test_chrome_74_osxhs
+    #    - name: "Behavioural test: chrome 74, OS X Sierra"
     #      script:
-    #        - make test_chrome_71_osxs
-    #    - name: "Behavioural test: firefox 65, Windows 10"
+    #        - make test_chrome_74_osxs
+    #    - name: "Behavioural test: firefox 66, Windows 10"
     #      script:
-    #        - make test_firefox_65_w10
-    #    - name: "Behavioural test: firefox 64, Windows 8.1"
+    #        - make test_firefox_66_w10
+    #    - name: "Behavioural test: firefox 65, Windows 8.1"
     #      script:
-    #        - make test_firefox_64_w81
-    #    - name: "Behavioural test: firefox 65, Windows 7"
+    #        - make test_firefox_65_w81
+    #    - name: "Behavioural test: firefox 66, Windows 7"
     #      script:
-    #        - make test_firefox_65_w7
-    #    - name: "Behavioural test: firefox 65, OS X Mojave"
+    #        - make test_firefox_66_w7
+    #    - name: "Behavioural test: firefox 66, OS X Mojave"
     #      script:
-    #        - make test_firefox_65_osxmoj
+    #        - make test_firefox_66_osxmoj
     #    - name: "Behavioural test: firefox 65, OS X High Sierra"
     #      script:
     #        - make test_firefox_65_osxhs
-    #    - name: "Behavioural test: firefox 64, OS X Sierra"
+    #    - name: "Behavioural test: firefox 66, OS X Sierra"
     #      script:
-    #        - make test_firefox_64_osxs
-    #    - name: "Behavioural test: ie 11, Windows 10"
-    #      script:
-    #        - make test_ie_11_w10
+    #        - make test_firefox_66_osxs
+    - name: "Behavioural test: ie 11, Windows 10"
+      script:
+        - make test_ie_11_w10
     #    - name: "Behavioural test: ie 10, Windows 8"
     #      script:
     #        - make test_ie_10_w8
-    #    - name: "Behavioural test: ie 11, Windows 7"
-    #      script:
-    #        - make test_ie_11_w7
     #    - name: "Behavioural test: edge 18, Windows 10"
     #      script:
     #        - make test_edge_18_w10
@@ -103,9 +100,9 @@ jobs:
     #    - name: "Behavioural test: Samsung Galaxy S9, Android 8.0"
     #      script:
     #        - make test_galaxyS9_8_0
-    #    - name: "Behavioural test: Samsung Galaxy S9 Plus, Android 8.0"
+    #    - name: "Behavioural test: Samsung Galaxy S9 Plus, Android 9.0"
     #      script:
-    #        - make test_galaxyS9Plus_8_0
+    #        - make test_galaxyS9Plus_9_0
     #    - name: "Behavioural test: Samsung Galaxy S8, Android 7.0"
     #      script:
     #        - make test_galaxyS8_7_0
@@ -136,6 +133,12 @@ jobs:
     #    - name: "Behavioural test: iPhone XS, iOS 12.0"
     #      script:
     #        - make test_iPhoneXS_12_0
+    #    - name: "Behavioural test: iPhone XS Max, iOS 12.0"
+    #      script:
+    #        - make test_iPhoneXS_Max_12_0
+    #    - name: "Behavioural test: iPhone XR, iOS 12.0"
+    #      script:
+    #        - make test_iPhoneXR_12_0
     - name: "Behavioural test: iPhone X, iOS 11.0"
       script:
         - make test_iPhoneX_11_0
