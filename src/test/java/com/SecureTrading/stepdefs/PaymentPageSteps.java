@@ -140,7 +140,7 @@ public class PaymentPageSteps {
         }
     }
 
-    @And("^User clicks Pay button - AUTH response set to ([^\"]*)$")
+    @And("^User clicks Pay button - AUTH response set to \"([^\"]*)\"$")
     public void userClicksPayButtonAUTHResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
         case "0":
@@ -252,5 +252,16 @@ public class PaymentPageSteps {
                 stubSTRequestType("cvvInvalidField.json", "THREEDQUERY");
                 break;
         }
+    }
+
+    @Then("^User will see that Submit button is disabled during payment process$")
+    public void userWillSeeThatSubmitButtonIsDisabledDuringPaymentProcess() {
+        paymentPage.validateIfSubmitButtonIsDisabledDuringPayment();
+    }
+
+    @And("^User will see that Submit button is enabled after payment$")
+    public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() {
+        paymentPage.validateIfNotificationFrameIsDisplayed();
+        paymentPage.validateIfSubmitButtonIsEnabledAfterPayment();
     }
 }

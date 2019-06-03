@@ -54,7 +54,7 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
-    private By notificationFrame = By.id("st-notification-frame"); // TODO was called paymentStatusMessage
+    private By notificationFrame = By.id("st-notification-frame");
     private By cardinalCommerceAuthModal = By.id("authWindow");
 
     // paymentMethods
@@ -62,7 +62,7 @@ public class PaymentPage extends BasePage {
     private By visaCheckoutMockButton = By.id("v-button");
     private By applePay = By.id("st-apple-pay");
 
-    public String getPaymentStatusMessage() { // TODO was called public String getTextFromNotificationFrame() {
+    public String getPaymentStatusMessage() {
         switchToIframe(notificationFrameName);
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
@@ -95,6 +95,17 @@ public class PaymentPage extends BasePage {
         }
         switchToDefaultIframe();
         return isFlipped;
+    }
+
+
+
+    public boolean checkIfSubmitButtonIsDisabled() {
+        boolean isDisabled = false;
+        String buttonState = getAttribute(SeleniumExecutor.getDriver().findElement(payMockButton), "class");
+        if (buttonState.contains("disabled"))
+            isDisabled = true;
+
+        return isDisabled;
     }
 
     public void switchToFrameByFieldType(CardFieldType fieldType) {
@@ -333,5 +344,26 @@ public class PaymentPage extends BasePage {
                 " Field is not highlighted but should be");
         Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 checkIfFieldIsHighlighted(fieldType));
+    }
+
+    public void validateIfSubmitButtonIsDisabledDuringPayment() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Submit button should be disabled but it isn't ");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfSubmitButtonIsDisabled());
+    }
+
+    public void validateIfSubmitButtonIsEnabledAfterPayment() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Submit button should be enabled but it isn't ");
+        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfSubmitButtonIsDisabled());
+    }
+
+    public void validateIfNotificationFrameIsDisplayed() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Notification frame is not displayed but should be");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                getPaymentStatusMessage() != null);
     }
 }
