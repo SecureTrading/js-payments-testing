@@ -156,7 +156,7 @@ Feature: Credit and debit card payments
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
 
-  #ToDo - Complete labels translation: Pay buttton, name, email. phone
+  #ToDo - Complete labels translation: Pay button, name, email. phone
   @passingTests @translations
   Scenario Outline: Checking labels translations for <language>
     When User changes page language to <language>
@@ -236,34 +236,11 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-  #ToDo - Complete translation - "Unauthenticated"
-  @translations
-  Scenario Outline: Cardincal Commerce - checking translation for "Unauthenticated" status for <language>
-    When User changes page language to <language>
-    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "60022"
-    Then User will see information about "Unauthenticated" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
   @passingTests @translations
   Scenario Outline: Visa Checkout - checking translation for "Error" status for <language>
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to "Error"
     Then User will see information about "Error" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
-  @passingTests @translations
-  Scenario Outline: Visa Checkout - checking translations for "Cancel" status for <language>
-    When User changes page language to <language>
-    And User chooses Visa Checkout as payment method - response set to "Cancel"
-    Then User will see information about "Cancel" payment status translated into <language>
     Examples:
       | language |
       | fr_FR    |
