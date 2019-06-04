@@ -250,16 +250,6 @@ Feature: Credit and debit card payments
       | de_DE    |
 
   @passingTests @translations
-  Scenario Outline: Visa Checkout - checking translation for "Success" status for <language>
-    When User changes page language to <language>
-    And User chooses Visa Checkout as payment method - response set to "Success"
-    Then User will see information about "Success" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
-  @passingTests @translations
   Scenario Outline: Visa Checkout - checking translation for "Error" status for <language>
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to "Error"
@@ -269,31 +259,10 @@ Feature: Credit and debit card payments
       | fr_FR    |
       | de_DE    |
 
-
   @passingTests @translations
   Scenario Outline: Visa Checkout - checking translations for "Cancel" status for <language>
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to "Cancel"
-    Then User will see information about "Cancel" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
-  @passingTests @translations
-  Scenario Outline: ApplePay - checking translation for "Success" status for <language>
-    When User changes page language to <language>
-    When User chooses ApplePay as payment method - response set to "Success"
-    Then User will see information about "Success" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
-  @passingTests @translations
-  Scenario Outline: ApplePay - checking translation for "Cancel" status for <language>
-    When User changes page language to <language>
-    When User chooses ApplePay as payment method - response set to "Cancel"
     Then User will see information about "Cancel" payment status translated into <language>
     Examples:
       | language |
