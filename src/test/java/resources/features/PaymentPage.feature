@@ -182,7 +182,6 @@ Feature: Credit and debit card payments
     Then User will see validation message "Field is required" under all fields translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -195,7 +194,6 @@ Feature: Credit and debit card payments
     Then User will see validation message "Value mismatch pattern" under "number" field translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -210,7 +208,6 @@ Feature: Credit and debit card payments
     Then User will see validation message "Invalid field" under "number" field translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -223,7 +220,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Success" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -237,7 +233,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Unknown error" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -251,7 +246,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Unauthenticated" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -262,7 +256,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Success" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -273,7 +266,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Error" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -285,7 +277,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Cancel" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -296,7 +287,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Success" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -307,7 +297,6 @@ Feature: Credit and debit card payments
     Then User will see information about "Cancel" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
 
@@ -319,6 +308,5 @@ Feature: Credit and debit card payments
     Then User will see information about "Decline" payment status translated into <language>
     Examples:
       | language |
-      | en_GB    |
       | fr_FR    |
       | de_DE    |
