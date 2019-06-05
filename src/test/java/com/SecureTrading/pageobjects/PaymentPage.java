@@ -57,7 +57,7 @@ public class PaymentPage extends BasePage {
     private By expirationDateFromAnimatedCard = By.id("st-animated-card-expiration-date");
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
-    private By notificationFrame = By.id("st-notification-frame"); // TODO was called paymentStatusMessage
+    private By notificationFrame = By.id("st-notification-frame");
     private By cardinalCommerceAuthModal = By.id("authWindow");
 
     // paymentMethods
@@ -76,7 +76,7 @@ public class PaymentPage extends BasePage {
     private By animatedCardNumberLabel = By.xpath("//div[@class='st-animated-card__pan']/label");
     private By animatedExpirationDateLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
 
-    public String getPaymentStatusMessage() { // TODO was called public String getTextFromNotificationFrame() {
+    public String getPaymentStatusMessage() {
         switchToIframe(notificationFrameName);
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
@@ -109,6 +109,15 @@ public class PaymentPage extends BasePage {
         }
         switchToDefaultIframe();
         return isFlipped;
+    }
+
+    public boolean checkIfSubmitButtonIsDisabled() {
+        boolean isDisabled = false;
+        String buttonState = getAttribute(SeleniumExecutor.getDriver().findElement(payMockButton), "class");
+        if (buttonState.contains("disabled"))
+            isDisabled = true;
+
+        return isDisabled;
     }
 
     public void switchToFrameByFieldType(CardFieldType fieldType) {
@@ -213,15 +222,18 @@ public class PaymentPage extends BasePage {
     public void fillCreditCardInputFieldByJavaScript(CardFieldType fieldType, String value) {
         switchToFrameByFieldType(fieldType);
         switch (fieldType) {
-        case number:
-            enterTextByJavaScript(cardNumberInputField, value);
-            break;
-        case cvc:
-            enterTextByJavaScript(cvcInputField, value);
-            break;
-        case expiryDate:
-            enterTextByJavaScript(expirationDateInputField, value);
-            break;
+            case number:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(cardNumberInputField));
+                enterTextByJavaScript(cardNumberInputField,value);
+                break;
+            case cvc:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(cvcInputField));
+                enterTextByJavaScript(cvcInputField, value);
+                break;
+            case expiryDate:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(expirationDateInputField));
+                enterTextByJavaScript(expirationDateInputField, value);
+                break;
         }
         switchToDefaultIframe();
     }
@@ -257,6 +269,30 @@ public class PaymentPage extends BasePage {
         switchToDefaultIframe();
         return message;
     }
+
+    public boolean checkIfFieldIsHighlighted(CardFieldType fieldType) {
+        boolean highlight = false;
+        String className = "";
+        switchToFrameByFieldType(fieldType);
+        switch (fieldType) {
+            case number:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField),"class");
+                break;
+            case cvc:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(cvcInputField),"class");
+                break;
+            case expiryDate:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(expirationDateInputField),"class");
+                break;
+        }
+
+        if(className.contains("error-field")){
+            highlight = true;
+        }
+        switchToDefaultIframe();
+        return highlight;
+    }
+
 
     public boolean checkIfCardinalAuthModalIsDisplayed() throws InterruptedException {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
@@ -326,18 +362,39 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void validateIfCardinalCommerceAuthenticationModalIsDisplayed() throws InterruptedException {
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                " Cardinal commerce authentication modal is not displayed");
-        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfCardinalAuthModalIsDisplayed());
-    }
-
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate,
             String cvc) {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+    }
+
+    public void validateIfFieldIsHighlighted(CardFieldType fieldType) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                " Field is not highlighted but should be");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfFieldIsHighlighted(fieldType));
+    }
+
+    public void validateIfSubmitButtonIsDisabledDuringPayment() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Submit button should be disabled but it isn't ");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfSubmitButtonIsDisabled());
+    }
+
+    public void validateIfSubmitButtonIsEnabledAfterPayment() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Submit button should be enabled but it isn't ");
+        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfSubmitButtonIsDisabled());
+    }
+
+    public void validateIfNotificationFrameIsDisplayed() {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Notification frame is not displayed but should be");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                getPaymentStatusMessage() != null);
     }
 
     public void validateIfElelemtTranslationWasAsExpected(String translation, CardFieldType fieldType, By element) {
