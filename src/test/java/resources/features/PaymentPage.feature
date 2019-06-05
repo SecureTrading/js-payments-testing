@@ -62,7 +62,7 @@ Feature: Credit and debit card payments
       | 60031       | "Invalid acquirer for 3-D Secure" | red   |
 
   @passingTests @cardinalCommerce @mockData
-  Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <paymentCode>
+  Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <actionCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
     And ACS response set to "<actionCode>"
@@ -135,7 +135,7 @@ Feature: Credit and debit card payments
       | 4000000000001000 | 12         | 123 | expiryDate |
       | 4000000000001000 | 12/22      | 12  | cvc        |
       | 4000000000009999 | 12/22      | 123 | number     |
-      | 4000000000001000 | 44/22      | 123 | expiryDate     |
+      | 4000000000001000 | 44/22      | 123 | expiryDate |
 
   @passingTests @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
