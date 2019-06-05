@@ -9,7 +9,9 @@ import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
 import static util.helpers.actions.CustomWaitImpl.*;
+import static util.JsonHandler.getTranslationFromJson;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,6 +22,8 @@ import util.enums.MerchantFieldType;
 import util.enums.PaymentType;
 import util.enums.StoredElement;
 
+import java.io.IOException;
+
 public class PaymentPage extends BasePage {
 
     // iFrame locators
@@ -29,7 +33,6 @@ public class PaymentPage extends BasePage {
     private String animatedCardFrameName = "st-animated-card-iframe";
     private String notificationFrameName = "st-notification-frame-iframe";
     private String cardinalFrame = "Cardinal-CCA-IFrame";
-    private By cardinalCollector = By.id("Cardinal-collector");
 
     // input fields locators
     private By merchantName = By.id("example-form-name");
@@ -61,6 +64,17 @@ public class PaymentPage extends BasePage {
     private By payMockButton = By.xpath("//button[@type='submit']");
     private By visaCheckoutMockButton = By.id("v-button");
     private By applePay = By.id("st-apple-pay");
+
+    // Labels
+    private By cardNumberLabel = By.xpath("//label[@for='st-card-number-input']");
+    private By expirationDateLabel = By.xpath("//label[@for='st-expiration-date-input']");
+    private By securityCodeLabel = By.xpath("//label[@for='st-security-code-input']");
+    private By merchantNameLabel = By.xpath("//label[@for='example-form-name']");
+    private By merchantEmailLabel = By.xpath("//label[@for='example-form-email']");
+    private By merchantPhoneLabel = By.xpath("//label[@for='example-form-phone']");
+    private By payButtonLabel = By.xpath("//button[@type='submit']");
+    private By animatedCardNumberLabel = By.xpath("//div[@class='st-animated-card__pan']/label");
+    private By animatedExpirationDateLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
 
     public String getPaymentStatusMessage() { // TODO was called public String getTextFromNotificationFrame() {
         switchToIframe(notificationFrameName);
@@ -108,6 +122,12 @@ public class PaymentPage extends BasePage {
         case expiryDate:
             switchToIframe(expirationDateFrameName);
             break;
+        case animatedCard:
+            switchToIframe(animatedCardFrameName);
+            break;
+        case notificationFrame:
+            switchToIframe(notificationFrameName);
+            break;
         }
     }
 
@@ -148,14 +168,14 @@ public class PaymentPage extends BasePage {
     }
 
     public void enterTextByJavaScript(By inputLocator, String value) {
-        ((JavascriptExecutor) SeleniumExecutor.getDriver())
-                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').value='" +value+ "'");
-        ((JavascriptExecutor) SeleniumExecutor.getDriver())
-                .executeScript("document.getElementById('" +inputLocator.toString().substring(7)+ "').dispatchEvent(new Event('input'))");
+        ((JavascriptExecutor) SeleniumExecutor.getDriver()).executeScript(
+                "document.getElementById('" + inputLocator.toString().substring(7) + "').value='" + value + "'");
+        ((JavascriptExecutor) SeleniumExecutor.getDriver()).executeScript("document.getElementById('"
+                + inputLocator.toString().substring(7) + "').dispatchEvent(new Event('input'))");
     }
 
     public void fillAllCardData(String cardNumber, String expiryDate, String cvc) {
-        if(System.getProperty("device") != null && System.getProperty("device").startsWith("i")){
+        if (System.getProperty("device") != null && System.getProperty("device").startsWith("i")) {
             fillCreditCardInputFieldByJavaScript(CardFieldType.number, cardNumber);
             fillCreditCardInputFieldByJavaScript(CardFieldType.expiryDate, expiryDate);
             scrollToBottomOfPage();
@@ -169,9 +189,9 @@ public class PaymentPage extends BasePage {
     }
 
     public void fillAllMerchantData(String name, String email, String phone) {
-            fillMerchantInputField(MerchantFieldType.name, name);
-            fillMerchantInputField(MerchantFieldType.email, email);
-            fillMerchantInputField(MerchantFieldType.phone, phone);
+        fillMerchantInputField(MerchantFieldType.name, name);
+        fillMerchantInputField(MerchantFieldType.email, email);
+        fillMerchantInputField(MerchantFieldType.phone, phone);
     }
 
     public void fillCreditCardInputField(CardFieldType fieldType, String value) {
@@ -193,15 +213,15 @@ public class PaymentPage extends BasePage {
     public void fillCreditCardInputFieldByJavaScript(CardFieldType fieldType, String value) {
         switchToFrameByFieldType(fieldType);
         switch (fieldType) {
-            case number:
-                enterTextByJavaScript(cardNumberInputField,value);
-                break;
-            case cvc:
-                enterTextByJavaScript(cvcInputField, value);
-                break;
-            case expiryDate:
-                enterTextByJavaScript(expirationDateInputField, value);
-                break;
+        case number:
+            enterTextByJavaScript(cardNumberInputField, value);
+            break;
+        case cvc:
+            enterTextByJavaScript(cvcInputField, value);
+            break;
+        case expiryDate:
+            enterTextByJavaScript(expirationDateInputField, value);
+            break;
         }
         switchToDefaultIframe();
     }
@@ -242,6 +262,15 @@ public class PaymentPage extends BasePage {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);
         switchToIframe(cardinalFrame);
         return isElementDisplayed(cardinalCommerceAuthModal);
+    }
+
+    public String getElementTranslation(CardFieldType fieldType, By element) {
+        if (fieldType != null)
+            switchToFrameByFieldType(fieldType);
+
+        String translation = getText(SeleniumExecutor.getDriver().findElement(element));
+        switchToDefaultIframe();
+        return translation;
     }
 
     public void validateIfFieldValidationMessageWasAsExpected(CardFieldType fieldType, String expectedMessage) {
@@ -309,5 +338,89 @@ public class PaymentPage extends BasePage {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+    }
+
+    public void validateIfElelemtTranslationWasAsExpected(String translation, CardFieldType fieldType, By element) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Translation is not correct, should be "
+                + translation + " but was: " + getElementTranslation(fieldType, element));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), translation,
+                getElementTranslation(fieldType, element));
+    }
+
+    // ToDo - Complete translations key for: PayButton, name, email, phone
+    public void validateIfLabelsTranslationWasAsExpected(String translation) throws IOException, ParseException {
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation),
+                CardFieldType.number, cardNumberLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation),
+                CardFieldType.expiryDate, expirationDateLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation),
+                CardFieldType.cvc, securityCodeLabel);
+        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
+        // translation), null, merchantNameLabel);
+        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
+        // translation), null, merchantEmailLabel);
+        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
+        // translation), null, merchantPhoneLabel);
+        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
+        // translation), null, payButtonLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(),
+                CardFieldType.animatedCard, animatedCardNumberLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(),
+                CardFieldType.animatedCard, animatedExpirationDateLabel);
+    }
+
+    // ToDo - Complete translations for: Decline, Unknown error, Unauthenticated,
+    // Ivalid field
+    public void validateIfPaymentStatusTranslationWasAsExpected(String paymentStatus, String translation)
+            throws IOException, ParseException {
+        switch (paymentStatus) {
+        case "Success":
+            validateIfElelemtTranslationWasAsExpected(
+                    getTranslationFromJson("Payment has been successfully processed", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Error":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("An error occurred", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Cancel":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Payment has been cancelled", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Decline":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Unknown error":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Unauthenticated":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        case "Invalid field":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
+                    CardFieldType.notificationFrame, notificationFrame);
+            break;
+        }
+    }
+
+    public void validateIfValidationMessageUnderFieldWasAsExpected(String fieldType, String translation,
+            String translationKey) throws IOException, ParseException {
+        switch (fieldType) {
+        case "number":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                    CardFieldType.number, creditCardFieldValidationMessage);
+            break;
+        case "expiryDate":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                    CardFieldType.expiryDate, expirationDateFieldValidationMessage);
+            break;
+        case "cvc":
+            validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                    CardFieldType.cvc, cvcFieldValidationMessage);
+            break;
+        }
     }
 }

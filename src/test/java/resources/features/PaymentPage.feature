@@ -6,12 +6,12 @@ Feature: Credit and debit card payments
   Background:
     Given User opens page with payment form
 
-  @passingTests @testEnv @cardinalCommerce @mockData
+  @passingTests @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
     And ACS response set to "OK"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
@@ -23,11 +23,11 @@ Feature: Credit and debit card payments
       | 70000       | "Decline"                                 | red   |
       | 99999       | "Unknown error"                           | red   |
 
-  @passingTests @testEnv @cardinalCommerce @mockData
+  @passingTests @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
@@ -36,11 +36,11 @@ Feature: Credit and debit card payments
       | 60022       | "Unauthenticated"                         | red   |
       | 70000       | "Decline"                                 | red   |
 
-  @passingTests @testEnv @cardinalCommerce @mockData
+  @passingTests @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled U"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
@@ -49,7 +49,7 @@ Feature: Credit and debit card payments
       | 60022       | "Unauthenticated"                         | red   |
       | 70000       | "Decline"                                 | red   |
 
-  @passingTests @testEnv @cardinalCommerce @mockData
+  @passingTests @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce - check THREEDQUERY response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "<paymentCode>"
@@ -61,7 +61,7 @@ Feature: Credit and debit card payments
       | 30000       | "Invalid field"                   | red   |
       | 60031       | "Invalid acquirer for 3-D Secure" | red   |
 
-  @passingTests @testEnv @cardinalCommerce @mockData
+  @passingTests @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <paymentCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to "entrolled Y"
@@ -75,11 +75,11 @@ Feature: Credit and debit card payments
       | FAILURE    | "Merchant decline"                        | red   |
       | ERROR      | "An error occurred"                       | red   |
 
-  @passingTests @testEnv @mockData
+  @passingTests @mockData
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to <paymentCode>
+    And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status "Payment has been successfully processed"
     Examples:
       | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
@@ -135,7 +135,7 @@ Feature: Credit and debit card payments
 
   @passingTests @walletTest @testEnv @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
-    When User chooses Visa Checkout as payment method - response set to <paymentCode>
+    When User chooses Visa Checkout as payment method - response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
@@ -146,7 +146,7 @@ Feature: Credit and debit card payments
 
   @passingTests @walletTest @testEnv @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
-    When User chooses ApplePay as payment method - response set to <paymentCode>
+    When User chooses ApplePay as payment method - response set to "<paymentCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has <color> color
     Examples:
@@ -155,3 +155,104 @@ Feature: Credit and debit card payments
       #    | Error       | "An error occurred"                       | red    |
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
+
+  #ToDo - Complete labels translation: Pay button, name, email. phone
+  @passingTests @translations
+  Scenario Outline: Checking labels translations for <language>
+    When User changes page language to <language>
+    Then User will see all labels displayed on page translated into <language>
+    Examples:
+      | language |
+      | en_GB    |
+      | fr_FR    |
+      | de_DE    |
+  #      | en_US    |
+  #      | cy_GB    |
+  #      | da_DK    |
+  #      | es_ES    |
+  #      | nl_NL    |
+  #      | no_NO    |
+  #      | sv_SE    |
+
+  #ToDo - ST-26 must be completed
+  @translations
+  Scenario Outline: Checking fields error translatios for <language>
+    When User changes page language to <language>
+    And User clicks Pay button
+    Then User will see validation message "Field is required" under all fields translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  #ToDo - ST-26 must be completed
+  #ToDo - Complete translation - "Value mismatch pattern"
+  @translations
+  Scenario Outline: Checking translation for fields validation translated into <language>
+    When User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
+    And User clicks Pay button
+    Then User will see validation message "Value mismatch pattern" under "number" field translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  #ToDo - Need marge with ST-171
+  #ToDo - Complete translation - "Invalid field"
+  @translations
+  Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
+    When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
+    #    And InvalidField response set for <field>
+    And User clicks Pay button
+    Then User will see information about "Invalid field" payment status translated into <language>
+    Then User will see validation message "Invalid field" under "number" field translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  @passingTests @passingTests @translations
+  Scenario Outline: Cardincal Commerce - checking translation for "Success" status for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
+    And THREEDQUERY response set to "not-entrolled N"
+    And User clicks Pay button - AUTH response set to "0"
+    Then User will see information about "Success" payment status translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  #ToDo - Complete translation - "Unknown error"
+  @translations
+  Scenario Outline: Cardincal Commerce - checking translation for "Unknown error" status for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
+    And THREEDQUERY response set to "not-entrolled N"
+    And User clicks Pay button - AUTH response set to "99999"
+    Then User will see information about "Unknown error" payment status translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  @passingTests @translations
+  Scenario Outline: Visa Checkout - checking translation for "Error" status for <language>
+    When User changes page language to <language>
+    And User chooses Visa Checkout as payment method - response set to "Error"
+    Then User will see information about "Error" payment status translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  #ToDo - Complete translation - "Decline"
+  @translations
+  Scenario Outline: ApplePay - checking translation for "Decline" status for <language>
+    When User changes page language to <language>
+    When User chooses ApplePay as payment method - response set to "Decline"
+    Then User will see information about "Decline" payment status translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
