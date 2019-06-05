@@ -205,12 +205,15 @@ public class PaymentPage extends BasePage {
         switchToFrameByFieldType(fieldType);
         switch (fieldType) {
             case number:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(cardNumberInputField));
                 enterTextByJavaScript(cardNumberInputField,value);
                 break;
             case cvc:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(cvcInputField));
                 enterTextByJavaScript(cvcInputField, value);
                 break;
             case expiryDate:
+                waitForElementDisplayed(SeleniumExecutor.getDriver().findElement(expirationDateInputField));
                 enterTextByJavaScript(expirationDateInputField, value);
                 break;
         }

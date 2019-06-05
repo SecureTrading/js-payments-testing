@@ -31,11 +31,18 @@ public class PaymentPageSteps {
     }
 
     @Given("^User opens page with payment form$")
-    public void userOpensPageWithPaymentForm() {
+    public void userOpensPageWithPaymentForm() throws InterruptedException {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else
+        } else {
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+
+            //Additional try for IE problems
+            if(SeleniumExecutor.getDriver().getTitle().contains("Can't reach this page")){
+                Thread.sleep(4000);
+                SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+            }
+        }
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")

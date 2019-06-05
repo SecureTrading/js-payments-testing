@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import util.SeleniumExecutor;
 
+import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
+
 public class CustomClickImpl {
     /**
      * Click on element, then wait for Javascript to load
@@ -17,6 +19,7 @@ public class CustomClickImpl {
         } catch (UnhandledAlertException ex) {
             ex.printStackTrace();
         }
+        waitForElementDisplayed(e);
     }
 
     /**
