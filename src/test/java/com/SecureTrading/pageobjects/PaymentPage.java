@@ -76,6 +76,10 @@ public class PaymentPage extends BasePage {
     private By animatedCardNumberLabel = By.xpath("//div[@class='st-animated-card__pan']/label");
     private By animatedExpirationDateLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
 
+    // Immediate payment
+    private By immediatePaymentErrorMessage = By.id("errormessage");
+    private By immediatePaymentErrorCode = By.id("errorcode");
+
     public String getPaymentStatusMessage() {
         switchToIframe(notificationFrameName);
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
@@ -89,6 +93,19 @@ public class PaymentPage extends BasePage {
                 "data-notification-color");
         switchToDefaultIframe();
         return frameColor;
+    }
+
+    public String getTextFromImmediatePaymentPage(String status) {
+        String text = "";
+        switch (status) {
+            case "message":
+                text = getText(SeleniumExecutor.getDriver().findElement(immediatePaymentErrorMessage));
+                break;
+            case "code":
+                text = getText(SeleniumExecutor.getDriver().findElement(immediatePaymentErrorCode));
+                break;
+        }
+        return text;
     }
 
     // Get info from animated credit card
@@ -479,5 +496,21 @@ public class PaymentPage extends BasePage {
                     CardFieldType.cvc, cvcFieldValidationMessage);
             break;
         }
+    }
+
+    public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                " payment status message is not correct, should be " + expectedMessage + " but was: "
+                        + getTextFromImmediatePaymentPage("message"));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                expectedMessage, getTextFromImmediatePaymentPage("message"));
+    }
+
+    public void validateIfErrorCodeFromImmediateWasAsExpected(String expectedCode) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                " payment status message is not correct, should be " + expectedCode + " but was: "
+                        + getTextFromImmediatePaymentPage("code"));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                expectedCode, getTextFromImmediatePaymentPage("code"));
     }
 }

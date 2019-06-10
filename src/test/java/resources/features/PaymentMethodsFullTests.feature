@@ -15,11 +15,11 @@ Feature: Payment methods
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 30000       | "Invalid field"                           | red   |
-      | 50000       | "Socket receive error"                    | red   |
-      | 60022       | "Unauthenticated"                         | red   |
-      | 99999       | "Unknown error"                           | red   |
+      | paymentCode | paymentStatusMessage   | color |
+      | 30000       | "Invalid field"        | red   |
+      | 50000       | "Socket receive error" | red   |
+      | 60022       | "Unauthenticated"      | red   |
+      | 99999       | "Unknown error"        | red   |
 
   @fullTest @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
@@ -41,9 +41,9 @@ Feature: Payment methods
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 60022       | "Unauthenticated"                         | red   |
-      | 70000       | "Decline"                                 | red   |
+      | paymentCode | paymentStatusMessage | color |
+      | 60022       | "Unauthenticated"    | red   |
+      | 70000       | "Decline"            | red   |
 
   @fullTest @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <actionCode>
@@ -65,8 +65,8 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status "Payment has been successfully processed"
     Examples:
-      | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
-      | 0           | 5100000000000511 | 12/22          | 123  | MASTERCARD |
+      | paymentCode | cardNumber       | expirationDate | cvc | cardType   |
+      | 0           | 5100000000000511 | 12/22          | 123 | MASTERCARD |
 
   @fullTest @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
@@ -75,14 +75,14 @@ Feature: Payment methods
     And User will see the same provided data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
     And User will see that animated card is flipped, except for "AMEX"
     Examples:
-      | cardNumber          | formattedCardNumber    | expirationDate | cvc  | cardType     |
-      | 1801000000000901    | 1801 0000 0000 0901    | 12/22          | 123  | ASTROPAYCARD |
-      | 3000000000000111    | 3000 000000 000111     | 12/22          | 123  | DINERS       |
-      | 6011000000000301    | 6011 0000 0000 0301    | 12/22          | 123  | DISCOVER     |
-      | 3528000000000411    | 3528 0000 0000 0411    | 12/22          | 123  | JCB          |
-      | 5000000000000611    | 5000 0000 0000 0611    | 12/22          | 123  | MAESTRO      |
-      | 5100000000000511    | 5100 0000 0000 0511    | 12/22          | 123  | MASTERCARD   |
-      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/22          | 123  | PIBA         |
+      | cardNumber          | formattedCardNumber    | expirationDate | cvc | cardType     |
+      | 1801000000000901    | 1801 0000 0000 0901    | 12/22          | 123 | ASTROPAYCARD |
+      | 3000000000000111    | 3000 000000 000111     | 12/22          | 123 | DINERS       |
+      | 6011000000000301    | 6011 0000 0000 0301    | 12/22          | 123 | DISCOVER     |
+      | 3528000000000411    | 3528 0000 0000 0411    | 12/22          | 123 | JCB          |
+      | 5000000000000611    | 5000 0000 0000 0611    | 12/22          | 123 | MAESTRO      |
+      | 5100000000000511    | 5100 0000 0000 0511    | 12/22          | 123 | MASTERCARD   |
+      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/22          | 123 | PIBA         |
 
   @fullTest @fieldsValidation
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>" expiration: "<expiration>", cvv: "<cvv>"
@@ -134,9 +134,9 @@ Feature: Payment methods
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color  |
-      | Error       | "An error occurred"                       | red    |
-      | Cancel      | "Payment has been cancelled"              | yellow |
+      | paymentCode | paymentStatusMessage         | color  |
+      | Error       | "An error occurred"          | red    |
+      | Cancel      | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
@@ -144,10 +144,10 @@ Feature: Payment methods
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color  |
+      | paymentCode | paymentStatusMessage         | color  |
       #    | Error       | "An error occurred"                       | red    |
-      | Decline     | "Decline"                                 | red    |
-      | Cancel      | "Payment has been cancelled"              | yellow |
+      | Decline     | "Decline"                    | red    |
+      | Cancel      | "Payment has been cancelled" | yellow |
 
   #ToDo - unblocking button after payment functionality required
   Scenario: Checking submit button state during and after payment
@@ -243,3 +243,38 @@ Feature: Payment methods
       | language |
       | fr_FR    |
       | de_DE    |
+
+  @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <paymentCode> response code
+    When THREEDQUERY response set to "entrolled Y"
+    And ACS response set to "OK"
+    And AUTH response set to "<paymentCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    Examples:
+      | paymentCode | errorMessage                            |
+      | 0           | Payment has been successfully processed |
+#      | 70000       | "Decline"                                 |
+
+  @mockData
+  Scenario Outline: Immediate payment (card enrolled N) - checking payment status for <paymentCode> response code
+    When THREEDQUERY response set to "enot-entrolled N"
+    And AUTH response set to "<paymentCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    Examples:
+      | paymentCode | errorMessage                            |
+      | 0           | Payment has been successfully processed |
+
+  @cardinalCommerce @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
+    When THREEDQUERY response set to "entrolled Y"
+    And ACS response set to "<actionCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    Examples:
+      | actionCode | errorMessage        |
+      | ERROR      | "An error occurred" |

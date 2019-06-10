@@ -37,11 +37,12 @@ public class PaymentPageSteps {
     public void userOpensPageWithPaymentForm() throws InterruptedException {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
+        } else if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("Immediate")) {
+            System.out.println("Step skipped as payment form is not required for immediate payment");
         } else {
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
-
             //Additional try for IE problems
-            if(SeleniumExecutor.getDriver().getTitle().contains("Can't reach this page")){
+            if (SeleniumExecutor.getDriver().getTitle().contains("Can't reach this page")) {
                 Thread.sleep(4000);
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
             }
@@ -88,7 +89,7 @@ public class PaymentPageSteps {
 
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
-            String expirationDate, String cvc) {
+                                                                                                 String expirationDate, String cvc) {
         paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
     }
 
@@ -112,65 +113,65 @@ public class PaymentPageSteps {
     @And("^THREEDQUERY response set to \"([^\"]*)\"$")
     public void threedqueryResponseSetTo(String response) {
         switch (response) {
-        case "entrolled Y":
-            stubSTRequestType("ccTDQEnrolledY.json", "THREEDQUERY");
-            break;
-        case "not-entrolled N":
-            stubSTRequestType("ccTDQEnrolledN.json", "THREEDQUERY");
-            break;
-        case "not-entrolled U":
-            stubSTRequestType("ccTDQEnrolledU.json", "THREEDQUERY");
-            break;
-        case "30000":
-            stubSTRequestType("ccTDQnvalidField.json", "THREEDQUERY");
-            break;
-        case "60031":
-            stubSTRequestType("ccTDQInvalidAcquirer.json", "THREEDQUERY");
-            break;
+            case "entrolled Y":
+                stubSTRequestType("ccTDQEnrolledY.json", "THREEDQUERY");
+                break;
+            case "not-entrolled N":
+                stubSTRequestType("ccTDQEnrolledN.json", "THREEDQUERY");
+                break;
+            case "not-entrolled U":
+                stubSTRequestType("ccTDQEnrolledU.json", "THREEDQUERY");
+                break;
+            case "30000":
+                stubSTRequestType("ccTDQnvalidField.json", "THREEDQUERY");
+                break;
+            case "60031":
+                stubSTRequestType("ccTDQInvalidAcquirer.json", "THREEDQUERY");
+                break;
         }
     }
 
     @And("^ACS response set to \"([^\"]*)\"$")
     public void acsResponseSetTo(String response) {
         switch (response) {
-        case "OK":
-            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSoK.json");
-            break;
-        case "NOACTION":
-            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSnoaction.json");
-            stubSTRequestType("ccAUTHoK.json", "AUTH");
-            break;
-        case "FAILURE":
-            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSfailure.json");
-            stubSTRequestType("ccAUTHMerchantDeclineError.json", "AUTH");
-            break;
-        case "ERROR":
-            stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSerror.json");
-            break;
+            case "OK":
+                stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSoK.json");
+                break;
+            case "NOACTION":
+                stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSnoaction.json");
+                stubSTRequestType("ccAUTHoK.json", "AUTH");
+                break;
+            case "FAILURE":
+                stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSfailure.json");
+                stubSTRequestType("ccAUTHMerchantDeclineError.json", "AUTH");
+                break;
+            case "ERROR":
+                stubPaymentStatus(PropertyType.CC_MOCK_ACS_URI, "ccACSerror.json");
+                break;
         }
     }
 
     @And("^User clicks Pay button - AUTH response set to \"([^\"]*)\"$")
     public void userClicksPayButtonAUTHResponseSetToPaymentCode(String paymentCode) {
         switch (paymentCode) {
-        case "0":
-            stubSTRequestType("ccAUTHoK.json", "AUTH");
-            break;
-        case "30000":
-            stubSTRequestType("ccAUTHInvalidField.json", "AUTH");
-            break;
-        case "50000":
-            stubSTRequestType("ccAUTHSocketError.json", "AUTH");
-            break;
-        case "60022":
-            stubSTRequestType("ccAUTHUnauthenticated.json", "AUTH");
-            break;
-        case "70000":
-            stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
-            break;
-        case "99999":
-            stubSTRequestType("ccAUTHUnknownError.json", "AUTH");
-            break;
+            case "0":
+                stubSTRequestType("ccAUTHoK.json", "AUTH");
+                break;
+            case "30000":
+                stubSTRequestType("ccAUTHInvalidField.json", "AUTH");
+                break;
+            case "50000":
+                stubSTRequestType("ccAUTHSocketError.json", "AUTH");
+                break;
+            case "60022":
+                stubSTRequestType("ccAUTHUnauthenticated.json", "AUTH");
+                break;
+            case "70000":
+                stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
+                break;
+            case "99999":
+                stubSTRequestType("ccAUTHUnknownError.json", "AUTH");
+                break;
         }
         paymentPage.choosePaymentMethodWithMock(PaymentType.cardinalCommerce);
     }
@@ -179,15 +180,15 @@ public class PaymentPageSteps {
     public void userChoosesVisaCheckoutAsPaymentMethodResponseSetTo(String paymentCode) throws Throwable {
         stubSTRequestType("visaAuthSuccess.json", "AUTH");
         switch (paymentCode) {
-        case "Success":
-            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
-            break;
-        case "Error":
-            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaError.json");
-            break;
-        case "Cancel":
-            stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
-            break;
+            case "Success":
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaSuccess.json");
+                break;
+            case "Error":
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaError.json");
+                break;
+            case "Cancel":
+                stubPaymentStatus(PropertyType.VISA_MOCK_URI, "visaCancel.json");
+                break;
         }
         scrollToBottomOfPage();
         paymentPage.choosePaymentMethodWithMock(PaymentType.visaCheckout);
@@ -200,24 +201,24 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             switch (paymentCode) {
-            case "Success":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                stubSTRequestType("appleAuthSuccess.json", "AUTH");
-                break;
-            case "Error":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                // TODO update sttransport to handle this and automatically do the success
-                // message too then applepay/visa become simpler
-                // TODO once this works comment back in in .feature file and add visa equivalent
-                stubSTRequestTypeServerError("AUTH");
-                break;
-            case "Decline":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
-                stubSTRequestType("appleAuthError.json", "AUTH");
-                break;
-            case "Cancel":
-                stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
-                break;
+                case "Success":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                    stubSTRequestType("appleAuthSuccess.json", "AUTH");
+                    break;
+                case "Error":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                    // TODO update sttransport to handle this and automatically do the success
+                    // message too then applepay/visa become simpler
+                    // TODO once this works comment back in in .feature file and add visa equivalent
+                    stubSTRequestTypeServerError("AUTH");
+                    break;
+                case "Decline":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleSuccess.json");
+                    stubSTRequestType("appleAuthError.json", "AUTH");
+                    break;
+                case "Cancel":
+                    stubPaymentStatus(PropertyType.APPLEPAY_MOCK_URI, "appleCancel.json");
+                    break;
             }
             scrollToBottomOfPage();
             paymentPage.choosePaymentMethodWithMock(PaymentType.applePay);
@@ -300,7 +301,7 @@ public class PaymentPageSteps {
 
     @Then("^User will see validation message \"([^\"]*)\" under \"([^\"]*)\" field translated into ([^\"]*)$")
     public void userWillSeeValidationMessageUnderFieldTranslatedIntoLanguage(String message, String fieldType,
-            String language) throws Throwable {
+                                                                             String language) throws Throwable {
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected(fieldType, language, message);
     }
 
@@ -310,5 +311,44 @@ public class PaymentPageSteps {
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("number", language, message);
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("expiryDate", language, message);
         paymentPage.validateIfValidationMessageUnderFieldWasAsExpected("cvc", language, message);
+    }
+
+    @And("^AUTH response set to \"([^\"]*)\"$")
+    public void authResponseSetTo(String paymentCode) {
+        switch (paymentCode) {
+            case "0":
+                stubSTRequestType("ccAUTHoK.json", "AUTH");
+                break;
+            case "30000":
+                stubSTRequestType("ccAUTHInvalidField.json", "AUTH");
+                break;
+            case "50000":
+                stubSTRequestType("ccAUTHSocketError.json", "AUTH");
+                break;
+            case "60022":
+                stubSTRequestType("ccAUTHUnauthenticated.json", "AUTH");
+                break;
+            case "70000":
+                stubSTRequestType("ccAUTHDeclineError.json", "AUTH");
+                break;
+            case "99999":
+                stubSTRequestType("ccAUTHUnknownError.json", "AUTH");
+                break;
+        }
+    }
+
+    @And("^User opens immediate payment page$")
+    public void userOpensImmediatePaymentPage() {
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/immediate.html");
+    }
+
+    @Then("^User will see message \"([^\"]*)\" displayed on page$")
+    public void userWillSeeMessageDisplayedOnPage(String message) {
+        paymentPage.validateIfMessageFromImmediateWasAsExpected(message);
+    }
+
+    @And("^User will see error code: \"([^\"]*)\"$")
+    public void userWillSeeErrorCode(String errorcode) {
+        paymentPage.validateIfErrorCodeFromImmediateWasAsExpected(errorcode);
     }
 }
