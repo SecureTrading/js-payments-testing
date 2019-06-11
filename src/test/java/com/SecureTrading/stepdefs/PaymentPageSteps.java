@@ -338,8 +338,9 @@ public class PaymentPageSteps {
     }
 
     @And("^User opens immediate payment page$")
-    public void userOpensImmediatePaymentPage() {
+    public void userOpensImmediatePaymentPage() throws InterruptedException {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/immediate.html");
+        Thread.sleep(2000);
     }
 
     @Then("^User will see message \"([^\"]*)\" displayed on page$")

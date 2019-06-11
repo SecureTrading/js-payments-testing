@@ -244,7 +244,7 @@ Feature: Payment methods
       | fr_FR    |
       | de_DE    |
 
-  @immediatePayment @mockData
+  @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <paymentCode> response code
     When THREEDQUERY response set to "entrolled Y"
     And ACS response set to "OK"
@@ -253,11 +253,10 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     And User will see error code: "<paymentCode>"
     Examples:
-      | paymentCode | errorMessage                            |
-      | 0           | Payment has been successfully processed |
-#      | 70000       | "Decline"                                 |
+      | paymentCode | errorMessage |
+      | 70000       | Decline      |
 
-  @mockData
+  @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled N) - checking payment status for <paymentCode> response code
     When THREEDQUERY response set to "enot-entrolled N"
     And AUTH response set to "<paymentCode>"
@@ -265,10 +264,10 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     And User will see error code: "<paymentCode>"
     Examples:
-      | paymentCode | errorMessage                            |
-      | 0           | Payment has been successfully processed |
+      | paymentCode | errorMessage |
+      | 0           | Ok           |
 
-  @cardinalCommerce @mockData
+  @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
     When THREEDQUERY response set to "entrolled Y"
     And ACS response set to "<actionCode>"
@@ -276,5 +275,5 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     And User will see error code: "<paymentCode>"
     Examples:
-      | actionCode | errorMessage        |
-      | ERROR      | "An error occurred" |
+      | actionCode | errorMessage      |
+      | ERROR      | An error occurred |

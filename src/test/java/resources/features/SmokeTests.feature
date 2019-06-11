@@ -170,3 +170,15 @@ Feature: Smoke tests
     Examples:
       | language |
       | fr_FR    |
+
+  @smokeTest @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <paymentCode> response code
+    When THREEDQUERY response set to "entrolled Y"
+    And ACS response set to "OK"
+    And AUTH response set to "<paymentCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    Examples:
+      | paymentCode | errorMessage |
+      | 0           | Ok           |
