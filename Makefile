@@ -61,7 +61,7 @@ test_edge_18_w10_fullTest:
 test_edge_17_w10_fullTest:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=Edge -Dbrowser_version=17.0 -Dresolution=1920x1080 -Dcucumber.options="--tags @fullTest"
 
-test_safari_12_0_osxmoj:_fullTest:
+test_safari_12_0_osxmoj_fullTest:
 	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=Safari -Dbrowser_version=12.0 -Dresolution=1920x1080 -Dcucumber.options="--tags @fullTest"
 
 test_safari_11_1_osxhs_fullTest:
@@ -184,7 +184,7 @@ test_edge_18_w10_smokeTest:
 test_edge_17_w10_smokeTest:
 	mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=Edge -Dbrowser_version=17.0 -Dresolution=1920x1080 -Dcucumber.options="--tags @smokeTest"
 
-test_safari_12_0_osxmoj:_smokeTest:
+test_safari_12_0_osxmoj_smokeTest:
 	mvn install -DLOCAL=true -Dos="OS X" -Dos_version=Mojave -Dbrowser=Safari -Dbrowser_version=12.0 -Dresolution=1920x1080 -Dcucumber.options="--tags @smokeTest"
 
 test_safari_11_1_osxhs_fullTest:
