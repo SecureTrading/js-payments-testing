@@ -264,15 +264,17 @@ public class PaymentPageSteps {
         }
     }
 
-    @Then("^User will see that Submit button is disabled during payment process$")
-    public void userWillSeeThatSubmitButtonIsDisabledDuringPaymentProcess() {
-        paymentPage.validateIfSubmitButtonIsDisabledDuringPayment();
-    }
-
-    @And("^User will see that Submit button is enabled after payment$")
+    @Then("^User will see that Submit button is enabled after payment$")
     public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() {
         paymentPage.validateIfNotificationFrameIsDisplayed();
-        paymentPage.validateIfSubmitButtonIsEnabledAfterPayment();
+        paymentPage.validateIfElementIsEnabledAfterPayment("submitButton");
+    }
+
+    @And("^User will see that all input fields are enabled$")
+    public void userWillSeeThatAllInputFieldsAreEnabled() {
+        paymentPage.validateIfElementIsEnabledAfterPayment("cardNumberInput");
+        paymentPage.validateIfElementIsEnabledAfterPayment("cvcInput");
+        paymentPage.validateIfElementIsEnabledAfterPayment("expirationDateInput");
     }
 
 

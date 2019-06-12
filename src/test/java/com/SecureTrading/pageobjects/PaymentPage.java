@@ -111,12 +111,30 @@ public class PaymentPage extends BasePage {
         return isFlipped;
     }
 
-    public boolean checkIfSubmitButtonIsDisabled() {
-        boolean isDisabled = false;
-        String buttonState = getAttribute(SeleniumExecutor.getDriver().findElement(payMockButton), "class");
-        if (buttonState.contains("disabled"))
-            isDisabled = true;
-
+    public boolean checkIfElementIsEnabled(String element) {
+        boolean isDisabled = true;
+        switch (element) {
+            case "cardNumberInput":
+                switchToIframe(cardNumberFrameName);
+                if (getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField), "class").contains("disabled"))
+                    isDisabled = false;
+                break;
+            case "cvcInput":
+                switchToIframe(cvcFrameName);
+                if (getAttribute(SeleniumExecutor.getDriver().findElement(cvcInputField), "class").contains("disabled"))
+                    isDisabled = false;
+                break;
+            case "expirationDateInput":
+                switchToIframe(expirationDateFrameName);
+                if (getAttribute(SeleniumExecutor.getDriver().findElement(expirationDateInputField), "class").contains("disabled"))
+                    isDisabled = false;
+                break;
+            case "submitButton":
+                if (getAttribute(SeleniumExecutor.getDriver().findElement(payMockButton), "class").contains("disabled"))
+                    isDisabled = false;
+                break;
+        }
+        switchToDefaultIframe();
         return isDisabled;
     }
 
@@ -376,18 +394,11 @@ public class PaymentPage extends BasePage {
                 checkIfFieldIsHighlighted(fieldType));
     }
 
-    public void validateIfSubmitButtonIsDisabledDuringPayment() {
+    public void validateIfElementIsEnabledAfterPayment(String element) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Submit button should be disabled but it isn't ");
+                element + " should be enabled but it isn't ");
         Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfSubmitButtonIsDisabled());
-    }
-
-    public void validateIfSubmitButtonIsEnabledAfterPayment() {
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Submit button should be enabled but it isn't ");
-        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfSubmitButtonIsDisabled());
+                checkIfElementIsEnabled(element));
     }
 
     public void validateIfNotificationFrameIsDisplayed() {
