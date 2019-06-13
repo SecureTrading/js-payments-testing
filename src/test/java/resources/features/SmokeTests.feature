@@ -112,7 +112,7 @@ Feature: Smoke tests
   @smokeTest @fullTest
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-    And InvalidField response set for <field>
+    And InvalidField response set for "<field>"
     And User clicks Pay button
     Then User will see notification frame with message: "Invalid field"
     And User will see that notification frame has "red" color
