@@ -298,6 +298,26 @@ public class PaymentPage extends BasePage {
         return highlight;
     }
 
+    public boolean checkIfMerchantFieldIsHighlighted(MerchantFieldType fieldType) {
+        boolean ishighlighted = false;
+        String className = "";
+        switch (fieldType) {
+            case name:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(merchantName),"class");
+                break;
+            case email:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(merchantEmail),"class");
+                break;
+            case phone:
+                className = getAttribute(SeleniumExecutor.getDriver().findElement(merchantPhone),"class");
+                break;
+        }
+        if(className.contains("error-field"))
+            ishighlighted = true;
+
+        return ishighlighted;
+    }
+
 
     public boolean checkIfCardinalAuthModalIsDisplayed() throws InterruptedException {
         waitUntilModalIsDisplayed(cardinalCommerceAuthModal);

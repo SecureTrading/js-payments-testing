@@ -1,0 +1,17 @@
+{
+  "requestreference": "W41-banp2pub",
+  "version": "1.00",
+  "response": [
+    {
+      "transactionreference": "41-9-32008",
+      "transactionstartedtimestamp": "2019-06-13 07:35:21",
+      "errormessage": "Invalid field",
+      "errorcode": "30000",
+      "requesttypedescription": "ERROR",
+      "errordata": [
+        "billingemail"
+      ]
+    }
+  ],
+  "secrand": "zypyjXcC6dO9p"
+}
