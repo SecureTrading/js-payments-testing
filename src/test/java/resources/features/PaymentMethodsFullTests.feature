@@ -149,13 +149,13 @@ Feature: Payment methods
       | Decline     | "Decline"                                 | red    |
       | Cancel      | "Payment has been cancelled"              | yellow |
 
-  #ToDo - unblocking button after payment functionality required
-  Scenario: Checking submit button state during and after payment
+  @fullTest @unlockPaymentForm
+  Scenario: hecking payment form state after payment with Error
     When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
     And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "0"
-    Then User will see that Submit button is disabled during payment process
-#    And User will see that Submit button is enabled after payment
+    And User clicks Pay button - AUTH response set to "99999"
+    Then User will see that Submit button is enabled after payment
+    And User will see that all input fields are enabled
 
   #ToDo - Complete labels translation: Pay button, name, email. phone
   @fullTest @translations

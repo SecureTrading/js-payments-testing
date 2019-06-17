@@ -170,3 +170,11 @@ Feature: Smoke tests
     Examples:
       | language |
       | fr_FR    |
+
+  @smokeTest @fullTest @unlockPaymentForm
+  Scenario: Checking payment form state after Success payment
+    When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
+    And THREEDQUERY response set to "not-entrolled N"
+    And User clicks Pay button - AUTH response set to "0"
+    Then User will see that Submit button is enabled after payment
+    And User will see that all input fields are enabled
