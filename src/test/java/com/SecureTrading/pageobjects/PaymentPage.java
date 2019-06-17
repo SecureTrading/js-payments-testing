@@ -183,7 +183,7 @@ public class PaymentPage extends BasePage {
                 + inputLocator.toString().substring(7) + "').dispatchEvent(new Event('input'))");
     }
 
-    public void fillAllCardData(String cardNumber, String expiryDate, String cvc) {
+    public void fillAllCardData(String cardNumber, String expiryDate, String cvc) throws InterruptedException {
         if (System.getProperty("device") != null && System.getProperty("device").startsWith("i")) {
             fillCreditCardInputFieldByJavaScript(CardFieldType.number, cardNumber);
             fillCreditCardInputFieldByJavaScript(CardFieldType.expiryDate, expiryDate);
@@ -203,7 +203,7 @@ public class PaymentPage extends BasePage {
         fillMerchantInputField(MerchantFieldType.phone, phone);
     }
 
-    public void fillCreditCardInputField(CardFieldType fieldType, String value) {
+    public void fillCreditCardInputField(CardFieldType fieldType, String value) throws InterruptedException {
         switchToFrameByFieldType(fieldType);
         switch (fieldType) {
         case number:
@@ -213,7 +213,12 @@ public class PaymentPage extends BasePage {
             sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
             break;
         case expiryDate:
-            sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
+            if(System.getProperty("browser") != null && System.getProperty("browser").startsWith("IE")){
+                sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0,2));
+                Thread.sleep(1000);
+                sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3,5));
+            } else
+                sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
             break;
         }
         switchToDefaultIframe();

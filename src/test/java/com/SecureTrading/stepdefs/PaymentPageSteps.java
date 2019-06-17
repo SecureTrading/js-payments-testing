@@ -39,9 +39,8 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
-
             //Additional try for IE problems
-            if(SeleniumExecutor.getDriver().getTitle().contains("Can't reach this page")){
+            if(!SeleniumExecutor.getDriver().getTitle().contains("Secure")){
                 Thread.sleep(4000);
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
             }
@@ -50,7 +49,7 @@ public class PaymentPageSteps {
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
-            String cardNumber, String expirationDate, String cvc) {
+            String cardNumber, String expirationDate, String cvc) throws InterruptedException {
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
@@ -77,7 +76,7 @@ public class PaymentPageSteps {
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc(
-            String cardNumber, String expirationDate, String cvc) {
+            String cardNumber, String expirationDate, String cvc) throws InterruptedException {
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
