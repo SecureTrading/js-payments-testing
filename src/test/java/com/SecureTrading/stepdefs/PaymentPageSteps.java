@@ -18,10 +18,7 @@ import cucumber.api.java.en.When;
 import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
-import util.enums.CardFieldType;
-import util.enums.PaymentType;
-import util.enums.PropertyType;
-import util.enums.StoredElement;
+import util.enums.*;
 
 import java.io.IOException;
 
@@ -241,6 +238,12 @@ public class PaymentPageSteps {
         paymentPage.validateIfFieldIsHighlighted(CardFieldType.fromString(field));
     }
 
+    @Then("^User will see that merchant field \"([^\"]*)\" is highlighted$")
+    public void userWillSeeThatMerchantFieldIsHighlighted(String field) {
+        scrollToTopOfPage();
+        paymentPage.checkIfMerchantFieldIsHighlighted(MerchantFieldType.fromString(field));
+    }
+
     @And("^User will see that all fields are highlighted$")
     public void userWillSeeThatAllFieldsAreHighlighted() {
         paymentPage.validateIfFieldIsHighlighted(CardFieldType.number);
@@ -248,7 +251,7 @@ public class PaymentPageSteps {
         paymentPage.validateIfFieldIsHighlighted(CardFieldType.cvc);
     }
 
-    @And("^InvalidField response set for ([^\"]*)")
+    @And("^InvalidField response set for \"([^\"]*)\"$")
     public void invalidfieldResponseSetForField(String fieldType) {
         switch (fieldType) {
             case "number":
@@ -259,6 +262,9 @@ public class PaymentPageSteps {
                 break;
             case "cvc":
                 stubSTRequestType("cvvInvalidField.json", "THREEDQUERY");
+                break;
+            case "email":
+                stubSTRequestType("emailInvalidField.json", "THREEDQUERY");
                 break;
         }
     }

@@ -111,7 +111,7 @@ Feature: Payment methods
   @fullTest @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-    And InvalidField response set for <field>
+    And InvalidField response set for "<field>"
     And User clicks Pay button
     Then User will see notification frame with message: "Invalid field"
     And User will see that notification frame has "red" color
@@ -127,6 +127,16 @@ Feature: Payment methods
     When User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
     And User clicks Pay button
     And User will see "Value mismatch pattern" message under field: "cvc"
+
+  @fullTest @fieldsValidation
+  Scenario: Checking merchant field validation - invalid email
+    When User fills merchant data with name "John Test", email "test@example", phone "44422224444"
+    And User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
+    And InvalidField response set for "email"
+    And User clicks Pay button
+    Then User will see that merchant field "email" is highlighted
+    And User will see notification frame with message: "Invalid field"
+    And User will see that notification frame has "red" color
 
   @fullTest @walletTest @visaTest @mockData
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
