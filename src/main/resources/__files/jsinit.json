@@ -1,22 +1,3 @@
 {
-  "requestreference": "W42-afw1kgbu",
-  "version": "1.00",
-  "response": [
-    {
-      "transactionstartedtimestamp": "2019-04-19 08:08:22",
-      "livestatus": "1",
-      "errorcode": "0",
-      "transactionreference": "42-14-119",
-      "cachetoken": "acachetoken",
-      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
-      "baseamount": "1000",
-      "accounttypedescription": "ECOM",
-      "requesttypedescription": "JSINIT",
-      "currencyiso3a": "GBP",
-      "errormessage": "Ok",
-      "operatorname": "live2_autojwt",
-      "threedinit": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJSZWZlcmVuY2VJZCI6IjIzLWNmODk2MWFhYzY4Mzg2NmQwNWEyMTEwNjA1NzQyMTNkZDc5N2ExNmIxYzMxYWE0YjRkZWIyNGY0MzE5NzRmZDciLCJpc3MiOiI1YzEyODg0NWMxMWI5MjIwZGMwNDZlOGUiLCJqdGkiOiIyMy1jZjg5NjFhYWM2ODM4NjZkMDVhMjExMDYwNTc0MjEzZGQ3OTdhMTZiMWMzMWFhNGI0ZGViMjRmNDMxOTc0ZmQ3IiwiaWF0IjoxNTU4MzU4ODQxLCJQYXlsb2FkIjp7Ik9yZGVyRGV0YWlscyI6eyJBbW91bnQiOjEwMDAsIkN1cnJlbmN5Q29kZSI6IjgyNiJ9fSwiT3JnVW5pdElkIjoiNWMxMTNlOGU2ZmUzZDEyNDYwMTQxODY4In0.UqqizRZE9U6Bjia-yB1kHz0Xt_jdciQTEsF4CQ4ypY8"
-    }
-  ],
-  "secrand": "mc4T0wgPUA0NPr"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6Ilc0Mi1hZncxa2didSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7InRyYW5zYWN0aW9uc3RhcnRlZHRpbWVzdGFtcCI6IjIwMTktMDQtMTkgMDg6MDg6MjIiLCJsaXZlc3RhdHVzIjoiMSIsImVycm9yY29kZSI6IjAiLCJ0cmFuc2FjdGlvbnJlZmVyZW5jZSI6IjQyLTE0LTExOSIsImNhY2hldG9rZW4iOiJhY2FjaGV0b2tlbiIsIm1lcmNoYW50bmFtZSI6IkxpdmUgVW5pdHRlc3QgU2l0ZSA8PiYhXy09K0AjOjssLi8_T0siLCJiYXNlYW1vdW50IjoiMTAwMCIsImFjY291bnR0eXBlZGVzY3JpcHRpb24iOiJFQ09NIiwicmVxdWVzdHR5cGVkZXNjcmlwdGlvbiI6IkpTSU5JVCIsImN1cnJlbmN5aXNvM2EiOiJHQlAiLCJlcnJvcm1lc3NhZ2UiOiJPayIsIm9wZXJhdG9ybmFtZSI6ImxpdmUyX2F1dG9qd3QiLCJ0aHJlZWRpbml0IjoiZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SlNaV1psY21WdVkyVkpaQ0k2SWpJekxXTm1PRGsyTVdGaFl6WTRNemcyTm1Rd05XRXlNVEV3TmpBMU56UXlNVE5rWkRjNU4yRXhObUl4WXpNeFlXRTBZalJrWldJeU5HWTBNekU1TnpSbVpEY2lMQ0pwYzNNaU9pSTFZekV5T0RnME5XTXhNV0k1TWpJd1pHTXdORFpsT0dVaUxDSnFkR2tpT2lJeU15MWpaamc1TmpGaFlXTTJPRE00Tmpaa01EVmhNakV4TURZd05UYzBNakV6WkdRM09UZGhNVFppTVdNek1XRmhOR0kwWkdWaU1qUm1ORE14T1RjMFptUTNJaXdpYVdGMElqb3hOVFU0TXpVNE9EUXhMQ0pRWVhsc2IyRmtJanA3SWs5eVpHVnlSR1YwWVdsc2N5STZleUpCYlc5MWJuUWlPakV3TURBc0lrTjFjbkpsYm1ONVEyOWtaU0k2SWpneU5pSjlmU3dpVDNKblZXNXBkRWxrSWpvaU5XTXhNVE5sT0dVMlptVXpaREV5TkRZd01UUXhPRFk0SW4wLlVxcWl6UlpFOVU2QmppYS15QjFrSHowWHRfamRjaVFURXNGNENRNHlwWTgifV0sInNlY3JhbmQiOiJtYzRUMHdnUFVBME5QciJ9fQ.8yGpAzaRn6AjFoCTb2N3uYvu-ABQdpH24Wymcl8NcfA"
 }
