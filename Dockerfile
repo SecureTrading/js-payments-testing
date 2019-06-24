@@ -1,4 +1,4 @@
-ARG CODE_VERSION=feature-st-255-handle-multi-requests
+ARG CODE_VERSION=feature-ST-255-handle-multi-requests
 FROM securetrading1/js-payments:${CODE_VERSION}
 COPY . /app/js-payments-testing
 WORKDIR /app/js-payments-testing
