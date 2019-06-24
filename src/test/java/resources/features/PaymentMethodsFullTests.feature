@@ -273,7 +273,7 @@ Feature: Payment methods
     And ACS response set to "<actionCode>"
     And User opens immediate payment page
     Then User will see message "<errorMessage>" displayed on page
-    And User will see error code: "<paymentCode>"
     Examples:
       | actionCode | errorMessage      |
       | ERROR      | An error occurred |
+      | FAILURE    | Merchant decline  |
