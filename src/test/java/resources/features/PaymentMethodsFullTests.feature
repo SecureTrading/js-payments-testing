@@ -264,8 +264,8 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     And User will see error code: "<paymentCode>"
     Examples:
-      | paymentCode | errorMessage |
-      | 0           | Ok           |
+      | paymentCode | errorMessage                            |
+      | 0           | Payment has been successfully processed |
 
   @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
