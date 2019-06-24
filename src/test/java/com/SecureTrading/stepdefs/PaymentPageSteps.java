@@ -35,6 +35,11 @@ public class PaymentPageSteps {
         if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
+            //Accept self signed certificates for Safari purpose
+            if(System.getProperty("browser") != null && System.getProperty("browser").startsWith("Safari")) {
+                SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+            }
+
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
             //Additional try for IE problems
             if(!SeleniumExecutor.getDriver().getTitle().contains("Secure")){
