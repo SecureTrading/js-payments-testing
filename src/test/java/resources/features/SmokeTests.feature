@@ -10,9 +10,9 @@ Feature: Smoke tests
     And User clicks Pay button - AUTH response set to "<paymentCode>"
     Then User will see information about payment status "Payment has been successfully processed"
     Examples:
-      | paymentCode | cardNumber       | expirationDate | cvc  | cardType   |
-      | 0           | 340000000000611  | 12/22          | 1234 | AMEX       |
-      | 0           | 4111110000000211 | 12/22          | 123  | VISA       |
+      | paymentCode | cardNumber       | expirationDate | cvc  | cardType |
+      | 0           | 340000000000611  | 12/22          | 1234 | AMEX     |
+      | 0           | 4111110000000211 | 12/22          | 123  | VISA     |
 
   @smokeTest @fullTest
   Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <paymentCode> response code
@@ -35,8 +35,8 @@ Feature: Smoke tests
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 60022       | "Unauthenticated"                         | red   |
+      | paymentCode | paymentStatusMessage | color |
+      | 60022       | "Unauthenticated"    | red   |
 
   @smokeTest @fullTest
   Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
@@ -69,8 +69,8 @@ Feature: Smoke tests
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | actionCode | paymentStatusMessage                      | color |
-      | FAILURE    | "Merchant decline"                        | red   |
+      | actionCode | paymentStatusMessage | color |
+      | FAILURE    | "Merchant decline"   | red   |
 
   @smokeTest @fullTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
@@ -79,9 +79,9 @@ Feature: Smoke tests
     And User will see the same provided data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
     And User will see that animated card is flipped, except for "AMEX"
     Examples:
-      | cardNumber          | formattedCardNumber    | expirationDate | cvc  | cardType     |
-      | 340000000000611     | 3400 000000 00611      | 12/22          | 1234 | AMEX         |
-      | 4111110000000211    | 4111 1100 0000 0211    | 12/22          | 123  | VISA         |
+      | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
+      | 340000000000611  | 3400 000000 00611   | 12/22          | 1234 | AMEX     |
+      | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
 
   @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
@@ -96,8 +96,8 @@ Feature: Smoke tests
     And User will see "Field is required" message under field: "<field>"
     And User will see that <field> field is highlighted
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      |                  | 12/22      | 123 | number     |
+      | cardNumber | expiration | cvc | field  |
+      |            | 12/22      | 123 | number |
 
   @smokeTest @fullTest
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
@@ -106,8 +106,8 @@ Feature: Smoke tests
     And User will see "Value mismatch pattern" message under field: "<field>"
     And User will see that <field> field is highlighted
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      | 4000000000001000 | 12/22      | 12  | cvc        |
+      | cardNumber       | expiration | cvc | field |
+      | 4000000000001000 | 12/22      | 12  | cvc   |
 
   @smokeTest @fullTest
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
@@ -119,8 +119,8 @@ Feature: Smoke tests
     And User will see "Invalid field" message under field: "<field>"
     And User will see that <field> field is highlighted
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      | 4000000000001000 | 12/22      | 123 | number     |
+      | cardNumber       | expiration | cvc | field  |
+      | 4000000000001000 | 12/22      | 123 | number |
 
   @smokeTest @fullTest
   Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
@@ -128,8 +128,8 @@ Feature: Smoke tests
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color  |
-      | Success     | "Payment has been successfully processed" | green  |
+      | paymentCode | paymentStatusMessage                      | color |
+      | Success     | "Payment has been successfully processed" | green |
 
   @smokeTest @fullTest
   Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
@@ -137,8 +137,8 @@ Feature: Smoke tests
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
     Examples:
-      | paymentCode | paymentStatusMessage                      | color  |
-      | Success     | "Payment has been successfully processed" | green  |
+      | paymentCode | paymentStatusMessage                      | color |
+      | Success     | "Payment has been successfully processed" | green |
 
     #ToDo - Complete labels translation: Pay button, name, email. phone
   @smokeTest @fullTest
@@ -178,3 +178,15 @@ Feature: Smoke tests
     And User clicks Pay button - AUTH response set to "0"
     Then User will see that Submit button is enabled after payment
     And User will see that all input fields are enabled
+
+  @smokeTest @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <paymentCode> response code
+    When THREEDQUERY response set to "entrolled Y"
+    And ACS response set to "OK"
+    And AUTH response set to "<paymentCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    Examples:
+      | paymentCode | errorMessage                            |
+      | 0           | Payment has been successfully processed |
