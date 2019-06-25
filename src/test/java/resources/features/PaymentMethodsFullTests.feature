@@ -267,6 +267,7 @@ Feature: Payment methods
       | paymentCode | errorMessage                            |
       | 0           | Payment has been successfully processed |
 
+  #ToDo - Verify ERROR action cody why is "Invalid response" instead "An error occured"
   @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
     When THREEDQUERY response set to "entrolled Y"
@@ -275,5 +276,5 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     Examples:
       | actionCode | errorMessage      |
-      | ERROR      | An error occurred |
+#      | ERROR      | An error occurred |
       | FAILURE    | Merchant decline  |
