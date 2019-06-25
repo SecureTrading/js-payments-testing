@@ -3,14 +3,12 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static util.JsonHandler.getTranslationFromJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
-import cucumber.api.PendingException;
+import com.SecureTrading.pageobjects.AnimatedCardModule;
 import com.SecureTrading.pageobjects.PaymentPage;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -25,9 +23,11 @@ import java.io.IOException;
 public class PaymentPageSteps {
 
     private PaymentPage paymentPage;
+    private AnimatedCardModule animatedCardModule;
 
     public PaymentPageSteps() {
         paymentPage = new PaymentPage();
+        animatedCardModule = new AnimatedCardModule();
     }
 
     @Given("^User opens page with payment form$")
@@ -38,13 +38,13 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as payment form is not required for immediate payment");
         } else {
             //Accept self signed certificates for Safari purpose
-            if(System.getProperty("browser") != null && System.getProperty("browser").startsWith("Safari")) {
+            if (System.getProperty("browser") != null && System.getProperty("browser").startsWith("Safari")) {
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
             }
 
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
             //Additional try for IE problems
-            if(!SeleniumExecutor.getDriver().getTitle().contains("Secure")){
+            if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
                 Thread.sleep(4000);
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
             }
@@ -70,12 +70,12 @@ public class PaymentPageSteps {
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
-        paymentPage.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
+        animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
     }
 
     @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
     public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) {
-        paymentPage.validateIfAnimatedCardIsFlipped(cardType);
+        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType);
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
@@ -92,7 +92,7 @@ public class PaymentPageSteps {
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
                                                                                                  String expirationDate, String cvc) {
-        paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
+        animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
     }
 
     @Then("^User will see information about payment status \"([^\"]*)\"$")
