@@ -5,6 +5,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import org.junit.Assume;
 import util.PicoContainerHelper;
+import util.enums.RequestType;
 import util.enums.StoredElement;
 
 public class BeforeHooks {
@@ -13,6 +14,6 @@ public class BeforeHooks {
     public void beforeScenario(Scenario scenario) {
         PicoContainerHelper.cleanContainer();
         PicoContainerHelper.updateInContainer(StoredElement.scenarioName, scenario.getName());
-        stubSTRequestType("jsinit.json", "JSINIT"); // Stub so Cardinal can init but don't use cardinal
+        stubSTRequestType("jsinit.json", RequestType.JSINIT); // Stub so Cardinal can init but don't use cardinal
     }
 }

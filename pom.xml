@@ -177,7 +177,7 @@
               <monochrome>true</monochrome>
               <!-- The tags to run, maps to CucumberOptions.tags property -->
               <tags>
-                <tag>@animatedCard</tag>
+                <tag>@smokeTest</tag>
               </tags>
               <parallelScheme>FEATURE</parallelScheme>
               <namingScheme>pattern</namingScheme>

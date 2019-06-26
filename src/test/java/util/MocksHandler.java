@@ -5,6 +5,7 @@ import static util.PropertiesHandler.getProperty;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import util.enums.PropertyType;
+import util.enums.RequestType;
 
 public class MocksHandler {
 
@@ -13,22 +14,22 @@ public class MocksHandler {
                                 Integer.parseInt(getProperty(PropertyType.PORT)));
         }
 
-        public static void stubSTRequestType(String mockJson, String requestType) {
+        public static void stubSTRequestType(String mockJson, RequestType requestType) {
                 MocksHandler.stubUrlOptionsForCors(PropertyType.GATEWAY_MOCK_URI);
                 MocksHandler.configureForLocalhost();
                 WireMock.stubFor(post(urlEqualTo(getProperty(PropertyType.GATEWAY_MOCK_URI)))
-                                .withRequestBody(containing(requestType))
+                                .withRequestBody(containing(requestType.toString()))
                                 .willReturn(aResponse().withStatus(200).withHeader("Access-Control-Allow-Origin", "*")
                                                 .withHeader("Access-Control-Allow-Headers", "Content-Type")
                                                 .withHeader("Access-Control-Allow-Methods", "GET, POST")
                                                 .withBodyFile(mockJson)));
         }
 
-        public static void stubSTRequestTypeServerError(String requestType) {
+        public static void stubSTRequestTypeServerError(RequestType requestType) {
                 MocksHandler.stubUrlOptionsForCors(PropertyType.GATEWAY_MOCK_URI);
                 MocksHandler.configureForLocalhost();
                 WireMock.stubFor(post(urlEqualTo(getProperty(PropertyType.GATEWAY_MOCK_URI)))
-                                .withRequestBody(containing(requestType))
+                                .withRequestBody(containing(requestType.toString()))
                                 .willReturn(aResponse().withStatus(500).withHeader("Access-Control-Allow-Origin", "*")
                                                 .withHeader("Access-Control-Allow-Headers", "Content-Type")
                                                 .withHeader("Access-Control-Allow-Methods", "GET, POST")));

@@ -7,73 +7,70 @@ Feature: Payment methods
     Given User opens page with payment form
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <paymentCode> response code
+  Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <actionCode> response code
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
-    And THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "OK"
-    And User clicks Pay button - AUTH response set to "<paymentCode>"
+    And THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 0           | "Payment has been successfully processed" | green |
-      | 70000       | "Decline"                                 | red   |
+      | actionCode | paymentStatusMessage                      | color |
+      | OK         | "Payment has been successfully processed" | green |
+      | DECLINE    | "Decline"                                 | red   |
     Examples:
-      | paymentCode | paymentStatusMessage   | color |
-      | 30000       | "Invalid field"        | red   |
-      | 50000       | "Socket receive error" | red   |
-      | 60022       | "Unauthenticated"      | red   |
-      | 99999       | "Unknown error"        | red   |
+      | actionCode      | paymentStatusMessage   | color |
+      | INVALID_FIELD   | "Invalid field"        | red   |
+      | SOCKET_ERROR    | "Socket receive error" | red   |
+      | UNAUTHENTICATED | "Unauthenticated"      | red   |
+      | UNKNOWN_ERROR   | "Unknown error"        | red   |
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <paymentCode> response code
+  Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <actionCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "<paymentCode>"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 60022       | "Unauthenticated"    | red   |
+      | actionCode      | paymentStatusMessage | color |
+      | UNAUTHENTICATED | "Unauthenticated"    | red   |
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 0           | "Payment has been successfully processed" | green |
-      | 70000       | "Decline"                                 | red   |
+      | actionCode | paymentStatusMessage                      | color |
+      | OK         | "Payment has been successfully processed" | green |
+      | DECLINE    | "Decline"                                 | red   |
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <paymentCode> response code
+  Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <actionCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled U"
-    And User clicks Pay button - AUTH response set to "<paymentCode>"
+    And THREEDQUERY response set to NOT_ENROLLED_U
+    And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | 0           | "Payment has been successfully processed" | green |
+      | actionCode | paymentStatusMessage                      | color |
+      | OK         | "Payment has been successfully processed" | green |
     Examples:
-      | paymentCode | paymentStatusMessage | color |
-      | 60022       | "Unauthenticated"    | red   |
-      | 70000       | "Decline"            | red   |
+      | actionCode      | paymentStatusMessage | color |
+      | UNAUTHENTICATED | "Unauthenticated"    | red   |
+      | DECLINE         | "Decline"            | red   |
 
   @smokeTest @fullTest
-  Scenario Outline: Cardincal Commerce - check THREEDQUERY response for code: <paymentCode>
+  Scenario: Cardincal Commerce - check THREEDQUERY response for code: "INVALID_ACQUIRER"
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "<paymentCode>"
+    And THREEDQUERY response set to INVALID_ACQUIRER
     And User clicks Pay button
-    Then User will see information about payment status <paymentStatusMessage>
-    And User will see that notification frame has "<color>" color
-    Examples:
-      | paymentCode | paymentStatusMessage              | color |
-      | 60031       | "Invalid acquirer for 3-D Secure" | red   |
+    Then User will see information about payment status "Invalid acquirer for 3-D Secure"
+    And User will see that notification frame has "red" color
 
   @fullTest @cardinalCommerce @mockData
   Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <actionCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "<actionCode>"
+    And THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to <actionCode>
     And User clicks Pay button
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
@@ -89,17 +86,17 @@ Feature: Payment methods
   @fullTest @cardinalCommerce
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "<paymentCode>"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to OK
     Then User will see information about payment status "Payment has been successfully processed"
   @smokeTest
     Examples:
-      | paymentCode | cardNumber       | expirationDate | cvc  | cardType |
-      | 0           | 340000000000611  | 12/22          | 1234 | AMEX     |
-      | 0           | 4111110000000211 | 12/22          | 123  | VISA     |
+      | cardNumber       | expirationDate | cvc  | cardType |
+      | 340000000000611  | 12/22          | 1234 | AMEX     |
+      | 4111110000000211 | 12/22          | 123  | VISA     |
     Examples:
-      | paymentCode | cardNumber       | expirationDate | cvc | cardType   |
-      | 0           | 5100000000000511 | 12/22          | 123 | MASTERCARD |
+      | cardNumber       | expirationDate | cvc | cardType   |
+      | 5100000000000511 | 12/22          | 123 | MASTERCARD |
 
   @fullTest @animatedCard
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
@@ -132,51 +129,51 @@ Feature: Payment methods
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>" expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
     And User clicks Pay button
-    And User will see "Field is required" message under field: "<field>"
+    And User will see "Field is required" message under field: <field>
     And User will see that <field> field is highlighted
   @smokeTest
     Examples:
-      | cardNumber | expiration | cvc | field  |
-      |            | 12/22      | 123 | number |
+      | cardNumber | expiration | cvc | field       |
+      |            | 12/22      | 123 | CARD_NUMBER |
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      | 4000000000001000 |            | 123 | expiryDate |
-      | 4000000000001000 | 12/22      |     | cvc        |
+      | cardNumber       | expiration | cvc | field       |
+      | 4000000000001000 |            | 123 | EXPIRY_DATE |
+      | 4000000000001000 | 12/22      |     | CVC         |
 
   @fullTest @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
     And User clicks Pay button
-    And User will see "Value mismatch pattern" message under field: "<field>"
+    And User will see "Value mismatch pattern" message under field: <field>
     And User will see that <field> field is highlighted
   @smokeTest
     Examples:
       | cardNumber       | expiration | cvc | field |
-      | 4000000000001000 | 12/22      | 12  | cvc   |
+      | 4000000000001000 | 12/22      | 12  | CVC   |
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      | 40000000         | 12/22      | 123 | number     |
-      | 4000000000001000 | 12         | 123 | expiryDate |
-      | 4000000000009999 | 12/22      | 123 | number     |
-      | 4000000000001000 | 44/22      | 123 | expiryDate |
+      | cardNumber       | expiration | cvc | field       |
+      | 40000000         | 12/22      | 123 | CARD_NUMBER |
+      | 4000000000001000 | 12         | 123 | EXPIRY_DATE |
+      | 4000000000009999 | 12/22      | 123 | CARD_NUMBER |
+      | 4000000000001000 | 44/22      | 123 | EXPIRY_DATE |
 
   @fullTest @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-    And InvalidField response set for "<field>"
+    And InvalidField response set for <field>
     And User clicks Pay button
     Then User will see notification frame with message: "Invalid field"
     And User will see that notification frame has "red" color
-    And User will see "Invalid field" message under field: "<field>"
+    And User will see "Invalid field" message under field: <field>
     And User will see that <field> field is highlighted
   @smokeTest
     Examples:
-      | cardNumber       | expiration | cvc | field  |
-      | 4000000000001000 | 12/22      | 123 | number |
+      | cardNumber       | expiration | cvc | field       |
+      | 4000000000001000 | 12/22      | 123 | CARD_NUMBER |
     Examples:
-      | cardNumber       | expiration | cvc | field      |
-      | 4000000000001000 | 12/15      | 123 | expiryDate |
-      | 4000000000001000 | 12/22      | 000 | cvc        |
+      | cardNumber       | expiration | cvc | field       |
+      | 4000000000001000 | 12/15      | 123 | EXPIRY_DATE |
+      | 4000000000001000 | 12/22      | 000 | CVC         |
 
   @fullTest @fieldsValidation
   Scenario: Filling 3-number of cvc code for AMEX card
@@ -190,53 +187,53 @@ Feature: Payment methods
     And User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
     And InvalidField response set for "email"
     And User clicks Pay button
-    Then User will see that merchant field "email" is highlighted
+    Then User will see that merchant field EMAIL is highlighted
     And User will see notification frame with message: "Invalid field"
     And User will see that notification frame has "red" color
 
   @fullTest @walletTest @visaTest
-  Scenario Outline: Visa Checkout - checking payment status for <paymentCode> response code
-    When User chooses Visa Checkout as payment method - response set to "<paymentCode>"
+  Scenario Outline: Visa Checkout - checking payment status for <actionCode> response code
+    When User chooses Visa Checkout as payment method - response set to <actionCode>
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | Success     | "Payment has been successfully processed" | green |
+      | actionCode | paymentStatusMessage                      | color |
+      | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
-      | paymentCode | paymentStatusMessage         | color  |
-      | Error       | "An error occurred"          | red    |
-      | Cancel      | "Payment has been cancelled" | yellow |
+      | actionCode | paymentStatusMessage         | color  |
+      | ERROR      | "An error occurred"          | red    |
+      | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
-  Scenario Outline: ApplePay - checking payment status for <paymentCode> response code
-    When User chooses ApplePay as payment method - response set to "<paymentCode>"
+  Scenario Outline: ApplePay - checking payment status for <actionCode> response code
+    When User chooses ApplePay as payment method - response set to "<actionCode>"
     Then User will see information about payment status <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
-      | paymentCode | paymentStatusMessage                      | color |
-      | Success     | "Payment has been successfully processed" | green |
+      | actionCode | paymentStatusMessage                      | color |
+      | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
-      | paymentCode | paymentStatusMessage         | color  |
-#      | Error       | "An error occurred"          | red    |
-      | Decline     | "Decline"                    | red    |
-      | Cancel      | "Payment has been cancelled" | yellow |
+      | actionCode | paymentStatusMessage         | color  |
+#      | ERROR       | "An error occurred"          | red    |
+      | DECLINE    | "Decline"                    | red    |
+      | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @unlockPaymentForm
   Scenario Outline: Checking payment form state after payment with Error
     When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "<paymentCode>"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see that Submit button is enabled after payment
     And User will see that all input fields are enabled
   @smokeTest
     Examples:
-      | paymentCode |
-      | 0           |
+      | actionCode |
+      | OK         |
     Examples:
-      | paymentCode |
-      | 99999       |
+      | actionCode |
+      | DECLINE    |
 
   #ToDo - Complete labels translation: Pay button, name, email. phone
   @fullTest @translations
@@ -266,7 +263,7 @@ Feature: Payment methods
   Scenario Outline: Checking translation for fields validation translated into <language>
     When User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
     And User clicks Pay button
-    Then User will see validation message "Value mismatch pattern" under "number" field translated into <language>
+    Then User will see validation message "Value mismatch pattern" under CARD_NUMBER field translated into <language>
     Examples:
       | language |
       | fr_FR    |
@@ -289,8 +286,8 @@ Feature: Payment methods
   Scenario Outline: Cardincal Commerce - checking translation for "Success" status for <language>
     When User changes page language to <language>
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "0"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to OK
     Then User will see information about "Success" payment status translated into <language>
   @smokeTest
     Examples:
@@ -305,8 +302,8 @@ Feature: Payment methods
   Scenario Outline: Cardincal Commerce - checking translation for "Unknown error" status for <language>
     When User changes page language to <language>
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to "not-entrolled N"
-    And User clicks Pay button - AUTH response set to "99999"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to UNKNOWN_ERROR
     Then User will see information about "Unknown error" payment status translated into <language>
     Examples:
       | language |
@@ -316,7 +313,7 @@ Feature: Payment methods
   @fullTest @translations
   Scenario Outline: Visa Checkout - checking translation for "Error" status for <language>
     When User changes page language to <language>
-    And User chooses Visa Checkout as payment method - response set to "Error"
+    And User chooses Visa Checkout as payment method - response set to ERROR
     Then User will see information about "Error" payment status translated into <language>
   @smokeTest
     Examples:
@@ -338,37 +335,34 @@ Feature: Payment methods
       | de_DE    |
 
   @fullTest @immediatePayment @mockData
-  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <paymentCode> response code
-    When THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "OK"
-    And AUTH response set to "<paymentCode>"
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
+    When THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And AUTH response set to "<actionCode>"
     And User opens immediate payment page
     Then User will see message "<errorMessage>" displayed on page
     And User will see error code: "<paymentCode>"
   @smokeTest
     Examples:
-      | paymentCode | errorMessage                            |
-      | 0           | Payment has been successfully processed |
+      | actionCode | errorMessage                            | paymentCode |
+      | OK         | Payment has been successfully processed | 0           |
     Examples:
-      | paymentCode | errorMessage |
-      | 70000       | Decline      |
+      | actionCode | errorMessage | paymentCode |
+      | DECLINE    | Decline      | 70000       |
 
   @fullTest @immediatePayment @mockData
-  Scenario Outline: Immediate payment (card enrolled N) - checking payment status for <paymentCode> response code
-    When THREEDQUERY response set to "enot-entrolled N"
-    And AUTH response set to "<paymentCode>"
+  Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
+    When THREEDQUERY response set to NOT_ENROLLED_N
+    And AUTH response set to "OK"
     And User opens immediate payment page
-    Then User will see message "<errorMessage>" displayed on page
-    And User will see error code: "<paymentCode>"
-    Examples:
-      | paymentCode | errorMessage                            |
-      | 0           | Payment has been successfully processed |
+    Then User will see message "Payment has been successfully processed" displayed on page
+    And User will see error code: "0"
 
   #ToDo - Verify ERROR action cody why is "Invalid response" instead "An error occured"
   @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
-    When THREEDQUERY response set to "entrolled Y"
-    And ACS response set to "<actionCode>"
+    When THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to <actionCode>
     And User opens immediate payment page
     Then User will see message "<errorMessage>" displayed on page
     Examples:

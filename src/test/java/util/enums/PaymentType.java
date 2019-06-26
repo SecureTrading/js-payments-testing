@@ -1,7 +1,9 @@
 package util.enums;
 
 public enum PaymentType {
-    visaCheckout("visaCheckout"), applePay("applePay"), cardinalCommerce("cardinalCommerce");
+    VISA_CHECKOUT("VISA_CHECKOUT"),
+    APPLE_PAY("APPLE_PAY"),
+    CARDINAL_COMMERCE("CARDINAL_COMMERCE");
 
     private String text;
 

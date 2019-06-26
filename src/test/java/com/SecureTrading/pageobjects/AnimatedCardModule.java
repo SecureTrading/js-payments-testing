@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
-import util.enums.CardFieldType;
+import util.enums.FieldType;
 import util.enums.StoredElement;
 
 import static util.helpers.IframeHandler.switchToDefaultIframe;
@@ -49,21 +49,21 @@ public class AnimatedCardModule {
         return isFlipped;
     }
 
-    public String getDataFromAnimatedCreditCard(CardFieldType fieldType) {
+    public String getDataFromAnimatedCreditCard(FieldType fieldType) {
         String data = "";
         switchToIframe(animatedCardFrameName);
         switch (fieldType) {
-            case number:
+            case CARD_NUMBER:
                 data = getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
                 break;
-            case cvc:
+            case CVC:
                 if (PicoContainerHelper.getFromContainer(StoredElement.cardType).toString().contains("AMEX")) {
                     data = getText(SeleniumExecutor.getDriver().findElement(cvcFrontSideAnimatedCard));
                 } else {
                     data = getText(SeleniumExecutor.getDriver().findElement(cvcBackSideAnimatedCard));
                 }
                 break;
-            case expiryDate:
+            case EXPIRY_DATE:
                 data = getText(SeleniumExecutor.getDriver().findElement(expirationDateFromAnimatedCard));
                 break;
         }
@@ -78,7 +78,7 @@ public class AnimatedCardModule {
                 expectedCardIcon, getCardTypeIconFromAnimatedCardText());
     }
 
-    public void validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType fieldType, String expectedData) {
+    public void validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType fieldType, String expectedData) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData
                         + " but was: " + getDataFromAnimatedCreditCard(fieldType));
@@ -102,8 +102,8 @@ public class AnimatedCardModule {
 
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate,
                                                                      String cvc) {
-        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.number, cardNumber);
-        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.expiryDate, expirationDate);
-        validateIfProvidedDataOnAnimatedCardWasAsExpected(CardFieldType.cvc, cvc);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.CARD_NUMBER, cardNumber);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.EXPIRY_DATE, expirationDate);
+        validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.CVC, cvc);
     }
 }
