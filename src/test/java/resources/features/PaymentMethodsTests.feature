@@ -7,12 +7,12 @@ Feature: Payment methods
     Given User opens page with payment form
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card enrolled Y) - checking payment status for <actionCode> response code
+  Scenario Outline: Cardinal Commerce (card enrolled Y) - checking payment status for <actionCode> response code
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to ENROLLED_Y
     And ACS response set to OK
     And User clicks Pay button - AUTH response set to <actionCode>
-    Then User will see information about payment status <paymentStatusMessage>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -27,11 +27,11 @@ Feature: Payment methods
       | UNKNOWN_ERROR   | "Unknown error"        | red   |
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card not-enrolled N) - checking payment status for <actionCode> response code
+  Scenario Outline: Cardinal Commerce (card not-enrolled N) - checking payment status for <actionCode> response code
     When User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to <actionCode>
-    Then User will see information about payment status <paymentStatusMessage>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -43,11 +43,11 @@ Feature: Payment methods
       | DECLINE    | "Decline"                                 | red   |
 
   @fullTest @cardinalCommerce
-  Scenario Outline: Cardincal Commerce (card not-enrolled U) - checking payment status for <actionCode> response code
+  Scenario Outline: Cardinal Commerce (card not-enrolled U) - checking payment status for <actionCode> response code
     And User fills payment form with credit card number "4111110000000401", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_U
     And User clicks Pay button - AUTH response set to <actionCode>
-    Then User will see information about payment status <paymentStatusMessage>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -59,20 +59,20 @@ Feature: Payment methods
       | DECLINE         | "Decline"            | red   |
 
   @smokeTest @fullTest
-  Scenario: Cardincal Commerce - check THREEDQUERY response for code: "INVALID_ACQUIRER"
+  Scenario: Cardinal Commerce - check THREEDQUERY response for code: "INVALID_ACQUIRER"
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to INVALID_ACQUIRER
     And User clicks Pay button
-    Then User will see information about payment status "Invalid acquirer for 3-D Secure"
+    Then User will see payment status information: "Invalid acquirer for 3-D Secure"
     And User will see that notification frame has "red" color
 
   @fullTest @cardinalCommerce @mockData
-  Scenario Outline: Cardincal Commerce (card enrolled Y) - check ACS response for code: <actionCode>
+  Scenario Outline: Cardinal Commerce (card enrolled Y) - check ACS response for code: <actionCode>
     When User fills payment form with credit card number "4111110000000211", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to ENROLLED_Y
     And ACS response set to <actionCode>
     And User clicks Pay button
-    Then User will see information about payment status <paymentStatusMessage>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -88,7 +88,7 @@ Feature: Payment methods
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to OK
-    Then User will see information about payment status "Payment has been successfully processed"
+    Then User will see payment status information: "Payment has been successfully processed"
   @smokeTest
     Examples:
       | cardNumber       | expirationDate | cvc  | cardType |
@@ -194,7 +194,7 @@ Feature: Payment methods
   @fullTest @walletTest @visaTest
   Scenario Outline: Visa Checkout - checking payment status for <actionCode> response code
     When User chooses Visa Checkout as payment method - response set to <actionCode>
-    Then User will see information about payment status <paymentStatusMessage>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -207,8 +207,8 @@ Feature: Payment methods
 
   @fullTest @walletTest @appleTest @mockData
   Scenario Outline: ApplePay - checking payment status for <actionCode> response code
-    When User chooses ApplePay as payment method - response set to "<actionCode>"
-    Then User will see information about payment status <paymentStatusMessage>
+    When User chooses ApplePay as payment method - response set to <actionCode>
+    Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
   @smokeTest
     Examples:
@@ -283,7 +283,7 @@ Feature: Payment methods
       | de_DE    |
 
   @fullTest @translations
-  Scenario Outline: Cardincal Commerce - checking translation for "Success" status for <language>
+  Scenario Outline: Cardinal Commerce - checking translation for "Success" status for <language>
     When User changes page language to <language>
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
@@ -299,7 +299,7 @@ Feature: Payment methods
 
   #ToDo - Complete translation - "Unknown error"
   @translations
-  Scenario Outline: Cardincal Commerce - checking translation for "Unknown error" status for <language>
+  Scenario Outline: Cardinal Commerce - checking translation for "Unknown error" status for <language>
     When User changes page language to <language>
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N

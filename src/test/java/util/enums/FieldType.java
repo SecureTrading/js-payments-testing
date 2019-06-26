@@ -1,12 +1,15 @@
 package util.enums;
 
 public enum FieldType {
-    CARD_NUMBER("CARD_NUMBER"),
-    CVC("CVC"),
-    EXPIRY_DATE("EXPIRY_DATE"),
-    ANIMATED_CARD("ANIMATED_CARD"),
-    NOTIFICATION_FRAME("NOTIFICATION_FRAME"),
-    EMAIL("EMAIL");
+    CARD_NUMBER("st-card-number-iframe"),
+    CVC("st-security-code-iframe"),
+    EXPIRY_DATE("st-expiration-date-iframe"),
+    ANIMATED_CARD("st-animated-card-iframe"),
+    NOTIFICATION_FRAME("st-notification-frame-iframe"),
+    NAME(""),
+    EMAIL(""),
+    PHONE(""),
+    SUBMIT_BUTTON("");
 
     private String text;
 
@@ -14,7 +17,7 @@ public enum FieldType {
         this.text = text;
     }
 
-    public String getText() {
+    public String getIframeName() {
         return this.text;
     }
 

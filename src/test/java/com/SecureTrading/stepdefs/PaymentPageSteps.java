@@ -3,6 +3,8 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static util.JsonHandler.getTranslationFromJson;
+import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
+import static util.helpers.TestConditionHandler.checkIfScenarioNameContainsText;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
@@ -33,13 +35,13 @@ public class PaymentPageSteps {
 
     @Given("^User opens page with payment form$")
     public void userOpensPageWithPaymentForm() throws InterruptedException {
-        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+        if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("Immediate")) {
+        } else if (checkIfScenarioNameContainsText("Immediate")) {
             System.out.println("Step skipped as payment form is not required for immediate payment");
         } else {
             //Accept self signed certificates for Safari purpose
-            if (System.getProperty("browser") != null && System.getProperty("browser").startsWith("Safari")) {
+            if (checkIfBrowserNameStartWith("Safari")) {
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
             }
 
@@ -76,7 +78,7 @@ public class PaymentPageSteps {
 
     @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
     public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) {
-        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType);
+        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"));
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
@@ -96,9 +98,9 @@ public class PaymentPageSteps {
         animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
     }
 
-    @Then("^User will see information about payment status \"([^\"]*)\"$")
-    public void userWillSeeInformationAboutPaymentStatusPaymentStatusMessage(String paymentStatusMessage) {
-        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+    @Then("^User will see payment status information: \"([^\"]*)\"$")
+    public void userWillSeePaymentStatusInformationPaymentStatusMessage(String paymentStatusMessage) {
+        if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             scrollToTopOfPage();
@@ -152,10 +154,10 @@ public class PaymentPageSteps {
         paymentPage.choosePaymentMethodWithMock(PaymentType.VISA_CHECKOUT);
     }
 
-    @When("^User chooses ApplePay as payment method - response set to \"([^\"]*)\"$")
+    @When("^User chooses ApplePay as payment method - response set to (.*)$")
     public void userChoosesApplePayAsPaymentMethodResponseSetTo(ApplePayResponse response) {
         stubSTRequestType(ApplePayResponse.SUCCESS.getMockJson(), RequestType.WALLETVERIFY); // Stub so wallet verify works
-        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+        if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             switch (response) {
@@ -185,7 +187,7 @@ public class PaymentPageSteps {
 
     @And("^User will see that notification frame has \"([^\"]*)\" color$")
     public void userWillSeeThatNotificationFrameHasColorColor(String color) {
-        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+        if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else
             paymentPage.validateIfColorOfNotificationFrameWasAsExpected(color);
@@ -196,15 +198,15 @@ public class PaymentPageSteps {
         paymentPage.validateIfPaymentStatusMessageWasAsExpected(message);
     }
 
-    @And("^User will see that ([^\"]*) field is highlighted$")
-    public void userWillSeeThatFieldFieldIsHighlighted(String field) {
-        paymentPage.validateIfFieldIsHighlighted(FieldType.fromString(field));
+    @And("^User will see that (.*) field is highlighted$")
+    public void userWillSeeThatFieldFieldIsHighlighted(FieldType fieldType) {
+        paymentPage.validateIfFieldIsHighlighted(fieldType);
     }
 
     @Then("^User will see that merchant field (.*) is highlighted$")
     public void userWillSeeThatMerchantFieldIsHighlighted(MerchantFieldType field) {
         scrollToTopOfPage();
-        paymentPage.checkIfMerchantFieldIsHighlighted(field);
+        paymentPage.validateIfMerchantFieldIsHighlighted(field);
     }
 
     @And("^User will see that all fields are highlighted$")
@@ -222,14 +224,14 @@ public class PaymentPageSteps {
     @Then("^User will see that Submit button is enabled after payment$")
     public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() {
         paymentPage.validateIfNotificationFrameIsDisplayed();
-        paymentPage.validateIfElementIsEnabledAfterPayment("submitButton");
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON);
     }
 
     @And("^User will see that all input fields are enabled$")
     public void userWillSeeThatAllInputFieldsAreEnabled() {
-        paymentPage.validateIfElementIsEnabledAfterPayment("cardNumberInput");
-        paymentPage.validateIfElementIsEnabledAfterPayment("cvcInput");
-        paymentPage.validateIfElementIsEnabledAfterPayment("expirationDateInput");
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE);
     }
 
     @When("^User changes page language to ([^\"]*)$")
@@ -247,7 +249,7 @@ public class PaymentPageSteps {
     @Then("^User will see information about \"([^\"]*)\" payment status translated into ([^\"]*)$")
     public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language)
             throws Throwable {
-        if (PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("SCENARIO SKIPPED")) {
+        if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
             paymentPage.validateIfPaymentStatusTranslationWasAsExpected(paymentStatus, language);

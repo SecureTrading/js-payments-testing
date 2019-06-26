@@ -14,10 +14,7 @@ import static util.helpers.actions.CustomGetTextImpl.getText;
 
 public class AnimatedCardModule {
 
-    //iFrame
-    public String animatedCardFrameName = "st-animated-card-iframe";
-
-    // animated credit card
+    // animated card
     private By animatedCard = By.id("st-animated-card");
     private By creditCardNumberFromAnimatedCard = By.id("st-animated-card-number");
     private By cvcBackSideAnimatedCard = By.id("st-animated-card-security-code");
@@ -31,17 +28,16 @@ public class AnimatedCardModule {
 
 
     public String getCardTypeIconFromAnimatedCardText() {
-        switchToIframe(animatedCardFrameName);
+        switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         String cardLogo = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
         switchToDefaultIframe();
         return cardLogo;
     }
 
     public boolean checkIfAnimatedCardIsFlipped() {
-        switchToIframe(animatedCardFrameName);
+        switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         boolean isFlipped = false;
         String cardSide = getAttribute(SeleniumExecutor.getDriver().findElement(animatedCard), "class");
-
         if (cardSide.contains("flip_card")) {
             isFlipped = true;
         }
@@ -51,7 +47,7 @@ public class AnimatedCardModule {
 
     public String getDataFromAnimatedCreditCard(FieldType fieldType) {
         String data = "";
-        switchToIframe(animatedCardFrameName);
+        switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         switch (fieldType) {
             case CARD_NUMBER:
                 data = getText(SeleniumExecutor.getDriver().findElement(creditCardNumberFromAnimatedCard));
@@ -86,8 +82,8 @@ public class AnimatedCardModule {
                 expectedData, getDataFromAnimatedCreditCard(fieldType));
     }
 
-    public void validateIfAnimatedCardIsFlipped(String cardType) {
-        if (cardType.equals("AMEX")) {
+    public void validateIfAnimatedCardIsFlipped(boolean amexCard) {
+        if (amexCard) {
             PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                     "Animated card is flipped for AMEX but shouldn't be");
             Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),

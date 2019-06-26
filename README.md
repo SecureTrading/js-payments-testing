@@ -13,4 +13,7 @@ The integration testing framework used in order to test the js-payments interfac
     - build docker containing test page and wiremock server with command "docker build . --tag 'securetrading1/js-payments-testing'"
     - run docker containing test page and wiremock server with command "docker run -d -p 8443:8443 -it 'securetrading1/js-payments-testing'"
     - run browserstack local connection tunnel with command "BrowserStackLocal.exe --key <real browserstack user_key> --local-identifier local_id" (BrowserStackLocal.exe binary is included within framework)
-    - run tests using one of options available in Makefile, for example: "make test_chrome_68_w10", or "make run_all_in_parallel".
+    - run tests using one of options available in Makefile, for example: "make test_chrome_68_w10_fullTest", or "make test_chrome_68_w10_smokeTest".
+        It is possible run two sets of tests:
+        - xx_smokeTest -> limited number of scenarios, checking basic functionality
+        - xx_fullTest -> full list of scenarios
