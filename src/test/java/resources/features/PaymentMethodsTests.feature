@@ -81,7 +81,7 @@ Feature: Payment methods
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | NOACTION   | "Payment has been successfully processed" | green |
-      | ERROR      | "An error occurred"                       | red   |
+      | ERROR      | "Invalid response"                        | red   |
 
   @fullTest @cardinalCommerce
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
@@ -202,7 +202,7 @@ Feature: Payment methods
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-      | ERROR      | "An error occurred"          | red    |
+      | ERROR      | "Invalid response"           | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
@@ -216,7 +216,7 @@ Feature: Payment methods
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-#      | ERROR       | "An error occurred"          | red    |
+#      | ERROR       | "Invalid response"          | red    |
       | DECLINE    | "Decline"                    | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
@@ -358,7 +358,6 @@ Feature: Payment methods
     Then User will see message "Payment has been successfully processed" displayed on page
     And User will see error code: "0"
 
-  #ToDo - Verify ERROR action cody why is "Invalid response" instead "An error occured"
   @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
     When THREEDQUERY response set to ENROLLED_Y
@@ -367,5 +366,5 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     Examples:
       | actionCode | errorMessage     |
-#      | ERROR      | An error occurred |
+      | ERROR      | Invalid response |
       | FAILURE    | Merchant decline |
