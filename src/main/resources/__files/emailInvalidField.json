@@ -1,17 +1,3 @@
 {
-  "requestreference": "W41-banp2pub",
-  "version": "1.00",
-  "response": [
-    {
-      "transactionreference": "41-9-32008",
-      "transactionstartedtimestamp": "2019-06-13 07:35:21",
-      "errormessage": "Invalid field",
-      "errorcode": "30000",
-      "requesttypedescription": "ERROR",
-      "errordata": [
-        "billingemail"
-      ]
-    }
-  ],
-  "secrand": "zypyjXcC6dO9p"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6Ilc0MS1iYW5wMnB1YiIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7InRyYW5zYWN0aW9ucmVmZXJlbmNlIjoiNDEtOS0zMjAwOCIsInRyYW5zYWN0aW9uc3RhcnRlZHRpbWVzdGFtcCI6IjIwMTktMDYtMTMgMDc6MzU6MjEiLCJlcnJvcm1lc3NhZ2UiOiJJbnZhbGlkIGZpZWxkIiwiZXJyb3Jjb2RlIjoiMzAwMDAiLCJyZXF1ZXN0dHlwZWRlc2NyaXB0aW9uIjoiRVJST1IiLCJlcnJvcmRhdGEiOlsiYmlsbGluZ2VtYWlsIl19XSwic2VjcmFuZCI6Inp5cHlqWGNDNmRPOXAifX0.2i4pYCJOqcnCH1aW_f8xB29wDjJkoaDEiILXSa5A9gE"
 }

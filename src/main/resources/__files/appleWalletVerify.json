@@ -1,9 +1,3 @@
 {
-  "errorcode": "0",
-  "errormessage": "Ok",
-  "requestid": "J-3bhw30gu",
-  "requesttypedescription": "WALLETVERIFY",
-  "transactionstartedtimestamp": "2019-04-18 12:11:26",
-  "walletsession": "{\"epochTimestamp\":1555589486829,\"expiresAt\":1555593086829,\"merchantSessionIdentifier\":\"SSH54A9E73B26674B71A27E44E4BC07E22B_916523AAED1343F5\"}",
-  "walletsource": "APPLEPAY"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6Ilc0Mi1jN2swM3IwZSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7ImVycm9yY29kZSI6IjAiLCJlcnJvcm1lc3NhZ2UiOiJPayIsInJlcXVlc3RpZCI6IkotM2JodzMwZ3UiLCJyZXF1ZXN0dHlwZWRlc2NyaXB0aW9uIjoiV0FMTEVUVkVSSUZZIiwidHJhbnNhY3Rpb25zdGFydGVkdGltZXN0YW1wIjoiMjAxOS0wNC0xOCAxMjoxMToyNiIsIndhbGxldHNlc3Npb24iOiJ7XCJlcG9jaFRpbWVzdGFtcFwiOjE1NTU1ODk0ODY4MjksXCJleHBpcmVzQXRcIjoxNTU1NTkzMDg2ODI5LFwibWVyY2hhbnRTZXNzaW9uSWRlbnRpZmllclwiOlwiU1NINTRBOUU3M0IyNjY3NEI3MUEyN0U0NEU0QkMwN0UyMkJfOTE2NTIzQUFFRDEzNDNGNVwifSIsIndhbGxldHNvdXJjZSI6IkFQUExFUEFZIn1dfX0.RZ1nKXQDk2_voMI0Dm8zoMMcVAeAQq9RXbFKfOI07Zo"
 }

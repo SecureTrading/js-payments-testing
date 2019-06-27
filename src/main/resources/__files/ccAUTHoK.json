@@ -1,34 +1,3 @@
 {
-  "requestreference": "W42-afw1kgbu",
-  "version": "1.00",
-  "response": [
-    {
-      "transactionstartedtimestamp": "2019-04-19 08:08:22",
-      "livestatus": "1",
-      "issuer": "PUBLIC BANK BERHAD",
-      "settleduedate": "2019-04-19",
-      "errorcode": "0",
-      "tid": "27887756",
-      "merchantnumber": "98965325",
-      "securityresponsepostcode": "0",
-      "transactionreference": "42-14-119",
-      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
-      "paymenttypedescription": "MASTERCARD",
-      "baseamount": "1000",
-      "accounttypedescription": "ECOM",
-      "acquirerresponsecode": "00",
-      "requesttypedescription": "AUTH",
-      "securityresponsesecuritycode": "2",
-      "currencyiso3a": "GBP",
-      "authcode": "5",
-      "errormessage": "Ok",
-      "operatorname": "live2_autojwt",
-      "merchantcountryiso2a": "GB",
-      "maskedpan": "520000######0007",
-      "securityresponseaddress": "0",
-      "issuercountryiso2a": "MY",
-      "settlestatus": "0"
-    }
-  ],
-  "secrand": "mc4T0wgPUA0NPr"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6Ilc0Mi1hZncxa2didSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7InRyYW5zYWN0aW9uc3RhcnRlZHRpbWVzdGFtcCI6IjIwMTktMDQtMTkgMDg6MDg6MjIiLCJsaXZlc3RhdHVzIjoiMSIsImlzc3VlciI6IlBVQkxJQyBCQU5LIEJFUkhBRCIsInNldHRsZWR1ZWRhdGUiOiIyMDE5LTA0LTE5IiwiZXJyb3Jjb2RlIjoiMCIsInRpZCI6IjI3ODg3NzU2IiwibWVyY2hhbnRudW1iZXIiOiI5ODk2NTMyNSIsInNlY3VyaXR5cmVzcG9uc2Vwb3N0Y29kZSI6IjAiLCJ0cmFuc2FjdGlvbnJlZmVyZW5jZSI6IjQyLTE0LTExOSIsIm1lcmNoYW50bmFtZSI6IkxpdmUgVW5pdHRlc3QgU2l0ZSA8PiYhXy09K0AjOjssLi8_T0siLCJwYXltZW50dHlwZWRlc2NyaXB0aW9uIjoiTUFTVEVSQ0FSRCIsImJhc2VhbW91bnQiOiIxMDAwIiwiYWNjb3VudHR5cGVkZXNjcmlwdGlvbiI6IkVDT00iLCJhY3F1aXJlcnJlc3BvbnNlY29kZSI6IjAwIiwicmVxdWVzdHR5cGVkZXNjcmlwdGlvbiI6IkFVVEgiLCJzZWN1cml0eXJlc3BvbnNlc2VjdXJpdHljb2RlIjoiMiIsImN1cnJlbmN5aXNvM2EiOiJHQlAiLCJhdXRoY29kZSI6IjUiLCJlcnJvcm1lc3NhZ2UiOiJPayIsIm9wZXJhdG9ybmFtZSI6ImxpdmUyX2F1dG9qd3QiLCJtZXJjaGFudGNvdW50cnlpc28yYSI6IkdCIiwibWFza2VkcGFuIjoiNTIwMDAwIyMjIyMjMDAwNyIsInNlY3VyaXR5cmVzcG9uc2VhZGRyZXNzIjoiMCIsImlzc3VlcmNvdW50cnlpc28yYSI6Ik1ZIiwic2V0dGxlc3RhdHVzIjoiMCJ9XSwic2VjcmFuZCI6Im1jNFQwd2dQVUEwTlByIn19.G7Ly5kqEKhZqevEXRzFSALO5wtogif89AcaQmPaxIQg"
 }

@@ -1,13 +1,3 @@
 {
-  "requestreference": "W23-5rd2wbjv",
-  "version": "1.00",
-  "response": [
-    {
-      "errorcode": "60031",
-      "requesttypedescription": "ERROR",
-      "transactionstartedtimestamp": "2019-05-09 07:43:33",
-      "errormessage": "Invalid acquirer for 3-D Secure"
-    }
-  ],
-  "secrand": "Vbxu3x6kUCoQ3"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6IlcyMy01cmQyd2JqdiIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7ImVycm9yY29kZSI6IjYwMDMxIiwicmVxdWVzdHR5cGVkZXNjcmlwdGlvbiI6IkVSUk9SIiwidHJhbnNhY3Rpb25zdGFydGVkdGltZXN0YW1wIjoiMjAxOS0wNS0wOSAwNzo0MzozMyIsImVycm9ybWVzc2FnZSI6IkludmFsaWQgYWNxdWlyZXIgZm9yIDMtRCBTZWN1cmUifV0sInNlY3JhbmQiOiJWYnh1M3g2a1VDb1EzIn19.NLn5gQa66KEZW64tsTmrP1cAduX3ypcFfIeA3z3wvQM"
 }

@@ -1,13 +1,3 @@
 {
-  "requestreference": "W23-5rd2wbjv",
-  "version": "1.00",
-  "response": [
-    {
-      "errorcode": "50000",
-      "requesttypedescription": "ERROR",
-      "transactionstartedtimestamp": "2019-05-09 07:43:33",
-      "errormessage": "Socket receive error"
-    }
-  ],
-  "secrand": "Vbxu3x6kUCoQ3"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6IlcyMy01cmQyd2JqdiIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7ImVycm9yY29kZSI6IjUwMDAwIiwicmVxdWVzdHR5cGVkZXNjcmlwdGlvbiI6IkVSUk9SIiwidHJhbnNhY3Rpb25zdGFydGVkdGltZXN0YW1wIjoiMjAxOS0wNS0wOSAwNzo0MzozMyIsImVycm9ybWVzc2FnZSI6IlNvY2tldCByZWNlaXZlIGVycm9yIn1dLCJzZWNyYW5kIjoiVmJ4dTN4NmtVQ29RMyJ9fQ.W2mXPfBu4E5Gwu4dKIyZQGx7SsNb0J8iAhtGx6BVceY"
 }
