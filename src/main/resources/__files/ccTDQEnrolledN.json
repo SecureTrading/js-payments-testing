@@ -1,31 +1,3 @@
 {
-  "requestreference": "W42-afw1kgbu",
-  "version": "1.00",
-  "response": [
-    {
-      "transactionstartedtimestamp": "2019-04-30 06:29:46",
-      "livestatus": "1",
-      "pareq": "P.a188782bd0ed4bf6b75087d309d440a9d8d2a726d4694cb4cccb4a503df0dfb0819160268729061efe57ca8f4149d8af3204d408909e8589ec950ac36952cca9c8db7f71911a89c702dfc709f2b9c5d4",
-      "settleduedate": "2019-04-30",
-      "errorcode": "0",
-      "tid": "27882200",
-      "merchantnumber": "11223344",
-      "merchantcountryiso2a": "GB",
-      "transactionreference": "42-2-81585",
-      "merchantname": "Live Unittest Site <>&!_-=+@#:;,./?OK",
-      "paymenttypedescription": "VISA",
-      "acsurl": "https://0eafstag.cardinalcommerce.com/EAFService/jsp/v1/redirect",
-      "accounttypedescription": "ECOM",
-      "requesttypedescription": "THREEDQUERY",
-      "acquirerresponsemessage": "P4FPWiPfcVfH1t9owyV0",
-      "md": "Om1kZkV4NXFobWJadWNIdDVPalFyMUlNeFVETHV2L1k5aWNkbzN2V2o2RDhabz0=",
-      "maskedpan": "411111######1111",
-      "errormessage": "Ok",
-      "issuercountryiso2a": "ZZ",
-      "enrolled": "N",
-      "operatorname": "live2_autojwt",
-      "settlestatus": "0"
-    }
-  ],
-  "secrand": "mc4T0wgPUA0NPr"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6Ilc0Mi1hZncxa2didSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7InRyYW5zYWN0aW9uc3RhcnRlZHRpbWVzdGFtcCI6IjIwMTktMDQtMzAgMDY6Mjk6NDYiLCJsaXZlc3RhdHVzIjoiMSIsInBhcmVxIjoiUC5hMTg4NzgyYmQwZWQ0YmY2Yjc1MDg3ZDMwOWQ0NDBhOWQ4ZDJhNzI2ZDQ2OTRjYjRjY2NiNGE1MDNkZjBkZmIwODE5MTYwMjY4NzI5MDYxZWZlNTdjYThmNDE0OWQ4YWYzMjA0ZDQwODkwOWU4NTg5ZWM5NTBhYzM2OTUyY2NhOWM4ZGI3ZjcxOTExYTg5YzcwMmRmYzcwOWYyYjljNWQ0Iiwic2V0dGxlZHVlZGF0ZSI6IjIwMTktMDQtMzAiLCJlcnJvcmNvZGUiOiIwIiwidGlkIjoiMjc4ODIyMDAiLCJtZXJjaGFudG51bWJlciI6IjExMjIzMzQ0IiwibWVyY2hhbnRjb3VudHJ5aXNvMmEiOiJHQiIsInRyYW5zYWN0aW9ucmVmZXJlbmNlIjoiNDItMi04MTU4NSIsIm1lcmNoYW50bmFtZSI6IkxpdmUgVW5pdHRlc3QgU2l0ZSA8PiYhXy09K0AjOjssLi8_T0siLCJwYXltZW50dHlwZWRlc2NyaXB0aW9uIjoiVklTQSIsImFjc3VybCI6Imh0dHBzOi8vMGVhZnN0YWcuY2FyZGluYWxjb21tZXJjZS5jb20vRUFGU2VydmljZS9qc3AvdjEvcmVkaXJlY3QiLCJhY2NvdW50dHlwZWRlc2NyaXB0aW9uIjoiRUNPTSIsInJlcXVlc3R0eXBlZGVzY3JpcHRpb24iOiJUSFJFRURRVUVSWSIsImFjcXVpcmVycmVzcG9uc2VtZXNzYWdlIjoiUDRGUFdpUGZjVmZIMXQ5b3d5VjAiLCJtZCI6Ik9tMWtaa1Y0TlhGb2JXSmFkV05JZERWUGFsRnlNVWxOZUZWRVRIVjJMMWs1YVdOa2J6TjJWMm8yUkRoYWJ6MD0iLCJtYXNrZWRwYW4iOiI0MTExMTEjIyMjIyMxMTExIiwiZXJyb3JtZXNzYWdlIjoiT2siLCJpc3N1ZXJjb3VudHJ5aXNvMmEiOiJaWiIsImVucm9sbGVkIjoiTiIsIm9wZXJhdG9ybmFtZSI6ImxpdmUyX2F1dG9qd3QiLCJzZXR0bGVzdGF0dXMiOiIwIn1dLCJzZWNyYW5kIjoibWM0VDB3Z1BVQTBOUHIifX0.rG39TNh8EMHSX8GUoXbTOCMOKkPqrk1LuQ5CV6O2qt4"
 }

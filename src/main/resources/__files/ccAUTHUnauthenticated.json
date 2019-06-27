@@ -1,34 +1,3 @@
 {
-  "requestreference": "W23-mjuwx1f5",
-  "version": "1.00",
-  "response": [
-    {
-      "transactionstartedtimestamp": "2016-12-13 11:00:44",
-      "parenttransactionreference": "1-2-345678",
-      "livestatus": "0",
-      "issuer": "SecureTrading Test Issuer1",
-      "splitfinalnumber": "1",
-      "dccenabled": "0",
-      "settleduedate": "2016-12-13",
-      "errorcode": "60022",
-      "tid": "27882788",
-      "merchantnumber": "00000000",
-      "merchantcountryiso2a": "GB",
-      "status": "N",
-      "transactionreference": "1-2-345679",
-      "merchantname": "Test Merchant",
-      "paymenttypedescription": "VISA",
-      "baseamount": "1050",
-      "accounttypedescription": "ECOM",
-      "requesttypedescription": "AUTH",
-      "currencyiso3a": "GBP",
-      "maskedpan": "411111######0211",
-      "errormessage": "Unauthenticated",
-      "operatorname": "webservices@example.com",
-      "enrolled": "Y",
-      "issuercountryiso2a": "US",
-      "settlestatus": "3"
-    }
-  ],
-  "secrand": "3J"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6IlcyMy1tanV3eDFmNSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7InRyYW5zYWN0aW9uc3RhcnRlZHRpbWVzdGFtcCI6IjIwMTYtMTItMTMgMTE6MDA6NDQiLCJwYXJlbnR0cmFuc2FjdGlvbnJlZmVyZW5jZSI6IjEtMi0zNDU2NzgiLCJsaXZlc3RhdHVzIjoiMCIsImlzc3VlciI6IlNlY3VyZVRyYWRpbmcgVGVzdCBJc3N1ZXIxIiwic3BsaXRmaW5hbG51bWJlciI6IjEiLCJkY2NlbmFibGVkIjoiMCIsInNldHRsZWR1ZWRhdGUiOiIyMDE2LTEyLTEzIiwiZXJyb3Jjb2RlIjoiNjAwMjIiLCJ0aWQiOiIyNzg4Mjc4OCIsIm1lcmNoYW50bnVtYmVyIjoiMDAwMDAwMDAiLCJtZXJjaGFudGNvdW50cnlpc28yYSI6IkdCIiwic3RhdHVzIjoiTiIsInRyYW5zYWN0aW9ucmVmZXJlbmNlIjoiMS0yLTM0NTY3OSIsIm1lcmNoYW50bmFtZSI6IlRlc3QgTWVyY2hhbnQiLCJwYXltZW50dHlwZWRlc2NyaXB0aW9uIjoiVklTQSIsImJhc2VhbW91bnQiOiIxMDUwIiwiYWNjb3VudHR5cGVkZXNjcmlwdGlvbiI6IkVDT00iLCJyZXF1ZXN0dHlwZWRlc2NyaXB0aW9uIjoiQVVUSCIsImN1cnJlbmN5aXNvM2EiOiJHQlAiLCJtYXNrZWRwYW4iOiI0MTExMTEjIyMjIyMwMjExIiwiZXJyb3JtZXNzYWdlIjoiVW5hdXRoZW50aWNhdGVkIiwib3BlcmF0b3JuYW1lIjoid2Vic2VydmljZXNAZXhhbXBsZS5jb20iLCJlbnJvbGxlZCI6IlkiLCJpc3N1ZXJjb3VudHJ5aXNvMmEiOiJVUyIsInNldHRsZXN0YXR1cyI6IjMifV0sInNlY3JhbmQiOiIzSiJ9fQ.pjDtcZDmL-wh1xWQQ6xIoMNxf8aWt9xCGTpHWe79o-Y"
 }

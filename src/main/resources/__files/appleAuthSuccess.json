@@ -1,38 +1,3 @@
 {
-  "requestreference": "W23-tw29qere",
-  "version": "1.00",
-  "response": [
-    {
-      "walletsource": "APPLEPAY",
-      "transactionstartedtimestamp": "2017-11-02 14:24:32",
-      "livestatus": "0",
-      "splitfinalnumber": "1",
-      "dccenabled": "0",
-      "settleduedate": "2017-11-02",
-      "errorcode": "0",
-      "baseamount": "200",
-      "tid": "27882788",
-      "merchantnumber": "00000000",
-      "merchantcountryiso2a": "GB",
-      "transactionreference": "23-9-141",
-      "merchantname": "Test Merchant",
-      "paymenttypedescription": "VISA",
-      "orderreference": "My_Order_123",
-      "eci": "07",
-      "accounttypedescription": "ECOM",
-      "cavv": "AqjLSnAAzVXOwsfABfO0MAACAAA=",
-      "acquirerresponsecode": "00",
-      "requesttypedescription": "AUTH",
-      "securityresponsesecuritycode": "0",
-      "currencyiso3a": "GBP",
-      "authcode": "TEST83",
-      "errormessage": "Ok",
-      "securityresponsepostcode": "0",
-      "maskedpan": "481852######5473",
-      "securityresponseaddress": "0",
-      "operatorname": "webservices@example.com",
-      "settlestatus": "0"
-    }
-  ],
-  "secrand": "T"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NjExMDk1MDQsInBheWxvYWQiOnsicmVxdWVzdHJlZmVyZW5jZSI6IlcyMy10dzI5cWVyZSIsInZlcnNpb24iOiIxLjAwIiwicmVzcG9uc2UiOlt7IndhbGxldHNvdXJjZSI6IkFQUExFUEFZIiwidHJhbnNhY3Rpb25zdGFydGVkdGltZXN0YW1wIjoiMjAxNy0xMS0wMiAxNDoyNDozMiIsImxpdmVzdGF0dXMiOiIwIiwic3BsaXRmaW5hbG51bWJlciI6IjEiLCJkY2NlbmFibGVkIjoiMCIsInNldHRsZWR1ZWRhdGUiOiIyMDE3LTExLTAyIiwiZXJyb3Jjb2RlIjoiMCIsImJhc2VhbW91bnQiOiIyMDAiLCJ0aWQiOiIyNzg4Mjc4OCIsIm1lcmNoYW50bnVtYmVyIjoiMDAwMDAwMDAiLCJtZXJjaGFudGNvdW50cnlpc28yYSI6IkdCIiwidHJhbnNhY3Rpb25yZWZlcmVuY2UiOiIyMy05LTE0MSIsIm1lcmNoYW50bmFtZSI6IlRlc3QgTWVyY2hhbnQiLCJwYXltZW50dHlwZWRlc2NyaXB0aW9uIjoiVklTQSIsIm9yZGVycmVmZXJlbmNlIjoiTXlfT3JkZXJfMTIzIiwiZWNpIjoiMDciLCJhY2NvdW50dHlwZWRlc2NyaXB0aW9uIjoiRUNPTSIsImNhdnYiOiJBcWpMU25BQXpWWE93c2ZBQmZPME1BQUNBQUE9IiwiYWNxdWlyZXJyZXNwb25zZWNvZGUiOiIwMCIsInJlcXVlc3R0eXBlZGVzY3JpcHRpb24iOiJBVVRIIiwic2VjdXJpdHlyZXNwb25zZXNlY3VyaXR5Y29kZSI6IjAiLCJjdXJyZW5jeWlzbzNhIjoiR0JQIiwiYXV0aGNvZGUiOiJURVNUODMiLCJlcnJvcm1lc3NhZ2UiOiJPayIsInNlY3VyaXR5cmVzcG9uc2Vwb3N0Y29kZSI6IjAiLCJtYXNrZWRwYW4iOiI0ODE4NTIjIyMjIyM1NDczIiwic2VjdXJpdHlyZXNwb25zZWFkZHJlc3MiOiIwIiwib3BlcmF0b3JuYW1lIjoid2Vic2VydmljZXNAZXhhbXBsZS5jb20iLCJzZXR0bGVzdGF0dXMiOiIwIn1dLCJzZWNyYW5kIjoiVCJ9fQ.fHA9Xgj9i5fgKsPnDXZEPmnLbgT_e-NqLo71RuqQpt0"
 }
