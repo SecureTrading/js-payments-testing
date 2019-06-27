@@ -6,9 +6,6 @@ public enum FieldType {
     EXPIRY_DATE("st-expiration-date-iframe"),
     ANIMATED_CARD("st-animated-card-iframe"),
     NOTIFICATION_FRAME("st-notification-frame-iframe"),
-    NAME(""),
-    EMAIL(""),
-    PHONE(""),
     SUBMIT_BUTTON("");
 
     private String text;
