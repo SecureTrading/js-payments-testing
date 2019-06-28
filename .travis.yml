@@ -29,7 +29,6 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push "securetrading1/js-payments-testing"
     - stage: Tests
-      if: env(AUTOMATION_TEST_TAG)=fullTest
     - name: "Behavioural test: chrome 74, Windows 10"
       if: env(AUTOMATION_TEST_TAG)=fullTest
       script:
