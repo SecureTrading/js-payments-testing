@@ -334,21 +334,22 @@ Feature: Payment methods
       | fr_FR    |
       | de_DE    |
 
-  @fullTest @immediatePayment @mockData
-  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
-    When THREEDQUERY response set to ENROLLED_Y
-    And ACS response set to OK
-    And AUTH response set to "<actionCode>"
-    And User opens immediate payment page
-    Then User will see message "<errorMessage>" displayed on page
-    And User will see error code: "<paymentCode>"
-  @smokeTest
-    Examples:
-      | actionCode | errorMessage                            | paymentCode |
-      | OK         | Payment has been successfully processed | 0           |
-    Examples:
-      | actionCode | errorMessage | paymentCode |
-      | DECLINE    | Decline      | 70000       |
+    #ToDo - Uncomment it when IE problem will be solved
+#  @fullTest @immediatePayment @mockData
+#  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
+#    When THREEDQUERY response set to ENROLLED_Y
+#    And ACS response set to OK
+#    And AUTH response set to "<actionCode>"
+#    And User opens immediate payment page
+#    Then User will see message "<errorMessage>" displayed on page
+#    And User will see error code: "<paymentCode>"
+#  @smokeTest
+#    Examples:
+#      | actionCode | errorMessage                            | paymentCode |
+#      | OK         | Payment has been successfully processed | 0           |
+#    Examples:
+#      | actionCode | errorMessage | paymentCode |
+#      | DECLINE    | Decline      | 70000       |
 
   @fullTest @immediatePayment @mockData
   Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
