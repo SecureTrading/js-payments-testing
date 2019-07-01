@@ -18,7 +18,7 @@
     <cucumber.java.version>4.4.0</cucumber.java.version>
     <cucumber.junit.version>4.4.0</cucumber.junit.version>
     <selenium.java.version>3.141.59</selenium.java.version>
-    <junit.jupiter.api.version>5.4.2</junit.jupiter.api.version>
+    <junit.jupiter.api.version>5.5.0</junit.jupiter.api.version>
     <commons.io.version>2.6</commons.io.version>
     <lombok.version>1.18.8</lombok.version>
     <pico.container.version>2.15</pico.container.version>
