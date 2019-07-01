@@ -4,5 +4,6 @@ public enum AttributeType {
     div,
     value,
     style,
-    img
+    img,
+
 }

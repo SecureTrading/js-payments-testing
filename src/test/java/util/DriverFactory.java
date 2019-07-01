@@ -1,6 +1,8 @@
 package util;
 
 import static util.PropertiesHandler.getProperty;
+import static util.helpers.TestConditionHandler.checkConditionForRunApplePayTest;
+import static util.helpers.TestConditionHandler.checkIfScenarioNameContainsText;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -84,9 +86,8 @@ abstract class DriverFactory {
         caps.setCapability("build", LocalDate.now().toString());
 
         //This method is for describing apple pay test as skipped if is not running on ios and safari
-        if(PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString().contains("ApplePay")){
-            if((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
-                    (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i"))){
+        if(checkIfScenarioNameContainsText("ApplePay")){
+            if(checkConditionForRunApplePayTest()){
                 PicoContainerHelper.cleanContainer();
                 PicoContainerHelper.updateInContainer(StoredElement.scenarioName, "SCENARIO SKIPPED as iOS system and Safari is required for ApplePay test");
             }

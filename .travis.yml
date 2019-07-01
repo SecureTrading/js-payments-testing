@@ -28,8 +28,7 @@ jobs:
         - docker build . --tag "securetrading1/js-payments-testing"
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push "securetrading1/js-payments-testing"
-    - stage: Full Tests
-      if: env(AUTOMATION_TEST_TAG)=fullTest
+    - stage: Tests
     - name: "Behavioural test: chrome 74, Windows 10"
       if: env(AUTOMATION_TEST_TAG)=fullTest
       script:
@@ -198,9 +197,6 @@ jobs:
       if: env(AUTOMATION_TEST_TAG)=fullTest
       script:
         - make test_iPadMini4_11_0_$AUTOMATION_TEST_TAG
-
-    - stage: Smoke Tests
-      if: env(AUTOMATION_TEST_TAG)=smokeTest
     - name: "Behavioural test: chrome 74, Windows 10"
       if: env(AUTOMATION_TEST_TAG)=smokeTest
       script:
