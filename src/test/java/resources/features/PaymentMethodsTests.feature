@@ -185,7 +185,7 @@ Feature: Payment methods
   Scenario: Checking merchant field validation - invalid email
     When User fills merchant data with name "John Test", email "test@example", phone "44422224444"
     And User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
-    And InvalidField response set for "email"
+    And InvalidField response set for EMAIL
     And User clicks Pay button
     Then User will see that merchant field EMAIL is highlighted
     And User will see notification frame with message: "Invalid field"
@@ -369,3 +369,13 @@ Feature: Payment methods
       | actionCode | errorMessage     |
       | ERROR      | Invalid response |
       | FAILURE    | Merchant decline |
+
+  @smoketest @fullTest @cardinalCommerce
+  Scenario: Successful payment with skipped JSINIT process
+    When User opens payment page without JSINIT process
+    When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
+    And THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And User clicks Pay button - AUTH response set to OK
+    Then User will see payment status information: "Payment has been successfully processed"
+    And User will see that notification frame has "green" color

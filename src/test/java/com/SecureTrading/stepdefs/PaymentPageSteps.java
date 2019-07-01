@@ -39,6 +39,8 @@ public class PaymentPageSteps {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else if (checkIfScenarioNameContainsText("Immediate")) {
             System.out.println("Step skipped as payment form is not required for immediate payment");
+        } else if (checkIfScenarioNameContainsText("skipped JSINIT process")) {
+            System.out.println("Step skipped as is not required");
         } else {
             //Accept self signed certificates for Safari purpose
             if (checkIfBrowserNameStartWith("Safari")) {
@@ -82,8 +84,9 @@ public class PaymentPageSteps {
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
-    public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc(
-            String cardNumber, String expirationDate, String cvc) throws InterruptedException {
+    public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc
+            (
+                    String cardNumber, String expirationDate, String cvc) throws InterruptedException {
         paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
     }
 
@@ -247,7 +250,8 @@ public class PaymentPageSteps {
     }
 
     @Then("^User will see information about \"([^\"]*)\" payment status translated into ([^\"]*)$")
-    public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String language)
+    public void userWillSeeInformationAboutPaymentStatusTranslatedIntoLanguage(String paymentStatus, String
+            language)
             throws Throwable {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
@@ -289,5 +293,10 @@ public class PaymentPageSteps {
     @And("^User will see error code: \"([^\"]*)\"$")
     public void userWillSeeErrorCode(String errorcode) {
         paymentPage.validateIfErrorCodeFromImmediateWasAsExpected(errorcode);
+    }
+
+    @When("User opens payment page without JSINIT process")
+    public void userOpensPaymentPageWithoutJSINITProcess() {
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/bypass.html");
     }
 }
