@@ -332,7 +332,7 @@ public class PaymentPage extends BasePage {
                 getElementTranslation(fieldType, element));
     }
 
-    // ToDo - Complete translations key for: PayButton, name, email, phone
+    // ToDo - Complete translations key for: name, email, phone
     public void validateIfLabelsTranslationWasAsExpected(String translation) throws IOException, ParseException {
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation),
                 FieldType.CARD_NUMBER, cardNumberLabel);
@@ -346,8 +346,8 @@ public class PaymentPage extends BasePage {
         // translation), null, merchantEmailLabel);
         // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
         // translation), null, merchantPhoneLabel);
-        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
-        // translation), null, payButtonLabel);
+         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Pay",
+         translation), null, payButtonLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(),
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedCardNumberLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(),
@@ -391,19 +391,19 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void validateIfValidationMessageUnderFieldWasAsExpected(FieldType fieldType, String translation,
+    public void validateIfValidationMessageUnderFieldWasAsExpected(FieldType fieldType, String language,
                                                                    String translationKey) throws IOException, ParseException {
         switch (fieldType) {
             case CARD_NUMBER:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.CARD_NUMBER, creditCardFieldValidationMessage);
                 break;
             case EXPIRY_DATE:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.EXPIRY_DATE, expirationDateFieldValidationMessage);
                 break;
             case CVC:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.CVC, cvcFieldValidationMessage);
                 break;
         }
