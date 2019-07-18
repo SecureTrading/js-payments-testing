@@ -24,7 +24,7 @@
     <pico.container.version>2.15</pico.container.version>
     <commons.lang.version>3.8.1</commons.lang.version>
     <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
-    <wiremock.version>2.23.2</wiremock.version>
+    <wiremock.version>2.24.0</wiremock.version>
     <rest.assured.version>4.0.0</rest.assured.version>
     <jackson.databind>2.9.9</jackson.databind>
     <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
