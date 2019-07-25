@@ -14,7 +14,7 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | OK         | "Payment has been successfully processed" | green |
@@ -33,7 +33,7 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode      | paymentStatusMessage | color |
       | UNAUTHENTICATED | "Unauthenticated"    | red   |
@@ -49,7 +49,7 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | OK         | "Payment has been successfully processed" | green |
@@ -74,7 +74,7 @@ Feature: Payment methods
     And User clicks Pay button
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode | paymentStatusMessage | color |
       | FAILURE    | "Merchant decline"   | red   |
@@ -89,7 +89,7 @@ Feature: Payment methods
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to OK
     Then User will see payment status information: "Payment has been successfully processed"
-  @smokeTest
+    @smokeTest
     Examples:
       | cardNumber       | expirationDate | cvc  | cardType |
       | 340000000000611  | 12/22          | 1234 | AMEX     |
@@ -104,7 +104,7 @@ Feature: Payment methods
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
     And User will see that animated card is flipped, except for "AMEX"
-  @smokeTest
+    @smokeTest
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
       | 340000000000611  | 3400 000000 00611   | 12/22          | 1234 | AMEX     |
@@ -131,7 +131,7 @@ Feature: Payment methods
     And User clicks Pay button
     And User will see "Field is required" message under field: <field>
     And User will see that <field> field is highlighted
-  @smokeTest
+    @smokeTest
     Examples:
       | cardNumber | expiration | cvc | field       |
       |            | 12/22      | 123 | CARD_NUMBER |
@@ -146,7 +146,7 @@ Feature: Payment methods
     And User clicks Pay button
     And User will see "Value mismatch pattern" message under field: <field>
     And User will see that <field> field is highlighted
-  @smokeTest
+    @smokeTest
     Examples:
       | cardNumber       | expiration | cvc | field |
       | 4000000000001000 | 12/22      | 12  | CVC   |
@@ -166,7 +166,7 @@ Feature: Payment methods
     And User will see that notification frame has "red" color
     And User will see "Invalid field" message under field: <field>
     And User will see that <field> field is highlighted
-  @smokeTest
+    @smokeTest
     Examples:
       | cardNumber       | expiration | cvc | field       |
       | 4000000000001000 | 12/22      | 123 | CARD_NUMBER |
@@ -196,7 +196,7 @@ Feature: Payment methods
     When User chooses Visa Checkout as payment method - response set to <actionCode>
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | SUCCESS    | "Payment has been successfully processed" | green |
@@ -210,13 +210,13 @@ Feature: Payment methods
     When User chooses ApplePay as payment method - response set to <actionCode>
     Then User will see payment status information: <paymentStatusMessage>
     And User will see that notification frame has "<color>" color
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-#      | ERROR       | "Invalid response"          | red    |
+      #      | ERROR       | "Invalid response"          | red    |
       | DECLINE    | "Decline"                    | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
@@ -227,7 +227,7 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to <actionCode>
     Then User will see that Submit button is enabled after payment
     And User will see that all input fields are enabled
-  @smokeTest
+    @smokeTest
     Examples:
       | actionCode |
       | OK         |
@@ -242,7 +242,7 @@ Feature: Payment methods
     And User clicks Pay button
     Then User will see all labels displayed on page translated into <language>
     And User will see validation message "Field is required" under all fields translated into <language>
-  @smokeTest
+    @smokeTest
     Examples:
       | language |
       | de_DE    |
@@ -289,7 +289,7 @@ Feature: Payment methods
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to OK
     Then User will see information about "Success" payment status translated into <language>
-  @smokeTest
+    @smokeTest
     Examples:
       | language |
       | fr_FR    |
@@ -315,7 +315,7 @@ Feature: Payment methods
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to ERROR
     Then User will see information about "Error" payment status translated into <language>
-  @smokeTest
+    @smokeTest
     Examples:
       | language |
       | fr_FR    |
@@ -334,22 +334,21 @@ Feature: Payment methods
       | fr_FR    |
       | de_DE    |
 
-    #ToDo - Uncomment it when IE problem will be solved
-#  @fullTest @immediatePayment @mockData
-#  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
-#    When THREEDQUERY response set to ENROLLED_Y
-#    And ACS response set to OK
-#    And AUTH response set to "<actionCode>"
-#    And User opens immediate payment page
-#    Then User will see message "<errorMessage>" displayed on page
-#    And User will see error code: "<paymentCode>"
-#  @smokeTest
-#    Examples:
-#      | actionCode | errorMessage                            | paymentCode |
-#      | OK         | Payment has been successfully processed | 0           |
-#    Examples:
-#      | actionCode | errorMessage | paymentCode |
-#      | DECLINE    | Decline      | 70000       |
+  @fullTest @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
+    When THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And AUTH response set to "<actionCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+    @smokeTest
+    Examples:
+      | actionCode | errorMessage                            | paymentCode |
+      | OK         | Payment has been successfully processed | 0           |
+    Examples:
+      | actionCode | errorMessage | paymentCode |
+      | DECLINE    | Decline      | 70000       |
 
   @fullTest @immediatePayment @mockData
   Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
