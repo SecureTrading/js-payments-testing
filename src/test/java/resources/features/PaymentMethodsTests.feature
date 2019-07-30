@@ -202,7 +202,7 @@ Feature: Payment methods
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-      | ERROR      | "An error occured"           | red    |
+      | ERROR      | "An error occurred"           | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
@@ -250,13 +250,13 @@ Feature: Payment methods
       | language |
       | en_GB    |
       | fr_FR    |
-  #      | en_US    |
-  #      | cy_GB    |
-  #      | da_DK    |
-  #      | es_ES    |
-  #      | nl_NL    |
-  #      | no_NO    |
-  #      | sv_SE    |
+      | en_US    |
+      | cy_GB    |
+      | da_DK    |
+      | es_ES    |
+      | nl_NL    |
+      | no_NO    |
+      | sv_SE    |
 
   @fullTest @translations
   Scenario Outline: Checking translation of fields validation for <language>
