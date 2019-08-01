@@ -275,7 +275,7 @@ Feature: Payment methods
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And InvalidField response set for CARD_NUMBER
     And User clicks Pay button
-#    Then User will see information about "Invalid field" payment status translated into <language>
+    Then User will see information about "Invalid field" payment status translated into <language>
     Then User will see validation message "Invalid field" under CARD_NUMBER field translated into <language>
     Examples:
       | language |
@@ -297,19 +297,6 @@ Feature: Payment methods
       | language |
       | de_DE    |
 
-  #ToDo - Complete translation - "Unknown error"
-#  @translations
-#  Scenario Outline: Cardinal Commerce - checking translation for "Unknown error" status for <language>
-#    When User changes page language to <language>
-#    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-#    And THREEDQUERY response set to NOT_ENROLLED_N
-#    And User clicks Pay button - AUTH response set to UNKNOWN_ERROR
-#    Then User will see information about "Unknown error" payment status translated into <language>
-#    Examples:
-#      | language |
-#      | fr_FR    |
-#      | de_DE    |
-
   @fullTest @translations
   Scenario Outline: Visa Checkout - checking "Error" status translation for <language>
     When User changes page language to <language>
@@ -323,33 +310,31 @@ Feature: Payment methods
       | language |
       | de_DE    |
 
-  #ToDo - Complete translation - "Decline"
-#  @translations
-#  Scenario Outline: ApplePay - checking translation for "Decline" status for <language>
-#    When User changes page language to <language>
-#    When User chooses ApplePay as payment method - response set to DECLINE
-#    Then User will see information about "Decline" payment status translated into <language>
-#    Examples:
-#      | language |
-#      | fr_FR    |
-#      | de_DE    |
+  @fullTest @translations
+  Scenario Outline: ApplePay - checking translation for "Payment has been cancelled" status for <language>
+    When User changes page language to <language>
+    When User chooses ApplePay as payment method - response set to CANCEL
+    Then User will see information about "Cancel" payment status translated into <language>
+    Examples:
+      | language |
+      | es_ES    |
+      | no_NO    |
 
-    #ToDo - Uncomment it when IE problem will be solved
-#  @fullTest @immediatePayment @mockData
-#  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
-#    When THREEDQUERY response set to ENROLLED_Y
-#    And ACS response set to OK
-#    And AUTH response set to "<actionCode>"
-#    And User opens immediate payment page
-#    Then User will see message "<errorMessage>" displayed on page
-#    And User will see error code: "<paymentCode>"
-#  @smokeTest
-#    Examples:
-#      | actionCode | errorMessage                            | paymentCode |
-#      | OK         | Payment has been successfully processed | 0           |
-#    Examples:
-#      | actionCode | errorMessage | paymentCode |
-#      | DECLINE    | Decline      | 70000       |
+  @fullTest @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
+    When THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And AUTH response set to "<actionCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+  @smokeTest
+    Examples:
+      | actionCode | errorMessage                            | paymentCode |
+      | OK         | Payment has been successfully processed | 0           |
+    Examples:
+      | actionCode | errorMessage | paymentCode |
+      | DECLINE    | Decline      | 70000       |
 
   @fullTest @immediatePayment @mockData
   Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
