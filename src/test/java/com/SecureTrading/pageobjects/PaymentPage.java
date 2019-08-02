@@ -52,9 +52,6 @@ public class PaymentPage extends BasePage {
     private By cardNumberLabel = By.xpath("//label[@for='st-card-number-input']");
     private By expirationDateLabel = By.xpath("//label[@for='st-expiration-date-input']");
     private By securityCodeLabel = By.xpath("//label[@for='st-security-code-input']");
-    private By merchantNameLabel = By.xpath("//label[@for='example-form-name']");
-    private By merchantEmailLabel = By.xpath("//label[@for='example-form-email']");
-    private By merchantPhoneLabel = By.xpath("//label[@for='example-form-phone']");
     private By payButtonLabel = By.xpath("//button[@type='submit']");
 
     // Immediate payment
@@ -332,7 +329,6 @@ public class PaymentPage extends BasePage {
                 getElementTranslation(fieldType, element));
     }
 
-    // ToDo - Complete translations key for: PayButton, name, email, phone
     public void validateIfLabelsTranslationWasAsExpected(String translation) throws IOException, ParseException {
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation),
                 FieldType.CARD_NUMBER, cardNumberLabel);
@@ -340,22 +336,14 @@ public class PaymentPage extends BasePage {
                 FieldType.EXPIRY_DATE, expirationDateLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation),
                 FieldType.CVC, securityCodeLabel);
-        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
-        // translation), null, merchantNameLabel);
-        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
-        // translation), null, merchantEmailLabel);
-        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
-        // translation), null, merchantPhoneLabel);
-        // validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("",
-        // translation), null, payButtonLabel);
+         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Pay",
+         translation), null, payButtonLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(),
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedCardNumberLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(),
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedExpirationDateLabel);
     }
 
-    // ToDo - Complete translations for: Decline, Unknown error, Unauthenticated,
-    // Ivalid field
     public void validateIfPaymentStatusTranslationWasAsExpected(String paymentStatus, String translation)
             throws IOException, ParseException {
         switch (paymentStatus) {
@@ -372,38 +360,26 @@ public class PaymentPage extends BasePage {
                 validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Payment has been cancelled", translation),
                         FieldType.NOTIFICATION_FRAME, notificationFrame);
                 break;
-            case "Decline":
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
-                        FieldType.NOTIFICATION_FRAME, notificationFrame);
-                break;
-            case "Unknown error":
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
-                        FieldType.NOTIFICATION_FRAME, notificationFrame);
-                break;
-            case "Unauthenticated":
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
-                        FieldType.NOTIFICATION_FRAME, notificationFrame);
-                break;
             case "Invalid field":
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("", translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Invalid field", translation),
                         FieldType.NOTIFICATION_FRAME, notificationFrame);
                 break;
         }
     }
 
-    public void validateIfValidationMessageUnderFieldWasAsExpected(FieldType fieldType, String translation,
+    public void validateIfValidationMessageUnderFieldWasAsExpected(FieldType fieldType, String language,
                                                                    String translationKey) throws IOException, ParseException {
         switch (fieldType) {
             case CARD_NUMBER:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.CARD_NUMBER, creditCardFieldValidationMessage);
                 break;
             case EXPIRY_DATE:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.EXPIRY_DATE, expirationDateFieldValidationMessage);
                 break;
             case CVC:
-                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, translation),
+                validateIfElelemtTranslationWasAsExpected(getTranslationFromJson(translationKey, language),
                         FieldType.CVC, cvcFieldValidationMessage);
                 break;
         }
