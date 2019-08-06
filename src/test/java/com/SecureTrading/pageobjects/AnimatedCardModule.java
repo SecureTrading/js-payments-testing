@@ -23,9 +23,9 @@ public class AnimatedCardModule {
     private By cardTypeLogoFromAnimatedCard = By.id("st-payment-logo");
 
     //labels
-    public By animatedCardNumberLabel = By.xpath("//div[@class='st-animated-card__pan']/label");
-    public By animatedExpirationDateLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
-    public By animatedSecurityCodeLabel = By.xpath("//div[@class='st-animated-card__expiration-date']/label");
+    public By animatedCardNumberLabel = By.id("st-animated-card-card-number-label");
+    public By animatedExpirationDateLabel = By.id("st-animated-card-expiration-date-label");
+    public By animatedSecurityCodeLabel = By.id("st-animated-card-security-code-label");
 
 
     public String getCardTypeIconFromAnimatedCardText() {
