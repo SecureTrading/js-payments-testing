@@ -98,13 +98,13 @@ Feature: Payment methods
       | cardNumber       | expirationDate | cvc | cardType   |
       | 5100000000000511 | 12/22          | 123 | MASTERCARD |
 
-  @fullTest @animatedCard
+  @animatedCardFullTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
     And User will see that animated card is flipped, except for "AMEX"
-  @smokeTest
+  @animatedCardSmokeTest
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
       | 340000000000611  | 3400 000000 00611   | 12/23          | 1234 | AMEX     |
@@ -235,7 +235,6 @@ Feature: Payment methods
       | actionCode |
       | DECLINE    |
 
-  #ToDo - Complete labels translation: name, email. phone
   @fullTest @translations
   Scenario Outline: Checking translations of labels and fields error for <language>
     When User changes page language to <language>
@@ -243,6 +242,27 @@ Feature: Payment methods
     Then User will see all labels displayed on page translated into <language>
     And User will see validation message "Field is required" under all fields translated into <language>
   @smokeTest
+    Examples:
+      | language |
+      | de_DE    |
+    Examples:
+      | language |
+      | en_GB    |
+      | fr_FR    |
+      | en_US    |
+      | cy_GB    |
+      | da_DK    |
+      | es_ES    |
+      | nl_NL    |
+      | no_NO    |
+      | sv_SE    |
+
+  @animatedCardFullTest @translations
+  Scenario Outline: Checking animated card translation for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
+    Then User will see that labels displayed on animated card are translated into <language>
+  @animatedCardSmokeTest
     Examples:
       | language |
       | de_DE    |
