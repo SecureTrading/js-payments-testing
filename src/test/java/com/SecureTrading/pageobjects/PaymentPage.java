@@ -58,7 +58,8 @@ public class PaymentPage extends BasePage {
     private By immediatePaymentErrorMessage = By.id("errormessage");
     private By immediatePaymentErrorCode = By.id("errorcode");
 
-    public String getPaymentStatusMessage() {
+    public String getPaymentStatusMessage() throws InterruptedException {
+        waitUntilElementIsDisplayed(notificationFrame,15);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
@@ -279,9 +280,9 @@ public class PaymentPage extends BasePage {
                 expectedMessage, getCreditCardFieldValidationMessage(fieldType));
     }
 
-    public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) {
+    public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) throws InterruptedException {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                " payment status message is not correct, should be " + expectedMessage + " but was: "
+                "Payment status message is not correct, should be " + expectedMessage + " but was: "
                         + getPaymentStatusMessage());
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedMessage, getPaymentStatusMessage());
@@ -316,7 +317,7 @@ public class PaymentPage extends BasePage {
                 checkIfElementIsEnabled(fieldType));
     }
 
-    public void validateIfNotificationFrameIsDisplayed() {
+    public void validateIfNotificationFrameIsDisplayed() throws InterruptedException {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Notification frame is not displayed but should be");
         Assert.assertNotNull(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), getPaymentStatusMessage());
@@ -385,9 +386,10 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) {
+    public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) throws InterruptedException {
+        waitUntilElementIsDisplayed(immediatePaymentErrorMessage,30);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                " payment status message is not correct, should be " + expectedMessage + " but was: "
+                "Payment status message is not correct, should be " + expectedMessage + " but was: "
                         + getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedMessage, getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE));
@@ -395,7 +397,7 @@ public class PaymentPage extends BasePage {
 
     public void validateIfErrorCodeFromImmediateWasAsExpected(String expectedCode) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                " payment status message is not correct, should be " + expectedCode + " but was: "
+                "Payment status message is not correct, should be " + expectedCode + " but was: "
                         + getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedCode, getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE));
