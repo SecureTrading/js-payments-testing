@@ -107,17 +107,17 @@ Feature: Payment methods
   @smokeTest
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
-      | 340000000000611  | 3400 000000 00611   | 12/22          | 1234 | AMEX     |
+      | 340000000000611  | 3400 000000 00611   | 12/23          | 1234 | AMEX     |
       | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
     Examples:
       | cardNumber          | formattedCardNumber    | expirationDate | cvc | cardType     |
-      | 1801000000000901    | 1801 0000 0000 0901    | 12/22          | 123 | ASTROPAYCARD |
-      | 3000000000000111    | 3000 000000 000111     | 12/22          | 123 | DINERS       |
-      | 6011000000000301    | 6011 0000 0000 0301    | 12/22          | 123 | DISCOVER     |
-      | 3528000000000411    | 3528 0000 0000 0411    | 12/22          | 123 | JCB          |
-      | 5000000000000611    | 5000 0000 0000 0611    | 12/22          | 123 | MAESTRO      |
-      | 5100000000000511    | 5100 0000 0000 0511    | 12/22          | 123 | MASTERCARD   |
-      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/22          | 123 | PIBA         |
+      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
+      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
+      | 6011000000000301    | 6011 0000 0000 0301    | 12/23          | 123 | DISCOVER     |
+      | 3528000000000411    | 3528 0000 0000 0411    | 12/23          | 123 | JCB          |
+      | 5000000000000611    | 5000 0000 0000 0611    | 12/23          | 123 | MAESTRO      |
+      | 5100000000000511    | 5100 0000 0000 0511    | 12/23          | 123 | MASTERCARD   |
+      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/23          | 123 | PIBA         |
 
   @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
@@ -179,7 +179,7 @@ Feature: Payment methods
   Scenario: Filling 3-number of cvc code for AMEX card
     When User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
     And User clicks Pay button
-    And User will see "Value mismatch pattern" message under field: "cvc"
+    And User will see "Value mismatch pattern" message under field: CVC
 
   @fullTest @fieldsValidation
   Scenario: Checking merchant field validation - invalid email
@@ -202,7 +202,7 @@ Feature: Payment methods
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-      | ERROR      | "Invalid response"           | red    |
+      | ERROR      | "An error occurred"           | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
@@ -221,7 +221,7 @@ Feature: Payment methods
       | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @unlockPaymentForm
-  Scenario Outline: Checking payment form state after payment with Error
+  Scenario Outline: Payment form accessibility after payment process
     When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to <actionCode>
@@ -235,9 +235,9 @@ Feature: Payment methods
       | actionCode |
       | DECLINE    |
 
-  #ToDo - Complete labels translation: Pay button, name, email. phone
+  #ToDo - Complete labels translation: name, email. phone
   @fullTest @translations
-  Scenario Outline: Checking translations for labels and fields error for <language>
+  Scenario Outline: Checking translations of labels and fields error for <language>
     When User changes page language to <language>
     And User clicks Pay button
     Then User will see all labels displayed on page translated into <language>
@@ -250,40 +250,40 @@ Feature: Payment methods
       | language |
       | en_GB    |
       | fr_FR    |
-  #      | en_US    |
-  #      | cy_GB    |
-  #      | da_DK    |
-  #      | es_ES    |
-  #      | nl_NL    |
-  #      | no_NO    |
-  #      | sv_SE    |
+      | en_US    |
+      | cy_GB    |
+      | da_DK    |
+      | es_ES    |
+      | nl_NL    |
+      | no_NO    |
+      | sv_SE    |
 
-  #ToDo - Complete translation - "Value mismatch pattern"
-  @translations
-  Scenario Outline: Checking translation for fields validation translated into <language>
-    When User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
+  @fullTest @translations
+  Scenario Outline: Checking translation of fields validation for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
     And User clicks Pay button
-    Then User will see validation message "Value mismatch pattern" under CARD_NUMBER field translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
-  #ToDo - Complete translation - "Invalid field"
-  @translations
-  Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
-    When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-    #    And InvalidField response set for <field>
-    And User clicks Pay button
-    Then User will see information about "Invalid field" payment status translated into <language>
-    Then User will see validation message "Invalid field" under "number" field translated into <language>
+    Then User will see validation message "Value mismatch pattern" under EXPIRY_DATE field translated into <language>
     Examples:
       | language |
       | fr_FR    |
       | de_DE    |
 
   @fullTest @translations
-  Scenario Outline: Cardinal Commerce - checking translation for "Success" status for <language>
+  Scenario Outline: Checking translation of backend fields validation for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
+    And InvalidField response set for CARD_NUMBER
+    And User clicks Pay button
+    Then User will see information about "Invalid field" payment status translated into <language>
+    Then User will see validation message "Invalid field" under CARD_NUMBER field translated into <language>
+    Examples:
+      | language |
+      | fr_FR    |
+      | de_DE    |
+
+  @fullTest @translations
+  Scenario Outline: Cardinal Commerce - checking "Success" status translation for <language>
     When User changes page language to <language>
     And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
@@ -297,21 +297,8 @@ Feature: Payment methods
       | language |
       | de_DE    |
 
-  #ToDo - Complete translation - "Unknown error"
-  @translations
-  Scenario Outline: Cardinal Commerce - checking translation for "Unknown error" status for <language>
-    When User changes page language to <language>
-    And User fills payment form with credit card number "4000000000001059", expiration date "01/22" and cvc "123"
-    And THREEDQUERY response set to NOT_ENROLLED_N
-    And User clicks Pay button - AUTH response set to UNKNOWN_ERROR
-    Then User will see information about "Unknown error" payment status translated into <language>
-    Examples:
-      | language |
-      | fr_FR    |
-      | de_DE    |
-
   @fullTest @translations
-  Scenario Outline: Visa Checkout - checking translation for "Error" status for <language>
+  Scenario Outline: Visa Checkout - checking "Error" status translation for <language>
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to ERROR
     Then User will see information about "Error" payment status translated into <language>
@@ -323,33 +310,31 @@ Feature: Payment methods
       | language |
       | de_DE    |
 
-  #ToDo - Complete translation - "Decline"
-  @translations
-  Scenario Outline: ApplePay - checking translation for "Decline" status for <language>
+  @fullTest @translations
+  Scenario Outline: ApplePay - checking translation for "Payment has been cancelled" status for <language>
     When User changes page language to <language>
-    When User chooses ApplePay as payment method - response set to "Decline"
-    Then User will see information about "Decline" payment status translated into <language>
+    When User chooses ApplePay as payment method - response set to CANCEL
+    Then User will see information about "Cancel" payment status translated into <language>
     Examples:
       | language |
-      | fr_FR    |
-      | de_DE    |
+      | es_ES    |
+      | no_NO    |
 
-    #ToDo - Uncomment it when IE problem will be solved
-#  @fullTest @immediatePayment @mockData
-#  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
-#    When THREEDQUERY response set to ENROLLED_Y
-#    And ACS response set to OK
-#    And AUTH response set to "<actionCode>"
-#    And User opens immediate payment page
-#    Then User will see message "<errorMessage>" displayed on page
-#    And User will see error code: "<paymentCode>"
-#  @smokeTest
-#    Examples:
-#      | actionCode | errorMessage                            | paymentCode |
-#      | OK         | Payment has been successfully processed | 0           |
-#    Examples:
-#      | actionCode | errorMessage | paymentCode |
-#      | DECLINE    | Decline      | 70000       |
+  @fullTest @immediatePayment @mockData
+  Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
+    When THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And AUTH response set to "<actionCode>"
+    And User opens immediate payment page
+    Then User will see message "<errorMessage>" displayed on page
+    And User will see error code: "<paymentCode>"
+  @smokeTest
+    Examples:
+      | actionCode | errorMessage                            | paymentCode |
+      | OK         | Payment has been successfully processed | 0           |
+    Examples:
+      | actionCode | errorMessage | paymentCode |
+      | DECLINE    | Decline      | 70000       |
 
   @fullTest @immediatePayment @mockData
   Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
