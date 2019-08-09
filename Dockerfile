@@ -1,4 +1,4 @@
-ARG CODE_VERSION=develop
+ARG CODE_VERSION=feature-ST-296-handle-response-JWT
 FROM securetrading1/js-payments:${CODE_VERSION}
 COPY . /app/js-payments-testing
 WORKDIR /app/js-payments-testing
