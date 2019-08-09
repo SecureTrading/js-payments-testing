@@ -68,7 +68,7 @@ public class PaymentPageSteps {
     }
 
     @And("^User clicks Pay button$")
-    public void userClicksPayButton() throws InterruptedException {
+    public void userClicksPayButton() {
         paymentPage.choosePaymentMethodWithMock(PaymentType.CARDINAL_COMMERCE);
     }
 
@@ -102,7 +102,7 @@ public class PaymentPageSteps {
     }
 
     @Then("^User will see payment status information: \"([^\"]*)\"$")
-    public void userWillSeePaymentStatusInformationPaymentStatusMessage(String paymentStatusMessage) {
+    public void userWillSeePaymentStatusInformationPaymentStatusMessage(String paymentStatusMessage) throws InterruptedException {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else {
@@ -225,7 +225,7 @@ public class PaymentPageSteps {
     }
 
     @Then("^User will see that Submit button is enabled after payment$")
-    public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() {
+    public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() throws InterruptedException {
         paymentPage.validateIfNotificationFrameIsDisplayed();
         paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON);
     }
@@ -280,13 +280,12 @@ public class PaymentPageSteps {
     }
 
     @And("^User opens immediate payment page$")
-    public void userOpensImmediatePaymentPage() throws InterruptedException {
+    public void userOpensImmediatePaymentPage() {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/immediate.html");
-        Thread.sleep(2000);
     }
 
     @Then("^User will see message \"([^\"]*)\" displayed on page$")
-    public void userWillSeeMessageDisplayedOnPage(String message) {
+    public void userWillSeeMessageDisplayedOnPage(String message) throws InterruptedException {
         paymentPage.validateIfMessageFromImmediateWasAsExpected(message);
     }
 
