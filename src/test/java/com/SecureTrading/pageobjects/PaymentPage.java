@@ -59,7 +59,6 @@ public class PaymentPage extends BasePage {
     private By immediatePaymentErrorCode = By.id("errorcode");
 
     public String getPaymentStatusMessage() throws InterruptedException {
-        waitUntilElementIsDisplayed(notificationFrame,15);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
