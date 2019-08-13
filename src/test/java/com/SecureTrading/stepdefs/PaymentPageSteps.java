@@ -91,7 +91,7 @@ public class PaymentPageSteps {
     }
 
     @And("^User will see \"([^\"]*)\" message under field: (.*)$")
-    public void userWillSeeMessageUnderField(String message, FieldType fieldType) throws Throwable {
+    public void userWillSeeMessageUnderField(String message, FieldType fieldType) {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(fieldType, message);
     }
 
