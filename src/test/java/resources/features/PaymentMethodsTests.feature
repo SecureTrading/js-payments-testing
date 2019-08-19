@@ -235,7 +235,6 @@ Feature: Payment methods
       | actionCode |
       | DECLINE    |
 
-  #ToDo - Complete labels translation: name, email. phone
   @fullTest @translations
   Scenario Outline: Checking translations of labels and fields error for <language>
     When User changes page language to <language>
@@ -256,6 +255,21 @@ Feature: Payment methods
       | es_ES    |
       | nl_NL    |
       | no_NO    |
+      | sv_SE    |
+
+  @fullTest @animatedCard @translations
+  Scenario Outline: Checking animated card translation for <language>
+    When User changes page language to <language>
+    And User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
+    Then User will see that labels displayed on animated card are translated into <language>
+  @smokeTest
+    Examples:
+      | language |
+      | de_DE    |
+    Examples:
+      | language |
+      | en_GB    |
+      | es_ES    |
       | sv_SE    |
 
   @fullTest @translations

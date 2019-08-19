@@ -298,4 +298,9 @@ public class PaymentPageSteps {
     public void userOpensPaymentPageWithoutJSINITProcess() {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/bypass.html");
     }
+
+    @Then("User will see that labels displayed on animated card are translated into ([^\"]*)$")
+    public void userWillSeeThatLabelsDisplayedOnAnimatedCardAreTranslatedIntoLanguage(String language) throws IOException, ParseException {
+        paymentPage.validateIfAnimatedCardTranslationWasAsExpected(language);
+    }
 }

@@ -338,10 +338,15 @@ public class PaymentPage extends BasePage {
                 FieldType.CVC, securityCodeLabel);
          validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Pay",
          translation), null, payButtonLabel);
+    }
+
+    public void validateIfAnimatedCardTranslationWasAsExpected(String translation) throws IOException, ParseException {
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(),
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedCardNumberLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(),
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedExpirationDateLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation).toUpperCase(),
+                FieldType.ANIMATED_CARD, animatedCardModule.animatedSecurityCodeLabel);
     }
 
     public void validateIfPaymentStatusTranslationWasAsExpected(String paymentStatus, String translation)
