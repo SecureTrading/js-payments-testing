@@ -202,7 +202,6 @@ Feature: Payment methods
       | SUCCESS    | "Payment has been successfully processed" | green |
     Examples:
       | actionCode | paymentStatusMessage         | color  |
-      | ERROR      | "An error occurred"           | red    |
       | CANCEL     | "Payment has been cancelled" | yellow |
 
   @fullTest @walletTest @appleTest @mockData
@@ -312,17 +311,15 @@ Feature: Payment methods
       | de_DE    |
 
   @fullTest @translations
-  Scenario Outline: Visa Checkout - checking "Error" status translation for <language>
+  Scenario Outline: Visa Checkout - check translation overwriting mechanism
     When User changes page language to <language>
     And User chooses Visa Checkout as payment method - response set to ERROR
-    Then User will see information about "Error" payment status translated into <language>
+    Then User will see notification frame with message: "Wystąpił błąd"
+    And User will see that notification frame has "red" color
   @smokeTest
     Examples:
       | language |
       | fr_FR    |
-    Examples:
-      | language |
-      | de_DE    |
 
   @fullTest @translations
   Scenario Outline: ApplePay - checking translation for "Payment has been cancelled" status for <language>
