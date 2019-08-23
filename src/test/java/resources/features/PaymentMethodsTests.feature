@@ -310,16 +310,16 @@ Feature: Payment methods
       | language |
       | de_DE    |
 
-  @fullTest @translations
-  Scenario Outline: Visa Checkout - check translation overwriting mechanism
-    When User changes page language to <language>
-    And User chooses Visa Checkout as payment method - response set to ERROR
-    Then User will see notification frame with message: "Wystąpił błąd"
-    And User will see that notification frame has "red" color
-  @smokeTest
-    Examples:
-      | language |
-      | fr_FR    |
+#  @fullTest @translations
+#  Scenario Outline: Visa Checkout - check translation overwriting mechanism
+#    When User changes page language to <language>
+#    And User chooses Visa Checkout as payment method - response set to ERROR
+#    Then User will see notification frame with message: "Wystąpił błąd"
+#    And User will see that notification frame has "red" color
+#  @smokeTest
+#    Examples:
+#      | language |
+#      | fr_FR    |
 
   @fullTest @translations
   Scenario Outline: ApplePay - checking translation for "Payment has been cancelled" status for <language>
