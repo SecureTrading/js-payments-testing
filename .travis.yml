@@ -61,10 +61,6 @@ jobs:
       if: env(TESTS_TYPE)=fullTest
       script:
         - mvn install -DLOCAL=true -Dos=Windows -Dos_version=8.1 -Dbrowser=Firefox -Dbrowser_version=67.0 -Dresolution=1920x1080 -Dcucumber.options="--tags $TEST_TAG"
-    - name: "Behavioural test: firefox 68, Windows 7"
-      if: env(TESTS_TYPE)=fullTest
-      script:
-        - mvn install -DLOCAL=true -Dos=Windows -Dos_version=7 -Dbrowser=Firefox -Dbrowser_version=68.0 -Dresolution=1920x1080 -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: firefox 68, OS X Mojave"
       if: env(TESTS_TYPE)=fullTest
       script:
@@ -80,10 +76,6 @@ jobs:
     - name: "Behavioural test: ie 11, Windows 10"
       script:
         - mvn install -DLOCAL=true -Dos=Windows -Dos_version=10 -Dbrowser=IE -Dbrowser_version=11.0 -Dresolution=1920x1080 -Dcucumber.options="--tags $TEST_TAG"
-    - name: "Behavioural test: ie 10, Windows 8"
-      if: env(TESTS_TYPE)=fullTest
-      script:
-        - mvn install -DLOCAL=true -Dos=Windows -Dos_version=8 -Dbrowser=IE -Dbrowser_version=10.0 -Dresolution=1920x1080 -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: edge 18, Windows 10"
       if: env(TESTS_TYPE)=fullTest
       script:

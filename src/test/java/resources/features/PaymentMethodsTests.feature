@@ -21,10 +21,10 @@ Feature: Payment methods
       | DECLINE    | "Decline"                                 | red   |
     Examples:
       | actionCode      | paymentStatusMessage   | color |
-      | INVALID_FIELD   | "Invalid field"        | red   |
+#      | INVALID_FIELD   | "Invalid field"        | red   |
       | SOCKET_ERROR    | "Socket receive error" | red   |
       | UNAUTHENTICATED | "Unauthenticated"      | red   |
-      | UNKNOWN_ERROR   | "Unknown error"        | red   |
+#      | UNKNOWN_ERROR   | "Unknown error"        | red   |
 
   @fullTest @cardinalCommerce
   Scenario Outline: Cardinal Commerce (card not-enrolled N) - checking payment status for <actionCode> response code
@@ -56,7 +56,7 @@ Feature: Payment methods
     Examples:
       | actionCode      | paymentStatusMessage | color |
       | UNAUTHENTICATED | "Unauthenticated"    | red   |
-      | DECLINE         | "Decline"            | red   |
+#      | DECLINE         | "Decline"            | red   |
 
   @smokeTest @fullTest
   Scenario: Cardinal Commerce - check THREEDQUERY response for code: "INVALID_ACQUIRER"
@@ -81,7 +81,7 @@ Feature: Payment methods
     Examples:
       | actionCode | paymentStatusMessage                      | color |
       | NOACTION   | "Payment has been successfully processed" | green |
-      | ERROR      | "Invalid response"                        | red   |
+#      | ERROR      | "Invalid response"                        | red   |
 
   @fullTest @cardinalCommerce
   Scenario Outline: Successful payment using most popular Credit Cards: <cardType>
@@ -111,13 +111,13 @@ Feature: Payment methods
       | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
     Examples:
       | cardNumber          | formattedCardNumber    | expirationDate | cvc | cardType     |
-      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
-      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
+#      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
+#      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
       | 6011000000000301    | 6011 0000 0000 0301    | 12/23          | 123 | DISCOVER     |
       | 3528000000000411    | 3528 0000 0000 0411    | 12/23          | 123 | JCB          |
       | 5000000000000611    | 5000 0000 0000 0611    | 12/23          | 123 | MAESTRO      |
       | 5100000000000511    | 5100 0000 0000 0511    | 12/23          | 123 | MASTERCARD   |
-      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/23          | 123 | PIBA         |
+#      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/23          | 123 | PIBA         |
 
   @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
@@ -181,15 +181,15 @@ Feature: Payment methods
     And User clicks Pay button
     And User will see "Value mismatch pattern" message under field: CVC
 
-  @fullTest @fieldsValidation
-  Scenario: Checking merchant field validation - invalid email
-    When User fills merchant data with name "John Test", email "test@example", phone "44422224444"
-    And User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
-    And InvalidField response set for EMAIL
-    And User clicks Pay button
-    Then User will see that merchant field EMAIL is highlighted
-    And User will see notification frame with message: "Invalid field"
-    And User will see that notification frame has "red" color
+#  @fullTest @fieldsValidation
+#  Scenario: Checking merchant field validation - invalid email
+#    When User fills merchant data with name "John Test", email "test@example", phone "44422224444"
+#    And User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
+#    And InvalidField response set for EMAIL
+#    And User clicks Pay button
+#    Then User will see that merchant field EMAIL is highlighted
+#    And User will see notification frame with message: "Invalid field"
+#    And User will see that notification frame has "red" color
 
   @fullTest @walletTest @visaTest
   Scenario Outline: Visa Checkout - checking payment status for <actionCode> response code
@@ -247,14 +247,14 @@ Feature: Payment methods
     Examples:
       | language |
       | en_GB    |
-      | fr_FR    |
-      | en_US    |
-      | cy_GB    |
-      | da_DK    |
-      | es_ES    |
-      | nl_NL    |
-      | no_NO    |
-      | sv_SE    |
+#      | fr_FR    |
+#      | en_US    |
+#      | cy_GB    |
+#      | da_DK    |
+#      | es_ES    |
+#      | nl_NL    |
+#      | no_NO    |
+#      | sv_SE    |
 
   @fullTest @animatedCard @translations
   Scenario Outline: Checking animated card translation for <language>
@@ -265,11 +265,11 @@ Feature: Payment methods
     Examples:
       | language |
       | de_DE    |
-    Examples:
-      | language |
-      | en_GB    |
-      | es_ES    |
-      | sv_SE    |
+#    Examples:
+#      | language |
+#      | en_GB    |
+#      | es_ES    |
+#      | sv_SE    |
 
   @fullTest @translations
   Scenario Outline: Checking translation of fields validation for <language>
@@ -280,7 +280,7 @@ Feature: Payment methods
     Examples:
       | language |
       | fr_FR    |
-      | de_DE    |
+#      | de_DE    |
 
   @fullTest @translations
   Scenario Outline: Checking translation of backend fields validation for <language>
@@ -292,8 +292,8 @@ Feature: Payment methods
     Then User will see validation message "Invalid field" under CARD_NUMBER field translated into <language>
     Examples:
       | language |
-      | fr_FR    |
-      | de_DE    |
+      | es_ES    |
+#      | de_DE    |
 
   @fullTest @translations
   Scenario Outline: Cardinal Commerce - checking "Success" status translation for <language>
@@ -305,10 +305,10 @@ Feature: Payment methods
   @smokeTest
     Examples:
       | language |
-      | fr_FR    |
-    Examples:
-      | language |
-      | de_DE    |
+      | no_NO    |
+#    Examples:
+#      | language |
+#      | de_DE    |
 
   @fullTest @translations
   Scenario Outline: Visa Checkout - check translation overwriting mechanism
@@ -329,7 +329,7 @@ Feature: Payment methods
     Examples:
       | language |
       | es_ES    |
-      | no_NO    |
+#      | no_NO    |
 
   @fullTest @immediatePayment @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - checking payment status for <actionCode> response code
@@ -363,7 +363,7 @@ Feature: Payment methods
     Then User will see message "<errorMessage>" displayed on page
     Examples:
       | actionCode | errorMessage     |
-      | ERROR      | Invalid response |
+#      | ERROR      | Invalid response |
       | FAILURE    | Merchant decline |
 
   @smoketest @fullTest @cardinalCommerce
