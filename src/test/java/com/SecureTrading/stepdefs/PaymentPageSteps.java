@@ -296,7 +296,7 @@ public class PaymentPageSteps {
 
     @When("User opens payment page without JSINIT process")
     public void userOpensPaymentPageWithoutJSINITProcess() {
-        if (checkIfScenarioNameContainsText("skipped JSINIT process")) {
+        if (checkIfBrowserNameStartWith("Safari")) {
             SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
             SeleniumExecutor.getDriver().get("https://thirdparty.example.com:8443");
         }
