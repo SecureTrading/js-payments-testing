@@ -82,6 +82,7 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.networkLogs", true);
         caps.setCapability("acceptSslCerts", true);
         caps.setCapability("ignoreProtectedModeSettings", true);
+        caps.setCapability("ensureCleanSession", true);
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
