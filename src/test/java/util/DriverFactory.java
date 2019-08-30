@@ -1,8 +1,7 @@
 package util;
 
 import static util.PropertiesHandler.getProperty;
-import static util.helpers.TestConditionHandler.checkConditionForRunApplePayTest;
-import static util.helpers.TestConditionHandler.checkIfScenarioNameContainsText;
+import static util.helpers.TestConditionHandler.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -68,8 +67,8 @@ abstract class DriverFactory {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // Browser/device configuration
-        for (String property : new String[]{"os", "os_version", "browser", "browser_version", "resolution", "device",
-                "real_mobile"}) {
+        for (String property : new String[] { "os", "os_version", "browser", "browser_version", "resolution", "device",
+                "real_mobile" }) {
             String value = System.getProperty(property);
             if (value != null) {
                 caps.setCapability(property, value);
@@ -80,21 +79,28 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.console", "errors");
         caps.setCapability("browserstack.debug", true);
         caps.setCapability("browserstack.networkLogs", true);
-        caps.setCapability("acceptSslCerts", "true");
+        caps.setCapability("acceptSslCerts", true);
+
+        if (checkIfBrowserNameStartWith("IE")){
+            caps.setCapability("ie.ensureCleanSession", true);
+            caps.setCapability("ie.forceCreateProcessApi", true);
+        }
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
 
-        //This method is for describing apple pay test as skipped if is not running on ios and safari
-        if(checkIfScenarioNameContainsText("ApplePay")){
-            if(checkConditionForRunApplePayTest()){
+        // This method is for describing apple pay test as skipped if is not running on
+        // ios and safari
+        if (checkIfScenarioNameContainsText("ApplePay")) {
+            if (checkConditionForRunApplePayTest()) {
                 PicoContainerHelper.cleanContainer();
-                PicoContainerHelper.updateInContainer(StoredElement.scenarioName, "SCENARIO SKIPPED as iOS system and Safari is required for ApplePay test");
+                PicoContainerHelper.updateInContainer(StoredElement.scenarioName,
+                        "SCENARIO SKIPPED as iOS system and Safari is required for ApplePay test");
             }
         }
 
-        caps.setCapability("name",
-                PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- " + simpleDateFormat.format(new Date()));
+        caps.setCapability("name", PicoContainerHelper.getFromContainer(StoredElement.scenarioName) + " --- "
+                + simpleDateFormat.format(new Date()));
 
         if (System.getProperty(PropertyType.LOCAL.toString()) != null
                 && System.getProperty(PropertyType.LOCAL.toString()).equals("true")) {
