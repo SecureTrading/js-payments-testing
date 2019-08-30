@@ -1,8 +1,7 @@
 package util;
 
 import static util.PropertiesHandler.getProperty;
-import static util.helpers.TestConditionHandler.checkConditionForRunApplePayTest;
-import static util.helpers.TestConditionHandler.checkIfScenarioNameContainsText;
+import static util.helpers.TestConditionHandler.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -81,8 +80,11 @@ abstract class DriverFactory {
         caps.setCapability("browserstack.debug", true);
         caps.setCapability("browserstack.networkLogs", true);
         caps.setCapability("acceptSslCerts", true);
-        caps.setCapability("ignoreProtectedModeSettings", true);
-        caps.setCapability("ie.ensureCleanSession", true);
+
+        if (checkIfBrowserNameStartWith("IE")){
+            caps.setCapability("ie.ensureCleanSession", true);
+            caps.setCapability("ie.forceCreateProcessApi", true);
+        }
 
         caps.setCapability("project", "JS Payments Interface");
         caps.setCapability("build", LocalDate.now().toString());
