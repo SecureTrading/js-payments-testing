@@ -345,11 +345,28 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfAnimatedCardTranslationWasAsExpected(String translation) throws IOException, ParseException {
-        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Card number", translation).toUpperCase(),
+        String cardNumberLowerCase = getTranslationFromJson("Card number", translation);
+        String expirationDateLowerCase = getTranslationFromJson("Expiration date", translation);
+        String cvvLowerCase = getTranslationFromJson("Security code", translation);
+        String cardNumberTranslation = "";
+        String expirationDateTranslation = "";
+        String cvvTranslation = "";
+
+        if(checkIfBrowserNameStartWith("Safari")){
+            cardNumberTranslation = cardNumberLowerCase;
+            expirationDateTranslation = expirationDateLowerCase;
+            cvvTranslation = cvvLowerCase;
+        } else {
+            cardNumberTranslation = cardNumberLowerCase.toUpperCase();
+            expirationDateTranslation = expirationDateLowerCase.toUpperCase();
+            cvvTranslation = cvvLowerCase.toUpperCase();
+        }
+
+        validateIfElelemtTranslationWasAsExpected(cardNumberTranslation,
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedCardNumberLabel);
-        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Expiration date", translation).toUpperCase(),
+        validateIfElelemtTranslationWasAsExpected(expirationDateTranslation,
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedExpirationDateLabel);
-        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation).toUpperCase(),
+        validateIfElelemtTranslationWasAsExpected(cvvTranslation,
                 FieldType.ANIMATED_CARD, animatedCardModule.animatedSecurityCodeLabel);
     }
 

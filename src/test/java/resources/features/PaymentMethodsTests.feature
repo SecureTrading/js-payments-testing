@@ -366,12 +366,11 @@ Feature: Payment methods
 #      | ERROR      | Invalid response |
       | FAILURE    | Merchant decline |
 
-  @smoketest @fullTest @cardinalCommerce
+  @smokeTest @fullTest @cardinalCommerce
   Scenario: Successful payment with skipped JSINIT process
     When User opens payment page without JSINIT process
     When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
-    And THREEDQUERY response set to ENROLLED_Y
-    And ACS response set to OK
+    And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to OK
     Then User will see payment status information: "Payment has been successfully processed"
     And User will see that notification frame has "green" color

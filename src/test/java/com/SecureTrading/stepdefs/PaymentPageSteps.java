@@ -37,21 +37,21 @@ public class PaymentPageSteps {
     public void userOpensPageWithPaymentForm() throws InterruptedException {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else if (checkIfScenarioNameContainsText("Immediate")) {
-            System.out.println("Step skipped as payment form is not required for immediate payment");
         } else if (checkIfScenarioNameContainsText("skipped JSINIT process")) {
             System.out.println("Step skipped as is not required");
         } else {
             //Accept self signed certificates for Safari purpose
             if (checkIfBrowserNameStartWith("Safari")) {
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+                SeleniumExecutor.getDriver().get("https://thirdparty.example.com:8443");
             }
-
-            SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
-            //Additional try for IE problems
-            if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
-                Thread.sleep(4000);
+            if (!checkIfScenarioNameContainsText("Immediate")) {
                 SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+                //Additional try for IE problems
+                if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
+                    Thread.sleep(4000);
+                    SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+                }
             }
         }
     }
@@ -296,6 +296,10 @@ public class PaymentPageSteps {
 
     @When("User opens payment page without JSINIT process")
     public void userOpensPaymentPageWithoutJSINITProcess() {
+        if (checkIfBrowserNameStartWith("Safari")) {
+            SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+            SeleniumExecutor.getDriver().get("https://thirdparty.example.com:8443");
+        }
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/bypass.html");
     }
 
