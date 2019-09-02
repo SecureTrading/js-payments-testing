@@ -9,6 +9,7 @@ import util.enums.StoredElement;
 
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
+import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 
@@ -35,7 +36,9 @@ public class AnimatedCardModule {
         return cardLogo;
     }
 
-    public boolean checkIfAnimatedCardIsFlipped() {
+    public boolean checkIfAnimatedCardIsFlipped() throws InterruptedException {
+        if (checkIfBrowserNameStartWith("IE"))
+            Thread.sleep(2000);
         switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         boolean isFlipped = false;
         String cardSide = getAttribute(SeleniumExecutor.getDriver().findElement(animatedCard), "class");
@@ -83,7 +86,7 @@ public class AnimatedCardModule {
                 expectedData, getDataFromAnimatedCreditCard(fieldType));
     }
 
-    public void validateIfAnimatedCardIsFlipped(boolean amexCard) {
+    public void validateIfAnimatedCardIsFlipped(boolean amexCard) throws InterruptedException {
         if (amexCard) {
             PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                     "Animated card is flipped for AMEX but shouldn't be");

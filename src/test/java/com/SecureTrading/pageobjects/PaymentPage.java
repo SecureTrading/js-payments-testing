@@ -59,13 +59,17 @@ public class PaymentPage extends BasePage {
     private By immediatePaymentErrorCode = By.id("errorcode");
 
     public String getPaymentStatusMessage() throws InterruptedException {
+        if (checkIfBrowserNameStartWith("IE"))
+            Thread.sleep(2000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
         return statusMessage;
     }
 
-    public String getColorOfNotificationFrame() {
+    public String getColorOfNotificationFrame() throws InterruptedException {
+        if (checkIfBrowserNameStartWith("IE"))
+            Thread.sleep(2000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(notificationFrame),
                 "data-notification-color");
@@ -287,7 +291,7 @@ public class PaymentPage extends BasePage {
                 expectedMessage, getPaymentStatusMessage());
     }
 
-    public void validateIfColorOfNotificationFrameWasAsExpected(String color) {
+    public void validateIfColorOfNotificationFrameWasAsExpected(String color) throws InterruptedException {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 " Color of notification frame is not correct, should be " + color + " but was: "
                         + getColorOfNotificationFrame());

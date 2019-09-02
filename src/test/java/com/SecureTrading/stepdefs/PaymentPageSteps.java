@@ -79,7 +79,7 @@ public class PaymentPageSteps {
     }
 
     @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
-    public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) {
+    public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
         animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"));
     }
 
@@ -189,7 +189,7 @@ public class PaymentPageSteps {
     }
 
     @And("^User will see that notification frame has \"([^\"]*)\" color$")
-    public void userWillSeeThatNotificationFrameHasColorColor(String color) {
+    public void userWillSeeThatNotificationFrameHasColorColor(String color) throws InterruptedException {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
         } else
