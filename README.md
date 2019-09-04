@@ -1,13 +1,17 @@
 # js-payments-testing
 The integration testing framework used in order to test the js-payments interface
 
-- Running tests on travis requires defining two travis variables (directly in travis.yml file or in travis interface):
+- Running tests on travis requires defining two travis variables (set directly in travis.yml file or in travis interface):
     - TESTS_TYPE: possible values: fullTest/smokeTest (full or limited number of browsers/devices on which tests will be run)
     - TEST_TAG: here can be defined tests with specific tag will be run, for example:
         '@smokeTest' -> smoke tests only
         '@fullTest' -> full set of tests
-        '@fullTest,~@animatedCard' -> full tests but without animated card tests
+        '@smokeTest,@animatedCard' -> smoke tests and also tests related to animated card (if is visible)
+        '@fullTest,@animatedCard' -> full tests and also tests related to animated card (if is visible)
         '@animatedCard' -> animated card tests only
+
+        For repository only with animated card:
+        '@animatedCardRepoTest' -> set of tests for animated card and fields validation without iframes
 
 - Tests can be run on any machine in two different ways:
 

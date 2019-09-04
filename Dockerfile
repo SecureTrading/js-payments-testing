@@ -1,4 +1,4 @@
-ARG CODE_VERSION=develop
+ARG CODE_VERSION=feature-ST-315-delete-animated-card-from-stjs-library
 FROM securetrading1/js-payments:${CODE_VERSION}
 COPY . /app/js-payments-testing
 WORKDIR /app/js-payments-testing

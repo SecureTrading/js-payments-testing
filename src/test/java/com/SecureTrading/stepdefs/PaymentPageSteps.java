@@ -59,7 +59,7 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
-        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
+        paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
     }
 
     @When("^User fills merchant data with name \"([^\"]*)\", email \"([^\"]*)\", phone \"([^\"]*)\"$")
@@ -75,19 +75,19 @@ public class PaymentPageSteps {
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
-        animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
+        paymentPage.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
     }
 
     @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
     public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
-        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"));
+        paymentPage.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"));
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc
             (
                     String cardNumber, String expirationDate, String cvc) throws InterruptedException {
-        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
+        paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
     }
 
     @And("^User will see \"([^\"]*)\" message under field: (.*)$")
@@ -98,7 +98,7 @@ public class PaymentPageSteps {
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
                                                                                                  String expirationDate, String cvc) {
-        animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
+        paymentPage.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
     }
 
     @Then("^User will see payment status information: \"([^\"]*)\"$")
