@@ -26,11 +26,9 @@ import java.io.IOException;
 public class PaymentPageSteps {
 
     private PaymentPage paymentPage;
-    private AnimatedCardModule animatedCardModule;
 
     public PaymentPageSteps() {
         paymentPage = new PaymentPage();
-        animatedCardModule = new AnimatedCardModule();
     }
 
     @Given("^User opens page with payment form$")

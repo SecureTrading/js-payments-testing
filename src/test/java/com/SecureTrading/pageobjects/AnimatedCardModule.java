@@ -1,5 +1,6 @@
 package com.SecureTrading.pageobjects;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
@@ -7,6 +8,9 @@ import util.SeleniumExecutor;
 import util.enums.FieldType;
 import util.enums.StoredElement;
 
+import java.io.IOException;
+
+import static util.JsonHandler.getTranslationFromJson;
 import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
@@ -33,9 +37,9 @@ public class AnimatedCardModule {
     private By expirationDateInputField = By.id("st-expiration-date-input");
 
     // No-iFrames-fields validation messages
-    private By creditCardFieldValidationMessage = By.id("st-card-number-message");
-    private By cvcFieldValidationMessage = By.id("st-security-code-message");
-    private By expirationDateFieldValidationMessage = By.id("st-expiration-date-message");
+    private By creditCardFieldValidationMessage = By.id("st-card-number-input-error");
+    private By cvcFieldValidationMessage = By.id("st-security-code-input-error");
+    private By expirationDateFieldValidationMessage = By.id("st-expiration-date-input-error");
 
 
     public boolean checkIfAnimatedCardIsFlippedWithoutIframe() throws InterruptedException {
@@ -98,7 +102,7 @@ public class AnimatedCardModule {
         validateIfProvidedDataOnAnimatedCardWasAsExpectedWithoutIframe(FieldType.CVC, cvc);
     }
 
-    public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv){
+    public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv) {
         sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
         sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), expiryDate);
         sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), cvv);
@@ -135,7 +139,7 @@ public class AnimatedCardModule {
                 break;
         }
 
-        if (className.contains("error-field")) {
+        if (className.contains("error")) {
             highlight = true;
         }
         return highlight;
@@ -156,15 +160,49 @@ public class AnimatedCardModule {
                 expectedMessage, getCreditCardNoIFrameFieldValidationMessage(fieldType));
     }
 
-    public void validateIfCardTypeIconWasAsExpectedForWithoutIframe(String expectedCardIcon) {
+    public void validateIfCardTypeIconWasAsExpectedForWithoutIframe(String expectedCardIcon) throws InterruptedException {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Card type icon is not correct, should be "
                 + expectedCardIcon + " but was: " + getCardTypeIconFromAnimatedCardTextWithoutIframe());
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedCardIcon, getCardTypeIconFromAnimatedCardTextWithoutIframe());
     }
 
-    public String getCardTypeIconFromAnimatedCardTextWithoutIframe() {
+    public String getCardTypeIconFromAnimatedCardTextWithoutIframe() throws InterruptedException {
         String cardLogo = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
         return cardLogo;
+    }
+
+    public void validateIfAnimatedCardTranslationWasAsExpected(String translation) throws InterruptedException, IOException, ParseException {
+        String cardNumberLowerCase = getTranslationFromJson("Card number", translation);
+        String expirationDateLowerCase = getTranslationFromJson("Expiration date", translation);
+        String cvvLowerCase = getTranslationFromJson("Security code", translation);
+        String cardNumberTranslation = "";
+        String expirationDateTranslation = "";
+        String cvvTranslation = "";
+
+        if (checkIfBrowserNameStartWith("Safari")) {
+            cardNumberTranslation = cardNumberLowerCase;
+            expirationDateTranslation = expirationDateLowerCase;
+            cvvTranslation = cvvLowerCase;
+        } else {
+            cardNumberTranslation = cardNumberLowerCase.toUpperCase();
+            expirationDateTranslation = expirationDateLowerCase.toUpperCase();
+            cvvTranslation = cvvLowerCase.toUpperCase();
+        }
+
+        validateIfElelemtTranslationWasAsExpected(cardNumberTranslation, animatedCardNumberLabel);
+        validateIfElelemtTranslationWasAsExpected(expirationDateTranslation, animatedExpirationDateLabel);
+        validateIfElelemtTranslationWasAsExpected(cvvTranslation, animatedSecurityCodeLabel);
+    }
+
+    public void validateIfElelemtTranslationWasAsExpected(String translation, By element) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Translation is not correct, should be "
+                + translation + " but was: " + getText(SeleniumExecutor.getDriver().findElement(element)));
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), translation,
+                getText(SeleniumExecutor.getDriver().findElement(element)));
+    }
+
+    public void changeFieldFocus() {
+        SeleniumExecutor.getDriver().findElement(cardNumberInputField).click();
     }
 }

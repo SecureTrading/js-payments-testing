@@ -26,19 +26,19 @@ Feature: Animated Card tests
 
   @animatedCardRepoTest
   Scenario Outline: Checking animated card translation for <language>
-    When User fills payment form with data: "<cardNumber>", "<expirationDate>" and "<cvc>"
-    Then User will see that labels displayed on animated card are translated into <language>
+    When User fills payment form with data: "340000000000611", "12/22" and "123"
+    Then User will see that labels on animated card are translated into <language>
     Examples:
       | language |
       | en_GB    |
-#      | en_GB    |
-#      | es_ES    |
-#      | sv_SE    |
+      | en_GB    |
+      | es_ES    |
+      | sv_SE    |
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
-    When User fills payment form with data: "<cardNumber>", "<expirationDate>" and "<cvc>"
-    And User changes the field
+    When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
+    And User changes the field focus
     Then User will see "Field is required" message under no-iframe-field: <field>
     And User will see that <field> no-iframe-field is highlighted
     Examples:
@@ -49,15 +49,15 @@ Feature: Animated Card tests
 
   @animatedCardRepoTest
   Scenario: Filling 3-number of cvc code for AMEX card
-    When User fills payment form with credit card number "340000000000611", expiration date "12/22" and cvc "123"
-    And User changes the field
-    Then User will see "Field is required" message under no-iframe-field: CVC
+    When User fills payment form with data: "340000000000611", "12/22" and "123"
+    And User changes the field focus
+    Then User will see "Value mismatch pattern" message under no-iframe-field: CVC
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
-    When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
-    And User clicks Pay button
-    Then User will see "Field is required" message under no-iframe-field: <field>
+    When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
+    And User changes the field focus
+    Then User will see "Value mismatch pattern" message under no-iframe-field: <field>
     And User will see that <field> no-iframe-field is highlighted
     Examples:
       | cardNumber       | expiration | cvc | field       |
