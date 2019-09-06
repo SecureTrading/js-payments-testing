@@ -31,9 +31,8 @@ Feature: Animated Card tests
     Examples:
       | language |
       | en_GB    |
-      | en_GB    |
-      | es_ES    |
-      | sv_SE    |
+#      | es_ES    |
+#      | sv_SE    |
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
