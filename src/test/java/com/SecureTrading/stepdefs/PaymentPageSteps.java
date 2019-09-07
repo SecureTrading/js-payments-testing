@@ -27,6 +27,7 @@ public class PaymentPageSteps {
 
     private PaymentPage paymentPage;
     private AnimatedCardModule animatedCardModule;
+    private boolean fieldInIframe = true;
 
     public PaymentPageSteps() {
         paymentPage = new PaymentPage();
@@ -59,7 +60,7 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
-        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
+        paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
     }
 
     @When("^User fills merchant data with name \"([^\"]*)\", email \"([^\"]*)\", phone \"([^\"]*)\"$")
@@ -75,30 +76,30 @@ public class PaymentPageSteps {
     @Then("^User will see card icon connected to card type ([^\"]*)$")
     public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
-        animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase());
+        animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase(), fieldInIframe);
     }
 
     @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
     public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
-        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"));
+        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"), fieldInIframe);
     }
 
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc
             (
                     String cardNumber, String expirationDate, String cvc) throws InterruptedException {
-        paymentPage.fillAllCardData(cardNumber, expirationDate, cvc);
+        paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
     }
 
     @And("^User will see \"([^\"]*)\" message under field: (.*)$")
     public void userWillSeeMessageUnderField(String message, FieldType fieldType) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(fieldType, message);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(fieldType, message, fieldInIframe);
     }
 
     @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
     public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
                                                                                                  String expirationDate, String cvc) {
-        animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc);
+        animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc, fieldInIframe);
     }
 
     @Then("^User will see payment status information: \"([^\"]*)\"$")
@@ -113,9 +114,9 @@ public class PaymentPageSteps {
 
     @Then("^User will see validation message \"([^\"]*)\" under all fields$")
     public void userWillSeeValidationMessageUnderAllFields(String message) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.CARD_NUMBER, message);
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.EXPIRY_DATE, message);
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.CVC, message);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.CARD_NUMBER, message, fieldInIframe);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.EXPIRY_DATE, message, fieldInIframe);
+        paymentPage.validateIfFieldValidationMessageWasAsExpected(FieldType.CVC, message, fieldInIframe);
     }
 
     @And("^THREEDQUERY response set to (.*)$")
@@ -203,7 +204,7 @@ public class PaymentPageSteps {
 
     @And("^User will see that (.*) field is highlighted$")
     public void userWillSeeThatFieldFieldIsHighlighted(FieldType fieldType) {
-        paymentPage.validateIfFieldIsHighlighted(fieldType);
+        paymentPage.validateIfFieldIsHighlighted(fieldType, fieldInIframe);
     }
 
     @Then("^User will see that merchant field (.*) is highlighted$")
@@ -214,9 +215,9 @@ public class PaymentPageSteps {
 
     @And("^User will see that all fields are highlighted$")
     public void userWillSeeThatAllFieldsAreHighlighted() {
-        paymentPage.validateIfFieldIsHighlighted(FieldType.CARD_NUMBER);
-        paymentPage.validateIfFieldIsHighlighted(FieldType.EXPIRY_DATE);
-        paymentPage.validateIfFieldIsHighlighted(FieldType.CVC);
+        paymentPage.validateIfFieldIsHighlighted(FieldType.CARD_NUMBER, fieldInIframe);
+        paymentPage.validateIfFieldIsHighlighted(FieldType.EXPIRY_DATE, fieldInIframe);
+        paymentPage.validateIfFieldIsHighlighted(FieldType.CVC, fieldInIframe);
     }
 
     @And("^InvalidField response set for (.*)$")
@@ -305,6 +306,6 @@ public class PaymentPageSteps {
 
     @Then("User will see that labels displayed on animated card are translated into ([^\"]*)$")
     public void userWillSeeThatLabelsDisplayedOnAnimatedCardAreTranslatedIntoLanguage(String language) throws IOException, ParseException {
-        paymentPage.validateIfAnimatedCardTranslationWasAsExpected(language);
+        paymentPage.validateIfAnimatedCardTranslationWasAsExpected(language, fieldInIframe);
     }
 }

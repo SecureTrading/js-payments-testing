@@ -131,7 +131,7 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void fillAllCardData(String cardNumber, String expiryDate, String cvc) throws InterruptedException {
+    public void fillPaymentForm(String cardNumber, String expiryDate, String cvc) throws InterruptedException {
         if (checkIfDeviceNameStartWith("i")) {
             fillCreditCardInputFieldByJavaScript(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputFieldByJavaScript(FieldType.EXPIRY_DATE, expiryDate);
@@ -205,9 +205,10 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public String getCreditCardFieldValidationMessage(FieldType fieldType) {
+    public String getCreditCardFieldValidationMessage(FieldType fieldType, boolean fieldInIframe) {
+        if(fieldInIframe)
+            switchToIframe(fieldType.getIframeName());
         String message = "";
-        switchToIframe(fieldType.getIframeName());
         switch (fieldType) {
             case CARD_NUMBER:
                 message = getText(SeleniumExecutor.getDriver().findElement(creditCardFieldValidationMessage));
@@ -223,10 +224,12 @@ public class PaymentPage extends BasePage {
         return message;
     }
 
-    public boolean checkIfFieldIsHighlighted(FieldType fieldType) {
+    public boolean checkIfFieldIsHighlighted(FieldType fieldType, boolean fieldInIframe) {
         boolean highlight = false;
         String className = "";
-        switchToIframe(fieldType.getIframeName());
+        if(fieldInIframe)
+            switchToIframe(fieldType.getIframeName());
+
         switch (fieldType) {
             case CARD_NUMBER:
                 className = getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField), "class");
@@ -275,12 +278,12 @@ public class PaymentPage extends BasePage {
         return translation;
     }
 
-    public void validateIfFieldValidationMessageWasAsExpected(FieldType fieldType, String expectedMessage) {
+    public void validateIfFieldValidationMessageWasAsExpected(FieldType fieldType, String expectedMessage, boolean fieldInIframe) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: "
-                        + getCreditCardFieldValidationMessage(fieldType));
+                        + getCreditCardFieldValidationMessage(fieldType, fieldInIframe));
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedMessage, getCreditCardFieldValidationMessage(fieldType));
+                expectedMessage, getCreditCardFieldValidationMessage(fieldType, fieldInIframe));
     }
 
     public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) throws InterruptedException {
@@ -299,11 +302,11 @@ public class PaymentPage extends BasePage {
                 getColorOfNotificationFrame());
     }
 
-    public void validateIfFieldIsHighlighted(FieldType fieldType) {
+    public void validateIfFieldIsHighlighted(FieldType fieldType, boolean fieldInIframe) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 " Field is not highlighted but should be");
         Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfFieldIsHighlighted(fieldType));
+                checkIfFieldIsHighlighted(fieldType, fieldInIframe));
     }
 
     public void validateIfMerchantFieldIsHighlighted(MerchantFieldType fieldType) {
@@ -344,30 +347,27 @@ public class PaymentPage extends BasePage {
          translation), null, payButtonLabel);
     }
 
-    public void validateIfAnimatedCardTranslationWasAsExpected(String translation) throws IOException, ParseException {
-        String cardNumberLowerCase = getTranslationFromJson("Card number", translation);
-        String expirationDateLowerCase = getTranslationFromJson("Expiration date", translation);
-        String cvvLowerCase = getTranslationFromJson("Security code", translation);
-        String cardNumberTranslation = "";
-        String expirationDateTranslation = "";
-        String cvvTranslation = "";
+    public void validateIfAnimatedCardTranslationWasAsExpected(String translation, boolean fieldInIframe) throws IOException, ParseException {
+        String cardNumberTranslation = getTranslationFromJson("Card number", translation);
+        String expirationDateTranslation = getTranslationFromJson("Expiration date", translation);
+        String cvvTranslation = getTranslationFromJson("Security code", translation);
 
-        if(checkIfBrowserNameStartWith("Safari")){
-            cardNumberTranslation = cardNumberLowerCase;
-            expirationDateTranslation = expirationDateLowerCase;
-            cvvTranslation = cvvLowerCase;
-        } else {
-            cardNumberTranslation = cardNumberLowerCase.toUpperCase();
-            expirationDateTranslation = expirationDateLowerCase.toUpperCase();
-            cvvTranslation = cvvLowerCase.toUpperCase();
+        if (!checkIfBrowserNameStartWith("Safari")) {
+            cardNumberTranslation = cardNumberTranslation.toUpperCase();
+            expirationDateTranslation = expirationDateTranslation.toUpperCase();
+            cvvTranslation = cvvTranslation.toUpperCase();
         }
 
+        FieldType fieldType = null;
+        if(fieldInIframe)
+            fieldType = FieldType.ANIMATED_CARD;
+
         validateIfElelemtTranslationWasAsExpected(cardNumberTranslation,
-                FieldType.ANIMATED_CARD, animatedCardModule.animatedCardNumberLabel);
+                fieldType, animatedCardModule.animatedCardNumberLabel);
         validateIfElelemtTranslationWasAsExpected(expirationDateTranslation,
-                FieldType.ANIMATED_CARD, animatedCardModule.animatedExpirationDateLabel);
+                fieldType, animatedCardModule.animatedExpirationDateLabel);
         validateIfElelemtTranslationWasAsExpected(cvvTranslation,
-                FieldType.ANIMATED_CARD, animatedCardModule.animatedSecurityCodeLabel);
+                fieldType, animatedCardModule.animatedSecurityCodeLabel);
     }
 
     public void validateIfPaymentStatusTranslationWasAsExpected(String paymentStatus, String translation)
