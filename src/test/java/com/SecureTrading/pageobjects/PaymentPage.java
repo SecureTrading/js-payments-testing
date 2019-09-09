@@ -59,8 +59,7 @@ public class PaymentPage extends BasePage {
     private By immediatePaymentErrorCode = By.id("errorcode");
 
     public String getPaymentStatusMessage() throws InterruptedException {
-        if (checkIfBrowserNameStartWith("IE"))
-            Thread.sleep(2000);
+        Thread.sleep(1000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         switchToDefaultIframe();
@@ -68,8 +67,7 @@ public class PaymentPage extends BasePage {
     }
 
     public String getColorOfNotificationFrame() throws InterruptedException {
-        if (checkIfBrowserNameStartWith("IE"))
-            Thread.sleep(2000);
+        Thread.sleep(1000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String frameColor = getAttribute(SeleniumExecutor.getDriver().findElement(notificationFrame),
                 "data-notification-color");
