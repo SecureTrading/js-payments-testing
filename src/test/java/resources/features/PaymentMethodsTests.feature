@@ -154,7 +154,7 @@ Feature: Payment methods
       | 4000000000009999 | 12/22      | 123 | CARD_NUMBER |
       | 4000000000001000 | 44/22      | 123 | EXPIRY_DATE |
 
-  @cc @fullTest @fieldsValidation
+  @fullTest @fieldsValidation
   Scenario Outline: Filling payment form with incomplete data (backend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with incorrect or missing data: card number <cardNumber>, expiration date <expiration> and cvc <cvc>
     And InvalidField response set for <field>
@@ -265,9 +265,9 @@ Feature: Payment methods
   @fullTest @translations
   Scenario Outline: Checking translation of fields validation for <language>
     When User changes page language to <language>
-    And User fills payment form with credit card number "4000000000000051 ", expiration date "12" and cvc "123"
+    And User fills payment form with credit card number "4000000000000051 ", expiration date "12/22" and cvc "12"
     And User clicks Pay button
-    Then User will see validation message "Value mismatch pattern" under EXPIRY_DATE field translated into <language>
+    Then User will see validation message "Value mismatch pattern" under CVC field translated into <language>
     Examples:
       | language |
       | fr_FR    |

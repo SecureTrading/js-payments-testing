@@ -81,10 +81,11 @@ public class AnimatedCardModule {
     }
 
     public void validateIfCardTypeIconWasAsExpected(String expectedCardIcon, boolean fieldInIframe) {
+        String cardIcon = getCardTypeIconFromAnimatedCardText(fieldInIframe);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Card type icon is not correct, should be "
-                + expectedCardIcon + " but was: " + getCardTypeIconFromAnimatedCardText(fieldInIframe));
+                + expectedCardIcon + " but was: " + cardIcon);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedCardIcon, getCardTypeIconFromAnimatedCardText(fieldInIframe));
+                expectedCardIcon, cardIcon);
     }
 
     public void validateIfAllProvidedDataOnAnimatedCardWasAsExpected(String cardNumber, String expirationDate,
@@ -95,11 +96,12 @@ public class AnimatedCardModule {
     }
 
     public void validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType fieldType, String expectedData, boolean fieldInIframe) {
+        String animatedCardData = getDataFromAnimatedCreditCard(fieldType, fieldInIframe);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " data from animated credit card is not correct, should be " + expectedData
-                        + " but was: " + getDataFromAnimatedCreditCard(fieldType, fieldInIframe));
+                        + " but was: " + animatedCardData);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedData, getDataFromAnimatedCreditCard(fieldType, fieldInIframe));
+                expectedData, animatedCardData);
     }
 
     public String getDataFromAnimatedCreditCard(FieldType fieldType, boolean fieldInIframe) {
