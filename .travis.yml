@@ -111,11 +111,11 @@ jobs:
     - name: "Behavioural test: Samsung Galaxy S7, Android 6.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S7" -Dos_version=6.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S7" -Dos_version=6.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
     - name: "Behavioural test: Samsung Galaxy Tab S3, Android 7.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Tab S3" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Tab S3" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
     - name: "Behavioural test: Google Pixel 3, Android 9.0"
       if: env(TESTS_TYPE)=fullTest
       script:
@@ -123,7 +123,7 @@ jobs:
     - name: "Behavioural test: Google Pixel, Android 8.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Google Pixel" -Dos_version=8.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+        - mvn install -DLOCAL=true -Ddevice="Google Pixel" -Dos_version=8.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
     - name: "Behavioural test: Google Nexus 6, Android 6.0"
       if: env(TESTS_TYPE)=fullTest
       script:
@@ -136,34 +136,34 @@ jobs:
       if: env(TESTS_TYPE)=fullTest
       script:
         - mvn install -DLOCAL=true -Ddevice="Google Nexus 5" -Dos_version=4.4 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone XS, iOS 12.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone XS" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone XS Max, iOS 12.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone XS Max" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone XR, iOS 12.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone XR" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone X, iOS 11.0"
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone X" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone 8, iOS 11.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone 8" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPhone SE, iOS 11.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPhone SE" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPad Pro 12.9 2018" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
-#    - name: "Behavioural test: iPad Mini 4, iOS 11.0"
-#      if: env(TESTS_TYPE)=fullTest
-#      script:
-#        - mvn install -DLOCAL=true -Ddevice="iPad Mini 4" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone XS, iOS 12.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone XS" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone XS Max, iOS 12.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone XS Max" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone XR, iOS 12.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone XR" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone X, iOS 11.0"
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone X" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone 8, iOS 11.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone 8" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPhone SE, iOS 11.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPhone SE" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPad Pro 12.9 2018, iOS 12.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPad Pro 12.9 2018" -Dos_version=12 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
+    - name: "Behavioural test: iPad Mini 4, iOS 11.0"
+      if: env(TESTS_TYPE)=fullTest
+      script:
+        - mvn install -DLOCAL=true -Ddevice="iPad Mini 4" -Dos_version=11 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
