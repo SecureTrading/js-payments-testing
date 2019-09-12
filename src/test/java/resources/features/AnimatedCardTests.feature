@@ -31,8 +31,8 @@ Feature: Animated Card tests
     Examples:
       | language |
       | en_GB    |
-#      | es_ES    |
-#      | sv_SE    |
+  #      | es_ES    |
+  #      | sv_SE    |
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
@@ -53,7 +53,7 @@ Feature: Animated Card tests
     Then User will see "Value mismatch pattern" message under no-iframe-field: CVC
 
   @animatedCardRepoTest
-  Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
+  Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvc>"
     When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
     And User changes the field focus
     Then User will see "Value mismatch pattern" message under no-iframe-field: <field>
