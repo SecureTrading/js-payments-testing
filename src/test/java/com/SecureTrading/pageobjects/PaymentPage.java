@@ -245,7 +245,7 @@ public class PaymentPage extends BasePage {
                 break;
         }
 
-        if (className.contains("error-field")) {
+        if (className.contains("error")) {
             highlight = true;
         }
         switchToDefaultIframe();
