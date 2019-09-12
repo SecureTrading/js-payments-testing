@@ -138,7 +138,8 @@ public class PaymentPage extends BasePage {
         } else {
             fillCreditCardInputField(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputField(FieldType.EXPIRY_DATE, expiryDate);
-            scrollToBottomOfPage();
+            if (!checkIfDeviceNameStartWith("Samsung") || !checkIfDeviceNameStartWith("Google"))
+                scrollToBottomOfPage();
             fillCreditCardInputField(FieldType.CVC, cvc);
         }
     }

@@ -20,10 +20,9 @@
     <selenium.java.version>3.141.59</selenium.java.version>
     <junit.jupiter.api.version>5.5.2</junit.jupiter.api.version>
     <commons.io.version>2.6</commons.io.version>
-    <lombok.version>1.18.8</lombok.version>
+    <lombok.version>1.18.10</lombok.version>
     <pico.container.version>2.15</pico.container.version>
     <commons.lang.version>3.8.1</commons.lang.version>
-    <acceptance.test.parallel.count>10</acceptance.test.parallel.count>
     <wiremock.version>2.24.1</wiremock.version>
     <rest.assured.version>4.1.1</rest.assured.version>
     <jackson.databind>2.9.9</jackson.databind>
