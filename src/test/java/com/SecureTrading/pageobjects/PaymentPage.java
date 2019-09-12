@@ -62,6 +62,10 @@ public class PaymentPage extends BasePage {
         Thread.sleep(1000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
+        if(statusMessage.length() == 0){
+            Thread.sleep(2000);
+            statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
+        }
         switchToDefaultIframe();
         return statusMessage;
     }
