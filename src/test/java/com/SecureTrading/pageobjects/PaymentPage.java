@@ -62,6 +62,10 @@ public class PaymentPage extends BasePage {
         Thread.sleep(1000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
+        if(statusMessage.length() == 0){
+            Thread.sleep(2000);
+            statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
+        }
         switchToDefaultIframe();
         return statusMessage;
     }
@@ -138,7 +142,8 @@ public class PaymentPage extends BasePage {
         } else {
             fillCreditCardInputField(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputField(FieldType.EXPIRY_DATE, expiryDate);
-            scrollToBottomOfPage();
+            if (!(checkIfDeviceNameStartWith("Samsung") || checkIfDeviceNameStartWith("Google")))
+                scrollToBottomOfPage();
             fillCreditCardInputField(FieldType.CVC, cvc);
         }
     }
@@ -159,10 +164,10 @@ public class PaymentPage extends BasePage {
                 sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
                 break;
             case EXPIRY_DATE:
-                if (checkIfBrowserNameStartWith("IE")) {
-                    sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0, 2));
-                    Thread.sleep(1000);
-                    sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3, 5));
+                if (checkIfBrowserNameStartWith("IE") && value.length() > 3) {
+                        sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0, 2));
+                        Thread.sleep(1000);
+                        sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3, 5));
                 } else
                     sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
                 break;
@@ -277,27 +282,31 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfFieldValidationMessageWasAsExpected(FieldType fieldType, String expectedMessage, boolean fieldInIframe) {
+        String actualMessage = getCreditCardFieldValidationMessage(fieldType, fieldInIframe);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " error message is not correct, should be " + expectedMessage + " but was: "
-                        + getCreditCardFieldValidationMessage(fieldType, fieldInIframe));
+                        + actualMessage);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedMessage, getCreditCardFieldValidationMessage(fieldType, fieldInIframe));
+                expectedMessage, actualMessage);
+
     }
 
     public void validateIfPaymentStatusMessageWasAsExpected(String expectedMessage) throws InterruptedException {
+        String actualMessage = getPaymentStatusMessage();
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Payment status message is not correct, should be " + expectedMessage + " but was: "
-                        + getPaymentStatusMessage());
+                        + actualMessage);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedMessage, getPaymentStatusMessage());
+                expectedMessage, actualMessage);
     }
 
     public void validateIfColorOfNotificationFrameWasAsExpected(String color) throws InterruptedException {
+        String actualColor = getColorOfNotificationFrame();
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 " Color of notification frame is not correct, should be " + color + " but was: "
-                        + getColorOfNotificationFrame());
+                        + actualColor);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), color,
-                getColorOfNotificationFrame());
+                actualColor);
     }
 
     public void validateIfFieldIsHighlighted(FieldType fieldType, boolean fieldInIframe) {
@@ -328,10 +337,11 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfElelemtTranslationWasAsExpected(String translation, FieldType fieldType, By element) {
+        String actualTranslation = getElementTranslation(fieldType, element);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage, " Translation is not correct, should be "
-                + translation + " but was: " + getElementTranslation(fieldType, element));
+                + translation + " but was: " + actualTranslation);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class), translation,
-                getElementTranslation(fieldType, element));
+                actualTranslation);
     }
 
     public void validateIfLabelsTranslationWasAsExpected(String translation) throws IOException, ParseException {
@@ -411,18 +421,20 @@ public class PaymentPage extends BasePage {
 
     public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) throws InterruptedException {
         waitUntilElementIsDisplayed(immediatePaymentErrorMessage,30);
+        String actualMessage = getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Payment status message is not correct, should be " + expectedMessage + " but was: "
-                        + getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE));
+                        + actualMessage);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedMessage, getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE));
+                expectedMessage, actualMessage);
     }
 
     public void validateIfErrorCodeFromImmediateWasAsExpected(String expectedCode) {
+        String actualMessage = getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Payment status message is not correct, should be " + expectedCode + " but was: "
-                        + getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE));
+                        + actualMessage);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedCode, getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE));
+                expectedCode, actualMessage);
     }
 }
