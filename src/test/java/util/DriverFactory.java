@@ -78,7 +78,7 @@ abstract class DriverFactory {
         // Logging configuration
         caps.setCapability("browserstack.console", "errors");
         caps.setCapability("browserstack.debug", true);
-        caps.setCapability("browserstack.networkLogs", true);
+        caps.setCapability("browserstack.networkLogs", false);
         caps.setCapability("acceptSslCerts", true);
 
         if (checkIfBrowserNameStartWith("IE")){
