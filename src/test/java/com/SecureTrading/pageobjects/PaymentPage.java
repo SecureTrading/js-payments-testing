@@ -161,7 +161,6 @@ public class PaymentPage extends BasePage {
                 if (checkIfBrowserNameStartWith("IE")) {
                     for (char digit : value.toCharArray()){
                         sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
-                        Thread.sleep(100);
                     }
                 } else
                     sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
