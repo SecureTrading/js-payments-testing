@@ -62,7 +62,7 @@ public class PaymentPage extends BasePage {
         Thread.sleep(1000);
         switchToIframe(FieldType.NOTIFICATION_FRAME.getIframeName());
         String statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
-        if(statusMessage.length() == 0){
+        if (statusMessage.length() == 0) {
             Thread.sleep(2000);
             statusMessage = getText(SeleniumExecutor.getDriver().findElement(notificationFrame));
         }
@@ -158,16 +158,22 @@ public class PaymentPage extends BasePage {
         switchToIframe(fieldType.getIframeName());
         switch (fieldType) {
             case CARD_NUMBER:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
+                if (checkIfBrowserNameStartWith("IE")) {
+                    for (char digit : value.toCharArray()){
+                        sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
+                        Thread.sleep(300);
+                    }
+                } else
+                    sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
                 break;
             case CVC:
                 sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
                 break;
             case EXPIRY_DATE:
                 if (checkIfBrowserNameStartWith("IE") && value.length() > 3) {
-                        sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0, 2));
-                        Thread.sleep(1000);
-                        sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3, 5));
+                    sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0, 2));
+                    Thread.sleep(1000);
+                    sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3, 5));
                 } else
                     sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);
                 break;
@@ -209,7 +215,7 @@ public class PaymentPage extends BasePage {
     }
 
     public String getCreditCardFieldValidationMessage(FieldType fieldType, boolean fieldInIframe) {
-        if(fieldInIframe)
+        if (fieldInIframe)
             switchToIframe(fieldType.getIframeName());
         String message = "";
         switch (fieldType) {
@@ -230,7 +236,7 @@ public class PaymentPage extends BasePage {
     public boolean checkIfFieldIsHighlighted(FieldType fieldType, boolean fieldInIframe) {
         boolean highlight = false;
         String className = "";
-        if(fieldInIframe)
+        if (fieldInIframe)
             switchToIframe(fieldType.getIframeName());
 
         switch (fieldType) {
@@ -351,8 +357,8 @@ public class PaymentPage extends BasePage {
                 FieldType.EXPIRY_DATE, expirationDateLabel);
         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Security code", translation),
                 FieldType.CVC, securityCodeLabel);
-         validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Pay",
-         translation), null, payButtonLabel);
+        validateIfElelemtTranslationWasAsExpected(getTranslationFromJson("Pay",
+                translation), null, payButtonLabel);
     }
 
     public void validateIfAnimatedCardTranslationWasAsExpected(String translation, boolean fieldInIframe) throws IOException, ParseException {
@@ -367,7 +373,7 @@ public class PaymentPage extends BasePage {
         }
 
         FieldType fieldType = null;
-        if(fieldInIframe)
+        if (fieldInIframe)
             fieldType = FieldType.ANIMATED_CARD;
 
         validateIfElelemtTranslationWasAsExpected(cardNumberTranslation,
@@ -420,7 +426,7 @@ public class PaymentPage extends BasePage {
     }
 
     public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) throws InterruptedException {
-        waitUntilElementIsDisplayed(immediatePaymentErrorMessage,30);
+        waitUntilElementIsDisplayed(immediatePaymentErrorMessage, 30);
         String actualMessage = getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Payment status message is not correct, should be " + expectedMessage + " but was: "

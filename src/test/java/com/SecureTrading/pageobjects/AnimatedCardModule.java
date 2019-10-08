@@ -55,7 +55,7 @@ public class AnimatedCardModule {
     public boolean checkIfAnimatedCardIsFlipped(boolean fieldInIframe) throws InterruptedException {
         if (checkIfBrowserNameStartWith("IE"))
             Thread.sleep(2000);
-        if(fieldInIframe)
+        if (fieldInIframe)
             switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         boolean isFlipped = false;
         String cardSide = getAttribute(SeleniumExecutor.getDriver().findElement(animatedCard), "class");
@@ -66,14 +66,21 @@ public class AnimatedCardModule {
         return isFlipped;
     }
 
-    public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv) {
-        sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
+    public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
+        if (checkIfBrowserNameStartWith("IE")) {
+            for (char digit : cardNumber.toCharArray()) {
+                sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
+                Thread.sleep(300);
+            }
+        } else
+            sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
+
         sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), expiryDate);
         sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), cvv);
     }
 
     public String getCardTypeIconFromAnimatedCardText(boolean fieldInIframe) {
-        if(fieldInIframe)
+        if (fieldInIframe)
             switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         String cardLogo = getAttribute(SeleniumExecutor.getDriver().findElement(cardTypeLogoFromAnimatedCard), "alt");
         switchToDefaultIframe();
@@ -105,7 +112,7 @@ public class AnimatedCardModule {
     }
 
     public String getDataFromAnimatedCreditCard(FieldType fieldType, boolean fieldInIframe) {
-        if(fieldInIframe)
+        if (fieldInIframe)
             switchToIframe(FieldType.ANIMATED_CARD.getIframeName());
         String data = "";
         switch (fieldType) {
