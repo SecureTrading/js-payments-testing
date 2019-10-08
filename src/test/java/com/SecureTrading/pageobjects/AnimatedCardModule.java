@@ -14,6 +14,7 @@ import static util.JsonHandler.getTranslationFromJson;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
+import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
@@ -68,9 +69,10 @@ public class AnimatedCardModule {
 
     public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
         if (checkIfBrowserNameStartWith("IE")) {
+            click(SeleniumExecutor.getDriver().findElement(cardNumberInputField));
             for (char digit : cardNumber.toCharArray()) {
                 sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
-                Thread.sleep(300);
+                Thread.sleep(100);
             }
         } else
             sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
