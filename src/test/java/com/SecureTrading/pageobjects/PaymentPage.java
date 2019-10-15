@@ -119,9 +119,10 @@ public class PaymentPage extends BasePage {
         return isDisabled;
     }
 
-    public void choosePaymentMethodWithMock(PaymentType paymentType) {
+    public void choosePaymentMethodWithMock(PaymentType paymentType) throws InterruptedException {
         switch (paymentType) {
             case VISA_CHECKOUT:
+                waitUntilElementIsDisplayed(visaCheckoutMockButton, 3);
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
                 break;
             case APPLE_PAY:
@@ -281,6 +282,24 @@ public class PaymentPage extends BasePage {
         return translation;
     }
 
+    public String getFieldCssStyle(FieldType fieldType) {
+        switchToIframe(fieldType.getIframeName());
+        String style = "";
+        switch (fieldType) {
+            case CARD_NUMBER:
+                style = SeleniumExecutor.getDriver().findElement(cardNumberInputField).getCssValue("background-color");
+                break;
+            case CVC:
+                style = SeleniumExecutor.getDriver().findElement(cvcInputField).getCssValue("background-color");
+                break;
+            case EXPIRY_DATE:
+                style = SeleniumExecutor.getDriver().findElement(expirationDateInputField).getCssValue("background-color");
+                break;
+        }
+        switchToDefaultIframe();
+        return style;
+    }
+
     public void validateIfFieldValidationMessageWasAsExpected(FieldType fieldType, String expectedMessage, boolean fieldInIframe) {
         String actualMessage = getCreditCardFieldValidationMessage(fieldType, fieldInIframe);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
@@ -436,5 +455,22 @@ public class PaymentPage extends BasePage {
                         + actualMessage);
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedCode, actualMessage);
+    }
+
+    public void validateIfUrlConstainsInfoAboutPayment(String expectedUrl) throws InterruptedException {
+        waitForUrl("jwt", 4);
+        String actualUrl = SeleniumExecutor.getDriver().getCurrentUrl();
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "URL is not correct");
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                expectedUrl, actualUrl);
+    }
+
+    public void validateIfFieldHasCorrectStyle(FieldType fieldType, String expectedStyle) {
+        String actualStyle = getFieldCssStyle(fieldType);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Field has incorrect background-color, should be rgba(255, 243, 51, 1) but is: "  + actualStyle);
+        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                expectedStyle, actualStyle);
     }
 }

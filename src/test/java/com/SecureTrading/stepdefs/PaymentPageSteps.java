@@ -15,8 +15,10 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import gherkin.ast.Scenario;
 import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
+import util.PropertiesHandler;
 import util.SeleniumExecutor;
 import util.enums.*;
 import util.enums.responses.*;
@@ -69,7 +71,7 @@ public class PaymentPageSteps {
     }
 
     @And("^User clicks Pay button$")
-    public void userClicksPayButton() {
+    public void userClicksPayButton() throws InterruptedException {
         paymentPage.choosePaymentMethodWithMock(PaymentType.CARDINAL_COMMERCE);
     }
 
@@ -145,13 +147,13 @@ public class PaymentPageSteps {
     }
 
     @And("^User clicks Pay button - AUTH response set to (.*)$")
-    public void userClicksPayButtonAUTHResponseSetToPaymentCode(AUTHresponse response) {
+    public void userClicksPayButtonAUTHResponseSetToPaymentCode(AUTHresponse response) throws InterruptedException {
         stubSTRequestType(response.getMockJson(), RequestType.AUTH);
         paymentPage.choosePaymentMethodWithMock(PaymentType.CARDINAL_COMMERCE);
     }
 
     @When("^User chooses Visa Checkout as payment method - response set to (.*)$")
-    public void userChoosesVisaCheckoutAsPaymentMethodResponseSetTo(VisaResponse response) {
+    public void userChoosesVisaCheckoutAsPaymentMethodResponseSetTo(VisaResponse response) throws InterruptedException {
         stubSTRequestType(VisaResponse.VISA_AUTH_SUCCESS.getMockJson(), RequestType.AUTH);
         stubPaymentStatus(PropertyType.VISA_MOCK_URI, response.getMockJson());
         scrollToBottomOfPage();
@@ -159,7 +161,7 @@ public class PaymentPageSteps {
     }
 
     @When("^User chooses ApplePay as payment method - response set to (.*)$")
-    public void userChoosesApplePayAsPaymentMethodResponseSetTo(ApplePayResponse response) {
+    public void userChoosesApplePayAsPaymentMethodResponseSetTo(ApplePayResponse response) throws InterruptedException {
         stubSTRequestType(ApplePayResponse.SUCCESS.getMockJson(), RequestType.WALLETVERIFY); // Stub so wallet verify works
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
@@ -307,5 +309,30 @@ public class PaymentPageSteps {
     @Then("User will see that labels displayed on animated card are translated into ([^\"]*)$")
     public void userWillSeeThatLabelsDisplayedOnAnimatedCardAreTranslatedIntoLanguage(String language) throws IOException, ParseException {
         paymentPage.validateIfAnimatedCardTranslationWasAsExpected(language, fieldInIframe);
+    }
+
+    @Then("User will see payment status information included in url")
+    public void userWillSeePaymentStatusInformationIncludedInUrl() throws InterruptedException {
+        String scenarioName = PicoContainerHelper.getFromContainer(StoredElement.scenarioName).toString();
+        switch (scenarioName.substring(0, scenarioName.indexOf(" "))) {
+            case "Cardinal":
+                paymentPage.validateIfUrlConstainsInfoAboutPayment(PropertiesHandler.getTestProperty("stepPaymentCardinalUrl"));
+                break;
+            case "Visa":
+                paymentPage.validateIfUrlConstainsInfoAboutPayment(PropertiesHandler.getTestProperty("stepPaymentVisaUrl"));
+                break;
+        }
+    }
+
+    @Then("User will see that (.*) field has correct style")
+    public void userWillSeeThatFieldHasCorrectStyle(FieldType fieldType) throws InterruptedException {
+        switch (fieldType) {
+            case CARD_NUMBER:
+                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
+                break;
+            case CVC:
+                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
+                break;
+        }
     }
 }

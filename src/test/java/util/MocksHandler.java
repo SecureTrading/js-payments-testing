@@ -51,4 +51,9 @@ public class MocksHandler {
                                 .withHeader("Access-Control-Allow-Headers", "Content-Type")
                                 .withHeader("Access-Control-Allow-Methods", "GET, POST").withBodyFile(mockJson)));
         }
+
+        public static void stubConfig(PropertyType mockUrl, String mockJson) {
+                WireMock.stubFor(get(urlEqualTo(getProperty(mockUrl))).willReturn(aResponse()
+                        .withStatus(200).withBodyFile(mockJson)));
+        }
 }

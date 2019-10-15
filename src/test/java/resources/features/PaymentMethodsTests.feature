@@ -3,6 +3,8 @@ Feature: Payment methods
   I want to use various payment methods using correct and incorrect credentials
   In order to check full payment functionality
 
+  NOTE: Tests precondition config setting take place in BeforeHooks class.
+
   Background:
     Given User opens page with payment form
 
@@ -357,8 +359,36 @@ Feature: Payment methods
   @smokeTest @fullTest @cardinalCommerce
   Scenario: Successful payment with skipped JSINIT process
     When User opens payment page without JSINIT process
-    When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
+    And User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to OK
     Then User will see payment status information: "Payment has been successfully processed"
     And User will see that notification frame has "green" color
+
+  @smokeTest @fullTest @submitOnSuccessTrue
+  Scenario: Cardinal Commerce - successful payment with enabled 'submit on success' process
+    When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
+    And THREEDQUERY response set to ENROLLED_Y
+    And ACS response set to OK
+    And User clicks Pay button - AUTH response set to OK
+    Then User will see payment status information included in url
+
+  @smokeTest @fullTest @submitOnSuccessTrue
+  Scenario: Visa Checkout - successful payment with enabled 'submit on success' process
+    When User chooses Visa Checkout as payment method - response set to SUCCESS
+    Then User will see payment status information included in url
+
+  @smokeTest @fullTest @fieldStyle
+  Scenario: Checking style of individual fields
+    Then User will see that CARD_NUMBER field has correct style
+    And User will see that CVC field has correct style
+
+  #ToDo Uncomment when Update Jwt feature will be merged into develop
+#  @smokeTest @fullTest @updatedJWTTrue
+#  Scenario: Successful payment with updated JWT
+#    When User fills payment form with credit card number "4111110000000211", expiration date "12/30" and cvc "123"
+#    And THREEDQUERY response set to ENROLLED_Y
+#    And ACS response set to OK
+#    And User clicks Pay button - AUTH response set to OK
+#    Then User will see payment status information: "Payment has been successfully processed"
+#    And User will see that notification frame has "green" color

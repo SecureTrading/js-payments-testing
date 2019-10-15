@@ -191,4 +191,17 @@ public class CustomWaitImpl {
             wde.printStackTrace();
         }
     }
+
+    public static void waitForUrl(String text, int wait) throws InterruptedException {
+        try {
+            for (int i = 0; i <= wait; i++) {
+                if (SeleniumExecutor.getDriver().getCurrentUrl().contains(text))
+                    break;
+                else
+                    Thread.sleep(1000);
+            }
+        } catch (WebDriverException wde) {
+            wde.printStackTrace();
+        }
+    }
 }

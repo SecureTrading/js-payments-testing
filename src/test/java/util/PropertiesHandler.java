@@ -27,4 +27,16 @@ public class PropertiesHandler {
         String value = System.getenv(property.toString());
         return value != null ? value : properties.getProperty(property.toString());
     }
+
+    public static String getTestProperty(String key) {
+        Properties testProperties = new Properties();
+        try {
+            testProperties.load(new FileInputStream("src/test/resources/testData.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String value = testProperties.getProperty(key);
+        return value;
+    }
 }
