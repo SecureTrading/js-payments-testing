@@ -1,4 +1,4 @@
-ARG CODE_VERSION=feature-ST-352-add-posibility-to-use-config-from-mock-json
+ARG CODE_VERSION=develop
 ARG CODE_REPO=js-payments
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO
