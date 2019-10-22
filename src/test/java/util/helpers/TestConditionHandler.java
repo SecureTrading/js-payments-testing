@@ -21,4 +21,22 @@ public class TestConditionHandler {
         return ((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
                 (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i")));
     }
+
+    public static String getConfigTagFromScenarioTagList() {
+        String[] tagArray = PicoContainerHelper.getFromContainer(StoredElement.scenarioTag).toString().split("@");
+        String configTag = "";
+        for(String tag : tagArray){
+            if(tag.toLowerCase().contains("config")){
+                configTag = "@" + tag;
+                break;
+            }
+        }
+        return configTag;
+    }
+
+    public static String getScenarioTagsList() {
+        return PicoContainerHelper.getFromContainer(StoredElement.scenarioTag).toString();
+    }
+
+
 }

@@ -79,19 +79,6 @@ public class PaymentPage extends BasePage {
         return frameColor;
     }
 
-    public String getTextFromImmediatePaymentPage(ImmediatePaymentField field) {
-        String text = "";
-        switch (field) {
-            case PAYMENT_STATUS_MESSAGE:
-                text = getText(SeleniumExecutor.getDriver().findElement(immediatePaymentErrorMessage));
-                break;
-            case PAYMENT_CODE:
-                text = getText(SeleniumExecutor.getDriver().findElement(immediatePaymentErrorCode));
-                break;
-        }
-        return text;
-    }
-
     public boolean checkIfElementIsEnabled(FieldType fieldType) {
         boolean isDisabled = true;
         switch (fieldType) {
@@ -122,7 +109,6 @@ public class PaymentPage extends BasePage {
     public void choosePaymentMethodWithMock(PaymentType paymentType) throws InterruptedException {
         switch (paymentType) {
             case VISA_CHECKOUT:
-                waitUntilElementIsDisplayed(visaCheckoutMockButton, 3);
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
                 break;
             case APPLE_PAY:
@@ -282,7 +268,7 @@ public class PaymentPage extends BasePage {
         return translation;
     }
 
-    public String getFieldCssStyle(FieldType fieldType) {
+    public String getFieldCssStyle(FieldType fieldType) throws InterruptedException {
         switchToIframe(fieldType.getIframeName());
         String style = "";
         switch (fieldType) {
@@ -438,25 +424,6 @@ public class PaymentPage extends BasePage {
         }
     }
 
-    public void validateIfMessageFromImmediateWasAsExpected(String expectedMessage) throws InterruptedException {
-        waitUntilElementIsDisplayed(immediatePaymentErrorMessage,30);
-        String actualMessage = getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_STATUS_MESSAGE);
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Payment status message is not correct, should be " + expectedMessage + " but was: "
-                        + actualMessage);
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedMessage, actualMessage);
-    }
-
-    public void validateIfErrorCodeFromImmediateWasAsExpected(String expectedCode) {
-        String actualMessage = getTextFromImmediatePaymentPage(ImmediatePaymentField.PAYMENT_CODE);
-        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Payment status message is not correct, should be " + expectedCode + " but was: "
-                        + actualMessage);
-        Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                expectedCode, actualMessage);
-    }
-
     public void validateIfUrlConstainsInfoAboutPayment(String expectedUrl) throws InterruptedException {
         waitForUrl("jwt", 4);
         String actualUrl = SeleniumExecutor.getDriver().getCurrentUrl();
@@ -466,11 +433,15 @@ public class PaymentPage extends BasePage {
                 expectedUrl, actualUrl);
     }
 
-    public void validateIfFieldHasCorrectStyle(FieldType fieldType, String expectedStyle) {
+    public void validateIfFieldHasCorrectStyle(FieldType fieldType, String expectedStyle) throws InterruptedException {
         String actualStyle = getFieldCssStyle(fieldType);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Field has incorrect background-color, should be rgba(255, 243, 51, 1) but is: "  + actualStyle);
+                "Field has incorrect background-color" );
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedStyle, actualStyle);
+    }
+
+    public void waitUntilPageIsLoaded() throws InterruptedException {
+        waitUntilElementIsDisplayed(visaCheckoutMockButton, 8);
     }
 }

@@ -3,8 +3,7 @@ package com.SecureTrading.stepdefs;
 import static util.MocksHandler.*;
 import static util.PropertiesHandler.getProperty;
 import static util.JsonHandler.getTranslationFromJson;
-import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
-import static util.helpers.TestConditionHandler.checkIfScenarioNameContainsText;
+import static util.helpers.TestConditionHandler.*;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
@@ -15,7 +14,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import gherkin.ast.Scenario;
 import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
 import util.PropertiesHandler;
@@ -36,12 +34,29 @@ public class PaymentPageSteps {
         animatedCardModule = new AnimatedCardModule();
     }
 
+    @Given("JavaScript configuration is set for scenario based on scenario's @config tag")
+    public void javascriptConfigurationIsSetForScenarioBasedOnScenarioSConfigTag() {
+        String scenarioTagsList = getScenarioTagsList();
+        if(scenarioTagsList.contains("@configSubmitOnSuccessTrue"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SUBMIT_ON_SUCCESS_TRUE.getMockJson());
+        else if (scenarioTagsList.contains("@configFieldStyle"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.FIELD_STYLE.getMockJson());
+        else if (scenarioTagsList.contains("@configAnimatedCardTrue"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.ANIMATED_CARD.getMockJson());
+        else if (scenarioTagsList.contains("@configImmediatePayment"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.IMMEDIATE_PAYMENT.getMockJson());
+        else if (scenarioTagsList.contains("@configUpdateJwtTrue"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.UPDATE_JWT.getMockJson());
+        else if (scenarioTagsList.contains("@configSkipJSinit"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SKIP_JSINIT.getMockJson());
+        else
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.CONFIG.getMockJson());
+    }
+
     @Given("^User opens page with payment form$")
     public void userOpensPageWithPaymentForm() throws InterruptedException {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
-        } else if (checkIfScenarioNameContainsText("skipped JSINIT process")) {
-            System.out.println("Step skipped as is not required");
         } else {
             //Accept self signed certificates for Safari purpose
             if (checkIfBrowserNameStartWith("Safari")) {
@@ -57,6 +72,7 @@ public class PaymentPageSteps {
                 }
             }
         }
+        paymentPage.waitUntilPageIsLoaded();
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
@@ -104,7 +120,7 @@ public class PaymentPageSteps {
         animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc, fieldInIframe);
     }
 
-    @Then("^User will see payment status information: \"([^\"]*)\"$")
+    @Then("^User will see payment status information: (.*)$")
     public void userWillSeePaymentStatusInformationPaymentStatusMessage(String paymentStatusMessage) throws InterruptedException {
         if (checkIfScenarioNameContainsText("SCENARIO SKIPPED")) {
             System.out.println("Step skipped as iOS system and Safari is required for ApplePay test");
@@ -284,26 +300,7 @@ public class PaymentPageSteps {
 
     @And("^User opens immediate payment page$")
     public void userOpensImmediatePaymentPage() {
-        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/immediate.html");
-    }
-
-    @Then("^User will see message \"([^\"]*)\" displayed on page$")
-    public void userWillSeeMessageDisplayedOnPage(String message) throws InterruptedException {
-        paymentPage.validateIfMessageFromImmediateWasAsExpected(message);
-    }
-
-    @And("^User will see error code: \"([^\"]*)\"$")
-    public void userWillSeeErrorCode(String errorcode) {
-        paymentPage.validateIfErrorCodeFromImmediateWasAsExpected(errorcode);
-    }
-
-    @When("User opens payment page without JSINIT process")
-    public void userOpensPaymentPageWithoutJSINITProcess() {
-        if (checkIfBrowserNameStartWith("Safari")) {
-            SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
-            SeleniumExecutor.getDriver().get("https://thirdparty.example.com:8443");
-        }
-        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI) + "/bypass.html");
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
 
     @Then("User will see that labels displayed on animated card are translated into ([^\"]*)$")
@@ -328,7 +325,7 @@ public class PaymentPageSteps {
     public void userWillSeeThatFieldHasCorrectStyle(FieldType fieldType) throws InterruptedException {
         switch (fieldType) {
             case CARD_NUMBER:
-                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
+                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(240, 248, 255, 1)");
                 break;
             case CVC:
                 paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");

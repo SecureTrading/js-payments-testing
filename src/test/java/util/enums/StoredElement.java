@@ -4,5 +4,6 @@ public enum StoredElement {
     errorMessage,
     sessionId,
     scenarioName,
-    cardType
+    cardType,
+    scenarioTag
 }
