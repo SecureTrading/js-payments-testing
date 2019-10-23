@@ -24,7 +24,7 @@ public class AnimatedCardSteps {
     }
 
     @When("User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"")
-    public void userFillsPaymentFormWithDataAnd(String cardNumber, String expiryDate, String cvv) {
+    public void userFillsPaymentFormWithDataAnd(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
         animatedCardModule.fillPaymentFormWithoutIFrames(cardNumber, expiryDate, cvv);
     }
 
