@@ -75,7 +75,7 @@ public class PaymentPageSteps {
         paymentPage.waitUntilPageIsLoaded();
     }
 
-    @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
+    @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\"(?: and cvc \"([^\"]*)\"|)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
         paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
@@ -246,14 +246,14 @@ public class PaymentPageSteps {
     @Then("^User will see that Submit button is enabled after payment$")
     public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() throws InterruptedException {
         paymentPage.validateIfNotificationFrameIsDisplayed();
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON, fieldInIframe);
     }
 
     @And("^User will see that all input fields are enabled$")
     public void userWillSeeThatAllInputFieldsAreEnabled() {
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER, fieldInIframe);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC, fieldInIframe);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE, fieldInIframe);
     }
 
     @When("^User changes page language to ([^\"]*)$")
@@ -331,5 +331,10 @@ public class PaymentPageSteps {
                 paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
                 break;
         }
+    }
+
+    @Then("^User will see that (.*) field is disabled$")
+    public void userWillSeeThatFieldIsDisabled(FieldType fieldType) {
+        paymentPage.validateIfFieldIsDisabled(fieldType, fieldInIframe);
     }
 }

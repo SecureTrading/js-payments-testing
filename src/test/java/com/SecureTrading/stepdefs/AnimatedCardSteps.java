@@ -3,14 +3,19 @@ package com.SecureTrading.stepdefs;
 import com.SecureTrading.pageobjects.AnimatedCardModule;
 import com.SecureTrading.pageobjects.PaymentPage;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
+import util.SeleniumExecutor;
 import util.enums.FieldType;
+import util.enums.PropertyType;
 import util.enums.StoredElement;
 
 import java.io.IOException;
+
+import static util.PropertiesHandler.getProperty;
 
 public class AnimatedCardSteps {
 
@@ -23,7 +28,12 @@ public class AnimatedCardSteps {
         paymentPage = new PaymentPage();
     }
 
-    @When("User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"")
+    @Given("User opens page with animated card")
+    public void userOpensPageWithAnimatedCard() {
+        SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+    }
+
+    @When("^User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\"(?: and \"([^\"]*)\"|)$")
     public void userFillsPaymentFormWithDataAnd(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
         animatedCardModule.fillPaymentFormWithoutIFrames(cardNumber, expiryDate, cvv);
     }
@@ -44,7 +54,7 @@ public class AnimatedCardSteps {
         animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase(), fieldInIframe);
     }
 
-    @And("User will see correct data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)")
+    @And("^User will see correct data on animated credit card \"([^\"]*)\", \"([^\"]*)\"(?: and \"([^\"]*)\"|)$")
     public void userWillSeeCorrectDataOnAnimatedCreditCardFormattedCardNumberExpirationDateAndCvc(String cardNumber,
                                                                                                   String expirationDate, String cvc) {
         animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc, fieldInIframe);
@@ -63,5 +73,10 @@ public class AnimatedCardSteps {
     @And("User changes the field focus")
     public void userChangesTheFieldFocus() {
         animatedCardModule.changeFieldFocus();
+    }
+
+    @And("^User will see that (.*) no-iframe-field is disabled$")
+    public void userWillSeeThatNoIframeFieldIsDisabled(FieldType fieldType) {
+        paymentPage.validateIfFieldIsDisabled(fieldType, fieldInIframe);
     }
 }

@@ -118,6 +118,11 @@ Feature: Payment methods
 #      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
 
   @baseConfig @smokeTest @fullTest
+  Scenario: Disabled CVC field for PIBA card type
+    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
+    Then User will see that CVC field is disabled
+
+  @baseConfig @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
     When User clicks Pay button
     Then User will see validation message "Field is required" under all fields

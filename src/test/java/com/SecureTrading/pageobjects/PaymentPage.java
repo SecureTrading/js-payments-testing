@@ -79,21 +79,20 @@ public class PaymentPage extends BasePage {
         return frameColor;
     }
 
-    public boolean checkIfElementIsEnabled(FieldType fieldType) {
+    public boolean checkIfElementIsEnabled(FieldType fieldType, boolean fieldInIframe) {
+        if (fieldInIframe)
+            switchToIframe(fieldType.getIframeName());
         boolean isDisabled = true;
         switch (fieldType) {
             case CARD_NUMBER:
-                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
             case CVC:
-                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(cvcInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
             case EXPIRY_DATE:
-                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(expirationDateInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
@@ -106,7 +105,7 @@ public class PaymentPage extends BasePage {
         return isDisabled;
     }
 
-    public void choosePaymentMethodWithMock(PaymentType paymentType) throws InterruptedException {
+    public void choosePaymentMethodWithMock(PaymentType paymentType) {
         switch (paymentType) {
             case VISA_CHECKOUT:
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
@@ -125,13 +124,15 @@ public class PaymentPage extends BasePage {
             fillCreditCardInputFieldByJavaScript(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputFieldByJavaScript(FieldType.EXPIRY_DATE, expiryDate);
             scrollToBottomOfPage();
-            fillCreditCardInputFieldByJavaScript(FieldType.CVC, cvc);
+            if (!(cvc == null))
+                fillCreditCardInputFieldByJavaScript(FieldType.CVC, cvc);
         } else {
             fillCreditCardInputField(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputField(FieldType.EXPIRY_DATE, expiryDate);
             if (!(checkIfDeviceNameStartWith("Samsung") || checkIfDeviceNameStartWith("Google")))
                 scrollToBottomOfPage();
-            fillCreditCardInputField(FieldType.CVC, cvc);
+            if (!(cvc == null))
+                fillCreditCardInputField(FieldType.CVC, cvc);
         }
     }
 
@@ -146,7 +147,7 @@ public class PaymentPage extends BasePage {
         switch (fieldType) {
             case CARD_NUMBER:
                 if (checkIfBrowserNameStartWith("IE")) {
-                    for (char digit : value.toCharArray()){
+                    for (char digit : value.toCharArray()) {
                         sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
                     }
                 } else
@@ -333,11 +334,18 @@ public class PaymentPage extends BasePage {
                 checkIfMerchantFieldIsHighlighted(fieldType));
     }
 
-    public void validateIfElementIsEnabledAfterPayment(FieldType fieldType) {
+    public void validateIfElementIsEnabledAfterPayment(FieldType fieldType, boolean fieldInIframe) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be enabled but it isn't ");
         Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfElementIsEnabled(fieldType));
+                checkIfElementIsEnabled(fieldType, fieldInIframe));
+    }
+
+    public void validateIfFieldIsDisabled(FieldType fieldType, boolean fieldInIframe) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                fieldType.toString() + " should be disabled but it isn't ");
+        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfElementIsEnabled(fieldType, fieldInIframe));
     }
 
     public void validateIfNotificationFrameIsDisplayed() throws InterruptedException {
@@ -441,7 +449,7 @@ public class PaymentPage extends BasePage {
     public void validateIfFieldHasCorrectStyle(FieldType fieldType, String expectedStyle) throws InterruptedException {
         String actualStyle = getFieldCssStyle(fieldType);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Field has incorrect background-color" );
+                "Field has incorrect background-color");
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedStyle, actualStyle);
     }

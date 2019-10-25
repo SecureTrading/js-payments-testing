@@ -4,13 +4,13 @@ Feature: Animated Card tests
   input fields validation
 
   Background:
-    Given User opens page with payment form
+    Given User opens page with animated card
 
   @animatedCardRepoTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with data: "<cardNumber>", "<expirationDate>" and "<cvc>"
     Then User will see correct card icon for <cardType>
-    And User will see correct data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
+    And User will see correct data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
     And User will see animated card is flipped, except for "AMEX"
     Examples:
       | cardNumber          | formattedCardNumber    | expirationDate | cvc  | cardType     |
@@ -22,7 +22,13 @@ Feature: Animated Card tests
       | 3528000000000411    | 3528 0000 0000 0411    | 12/23          | 123  | JCB          |
       | 5000000000000611    | 5000 0000 0000 0611    | 12/23          | 123  | MAESTRO      |
       | 5100000000000511    | 5100 0000 0000 0511    | 12/23          | 123  | MASTERCARD   |
-      | 3089500000000000021 | 3089 5000 0000 0000021 | 12/23          | 123  | PIBA         |
+
+  @animatedCardRepoTest
+  Scenario: Credit card recognition for PIBA and validate date on animated card
+    When User fills payment form with data: "3089500000000000021", "12/23"
+    Then User will see correct card icon for PIBA
+    And User will see correct data on animated credit card "3089 5000 0000 0000021", "12/23"
+    And User will see that CVC no-iframe-field is disabled
 
   @animatedCardRepoTest
   Scenario Outline: Checking animated card translation for <language>
