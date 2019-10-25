@@ -1,4 +1,4 @@
-ARG CODE_VERSION=feature-ST-334-allow-payment-form-to-have-multiple-buttons
+ARG CODE_VERSION=develop
 ARG CODE_REPO=js-payments
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO
