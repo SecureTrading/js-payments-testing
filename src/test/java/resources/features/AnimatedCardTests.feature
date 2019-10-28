@@ -9,9 +9,9 @@ Feature: Animated Card tests
   @animatedCardRepoTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with data: "<cardNumber>", "<expirationDate>" and "<cvc>"
-    Then User will see correct card icon for <cardType>
-    And User will see correct data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
-    And User will see animated card is flipped, except for "AMEX"
+    Then User will see card icon connected to card type <cardType>
+    And User will see the same provided data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
+    And User will see that animated card is flipped, except for "AMEX"
     Examples:
       | cardNumber          | formattedCardNumber    | expirationDate | cvc  | cardType     |
       | 340000000000611     | 3400 000000 00611      | 12/23          | 1234 | AMEX         |
@@ -26,14 +26,14 @@ Feature: Animated Card tests
   @animatedCardRepoTest
   Scenario: Credit card recognition for PIBA and validate date on animated card
     When User fills payment form with data: "3089500000000000021", "12/23"
-    Then User will see correct card icon for PIBA
-    And User will see correct data on animated credit card "3089 5000 0000 0000021", "12/23"
-    And User will see that CVC no-iframe-field is disabled
+    Then User will see card icon connected to card type PIBA
+    And User will see the same provided data on animated credit card "3089 5000 0000 0000021", "12/23"
+    Then User will see that CVC field is disabled
 
   @animatedCardRepoTest
   Scenario Outline: Checking animated card translation for <language>
     When User fills payment form with data: "340000000000611", "12/22" and "123"
-    Then User will see that labels on animated card are translated into <language>
+    Then User will see that labels displayed on animated card are translated into <language>
     Examples:
       | language |
       | en_GB    |
@@ -44,8 +44,8 @@ Feature: Animated Card tests
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
     And User changes the field focus
-    Then User will see "Field is required" message under no-iframe-field: <field>
-    And User will see that <field> no-iframe-field is highlighted
+    And User will see "Field is required" message under field: <field>
+    And User will see that <field> field is highlighted
     Examples:
       | cardNumber       | expiration | cvc | field       |
       |                  | 12/22      | 123 | CARD_NUMBER |
@@ -56,14 +56,14 @@ Feature: Animated Card tests
   Scenario: Filling 3-number of cvc code for AMEX card
     When User fills payment form with data: "340000000000611", "12/22" and "123"
     And User changes the field focus
-    Then User will see "Value mismatch pattern" message under no-iframe-field: CVC
+    And User will see "Value mismatch pattern" message under field: CVC
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvc>"
     When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
     And User changes the field focus
-    Then User will see "Value mismatch pattern" message under no-iframe-field: <field>
-    And User will see that <field> no-iframe-field is highlighted
+    And User will see "Value mismatch pattern" message under field: <field>
+    And User will see that <field> field is highlighted
     Examples:
       | cardNumber       | expiration | cvc | field       |
       | 4000000000001000 | 12/22      | 12  | CVC         |

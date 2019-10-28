@@ -103,7 +103,7 @@ Feature: Payment methods
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
-    And User will see the same provided data on animated credit card <formattedCardNumber>, <expirationDate> and <cvc>
+    And User will see the same provided data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
     And User will see that animated card is flipped, except for "AMEX"
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
@@ -117,10 +117,11 @@ Feature: Payment methods
 #      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
 #      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
 
-  @baseConfig @smokeTest @fullTest
-  Scenario: Disabled CVC field for PIBA card type
-    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
-    Then User will see that CVC field is disabled
+  #ToDo Uncomment when changes on js-payments will be ready
+#  @baseConfig @fullTest
+#  Scenario: Disabled CVC field for PIBA card type
+#    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
+#    Then User will see that CVC field is disabled
 
   @baseConfig @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation

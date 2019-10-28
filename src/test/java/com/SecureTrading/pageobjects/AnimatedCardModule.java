@@ -13,8 +13,9 @@ import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
+import static util.helpers.actions.CustomWaitImpl.waitUntilElementIsDisplayed;
 
-public class AnimatedCardModule {
+public class AnimatedCardModule extends BasePage {
 
     // animated card
     private By animatedCard = By.id("st-animated-card");
@@ -135,5 +136,9 @@ public class AnimatedCardModule {
 
     public void changeFieldFocus() {
         SeleniumExecutor.getDriver().findElement(cardNumberInputField).click();
+    }
+
+    public void waitUntilPageIsLoaded() throws InterruptedException {
+        waitUntilElementIsDisplayed(animatedCard, 8);
     }
 }

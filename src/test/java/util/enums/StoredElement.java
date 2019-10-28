@@ -5,5 +5,6 @@ public enum StoredElement {
     sessionId,
     scenarioName,
     cardType,
-    scenarioTag
+    scenarioTag,
+    isFieldInIframe
 }

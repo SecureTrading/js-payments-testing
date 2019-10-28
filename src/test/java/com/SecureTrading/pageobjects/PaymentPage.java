@@ -105,6 +105,32 @@ public class PaymentPage extends BasePage {
         return isDisabled;
     }
 
+    public boolean checkIfElementIsDisabled(FieldType fieldType, boolean fieldInIframe) {
+        if (fieldInIframe)
+            switchToIframe(fieldType.getIframeName());
+        boolean isDisabled = false;
+        switch (fieldType) {
+            case CARD_NUMBER:
+                if (SeleniumExecutor.getDriver().findElement(cardNumberInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case CVC:
+                if (SeleniumExecutor.getDriver().findElement(cvcInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case EXPIRY_DATE:
+                if (SeleniumExecutor.getDriver().findElement(expirationDateInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case SUBMIT_BUTTON:
+                if (SeleniumExecutor.getDriver().findElement(payMockButton).isDisplayed())
+                    isDisabled = true;
+                break;
+        }
+        switchToDefaultIframe();
+        return isDisabled;
+    }
+
     public void choosePaymentMethodWithMock(PaymentType paymentType) {
         switch (paymentType) {
             case VISA_CHECKOUT:
@@ -344,8 +370,8 @@ public class PaymentPage extends BasePage {
     public void validateIfFieldIsDisabled(FieldType fieldType, boolean fieldInIframe) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be disabled but it isn't ");
-        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfElementIsEnabled(fieldType, fieldInIframe));
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfElementIsDisabled(fieldType, fieldInIframe));
     }
 
     public void validateIfNotificationFrameIsDisplayed() throws InterruptedException {
