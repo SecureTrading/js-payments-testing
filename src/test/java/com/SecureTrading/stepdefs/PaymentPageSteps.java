@@ -227,20 +227,20 @@ public class PaymentPageSteps {
     @Then("^User will see that Submit button is enabled after payment$")
     public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() throws InterruptedException {
         paymentPage.validateIfNotificationFrameIsDisplayed();
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON, fieldInIframe);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON);
     }
 
     @And("^User will see that all input fields are enabled$")
     public void userWillSeeThatAllInputFieldsAreEnabled() {
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER, fieldInIframe);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC, fieldInIframe);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE, fieldInIframe);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC);
+        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE);
     }
 
     @When("^User changes page language to ([^\"]*)$")
-    public void userChangesPageLanguageToLanguage(String language) throws IOException, ParseException {
-        SeleniumExecutor.getDriver()
-                .get(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+    public void userChangesPageLanguageToLanguage(String language) throws IOException, ParseException, InterruptedException {
+        paymentPage.OpenPage(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+        paymentPage.waitUntilPageIsLoaded();
     }
 
     @Then("^User will see all labels displayed on page translated into ([^\"]*)$")

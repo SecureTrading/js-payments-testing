@@ -79,20 +79,21 @@ public class PaymentPage extends BasePage {
         return frameColor;
     }
 
-    public boolean checkIfElementIsEnabled(FieldType fieldType, boolean fieldInIframe) {
-        if (fieldInIframe)
-            switchToIframe(fieldType.getIframeName());
+    public boolean checkIfElementIsEnabled(FieldType fieldType) {
         boolean isDisabled = true;
         switch (fieldType) {
             case CARD_NUMBER:
+                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(cardNumberInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
             case CVC:
+                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(cvcInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
             case EXPIRY_DATE:
+                switchToIframe(fieldType.getIframeName());
                 if (getAttribute(SeleniumExecutor.getDriver().findElement(expirationDateInputField), "class").contains("disabled"))
                     isDisabled = false;
                 break;
@@ -360,11 +361,11 @@ public class PaymentPage extends BasePage {
                 checkIfMerchantFieldIsHighlighted(fieldType));
     }
 
-    public void validateIfElementIsEnabledAfterPayment(FieldType fieldType, boolean fieldInIframe) {
+    public void validateIfElementIsEnabledAfterPayment(FieldType fieldType) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be enabled but it isn't ");
         Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfElementIsEnabled(fieldType, fieldInIframe));
+                checkIfElementIsEnabled(fieldType));
     }
 
     public void validateIfFieldIsDisabled(FieldType fieldType, boolean fieldInIframe) {
