@@ -1,5 +1,5 @@
 ARG CODE_VERSION=develop
-ARG CODE_REPO=js-payments
+ARG CODE_REPO=js-payments-card
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO
 COPY . /app/js-payments-testing
