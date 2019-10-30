@@ -138,7 +138,7 @@ public class AnimatedCardModule extends BasePage {
         SeleniumExecutor.getDriver().findElement(cardNumberInputField).click();
     }
 
-    public void waitUntilPageIsLoaded() throws InterruptedException {
-        waitUntilElementIsDisplayed(animatedCard, 8);
+    public boolean waitUntilPageIsLoaded() throws InterruptedException {
+        return waitUntilElementIsDisplayed(animatedCard, 8);
     }
 }

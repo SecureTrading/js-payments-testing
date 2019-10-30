@@ -130,6 +130,9 @@ abstract class DriverFactory {
             driver.manage().window().maximize();
         }
 
+        if(!(System.getProperty("browser") == null))
+            driver.manage().window().maximize();
+
         waitDriver = new WebDriverWait(driver, TIMEOUT);
         driver.manage().timeouts().pageLoadTimeout(DriverFactory.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
 

@@ -2,8 +2,7 @@ package com.SecureTrading.pageobjects;
 
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
-import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
-import static util.helpers.TestConditionHandler.checkIfDeviceNameStartWith;
+import static util.helpers.TestConditionHandler.*;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
@@ -405,7 +404,7 @@ public class PaymentPage extends BasePage {
         String expirationDateTranslation = getTranslationFromJson("Expiration date", translation);
         String cvvTranslation = getTranslationFromJson("Security code", translation);
 
-        if (!checkIfBrowserNameStartWith("Safari")) {
+        if (!(checkIfBrowserNameStartWith("Safari") || (checkIfBrowserNameStartWith("Edge") && checkIfBrowserVersionIsEqual("17.0")))) {
             cardNumberTranslation = cardNumberTranslation.toUpperCase();
             expirationDateTranslation = expirationDateTranslation.toUpperCase();
             cvvTranslation = cvvTranslation.toUpperCase();

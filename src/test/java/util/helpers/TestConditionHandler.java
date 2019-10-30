@@ -17,6 +17,10 @@ public class TestConditionHandler {
         return System.getProperty("browser") != null && System.getProperty("browser").startsWith(text);
     }
 
+    public static boolean checkIfBrowserVersionIsEqual(String text) {
+        return System.getProperty("browser_version") != null && System.getProperty("browser_version").startsWith(text);
+    }
+
     public static boolean checkConditionForRunApplePayTest() {
         return ((System.getProperty("device") == null && !System.getProperty("browser").equals("Safari")) ||
                 (System.getProperty("browser") == null && !System.getProperty("device").startsWith("i")));

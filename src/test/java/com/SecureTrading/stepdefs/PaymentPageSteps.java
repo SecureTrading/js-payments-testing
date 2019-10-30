@@ -63,6 +63,7 @@ public class PaymentPageSteps {
             }
             if (!checkIfScenarioNameContainsText("Immediate")) {
                 paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
+                paymentPage.waitUntilPageIsLoaded();
                 //Additional try for IE problems
                 if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
                     Thread.sleep(4000);
@@ -70,7 +71,6 @@ public class PaymentPageSteps {
                 }
             }
         }
-        paymentPage.waitUntilPageIsLoaded();
     }
 
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\"(?: and cvc \"([^\"]*)\"|)$")
