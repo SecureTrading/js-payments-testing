@@ -29,8 +29,11 @@ public class AnimatedCardSteps {
     @Given("User opens page with animated card")
     public void userOpensPageWithAnimatedCard() throws InterruptedException {
         animatedCardModule.OpenPage(getProperty(PropertyType.BASE_URI));
-        if (!animatedCardModule.waitUntilPageIsLoaded())
+        if (!animatedCardModule.waitUntilPageIsLoaded()){
+            animatedCardModule.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+            Thread.sleep(2000);
             animatedCardModule.OpenPage(getProperty(PropertyType.BASE_URI));
+        }
     }
 
     @When("^User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\"(?: and \"([^\"]*)\"|)$")

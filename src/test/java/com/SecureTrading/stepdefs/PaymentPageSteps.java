@@ -66,6 +66,7 @@ public class PaymentPageSteps {
                 paymentPage.waitUntilPageIsLoaded();
                 //Additional try for IE problems
                 if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
+                    paymentPage.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
                     Thread.sleep(4000);
                     paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
                 }
