@@ -44,7 +44,7 @@ Feature: Animated Card tests
   Scenario Outline: Filling payment form with empty fields -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvv>"
     When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
     And User changes the field focus
-    And User will see "Field is required" message under field: <field>
+    Then User will see "Field is required" message under field: <field>
     And User will see that <field> field is highlighted
     Examples:
       | cardNumber       | expiration | cvc | field       |
@@ -56,13 +56,13 @@ Feature: Animated Card tests
   Scenario: Filling 3-number of cvc code for AMEX card
     When User fills payment form with data: "340000000000611", "12/22" and "123"
     And User changes the field focus
-    And User will see "Value mismatch pattern" message under field: CVC
+    Then User will see "Value mismatch pattern" message under field: CVC
 
   @animatedCardRepoTest
   Scenario Outline: Filling payment form with incomplete data (frontend validation) -> cardNumber "<cardNumber>", expiration: "<expiration>", cvv: "<cvc>"
     When User fills payment form with data: "<cardNumber>", "<expiration>" and "<cvc>"
     And User changes the field focus
-    And User will see "Value mismatch pattern" message under field: <field>
+    Then User will see "Value mismatch pattern" message under field: <field>
     And User will see that <field> field is highlighted
     Examples:
       | cardNumber       | expiration | cvc | field       |

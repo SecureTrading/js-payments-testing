@@ -16,6 +16,7 @@ import util.enums.StoredElement;
 import java.io.IOException;
 
 import static util.PropertiesHandler.getProperty;
+import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
 public class AnimatedCardSteps {
 
@@ -60,6 +61,7 @@ public class AnimatedCardSteps {
 
     @And("User changes the field focus")
     public void userChangesTheFieldFocus() {
+        scrollToTopOfPage();
         animatedCardModule.changeFieldFocus();
     }
 }
