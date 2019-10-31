@@ -44,7 +44,7 @@ public class PaymentPage extends BasePage {
     private By notificationFrame = By.id("st-notification-frame");
 
     // paymentMethods
-    private By payMockButton = By.xpath("//button[@type='submit']");
+    private By payMockButton = By.id("merchant-submit-button");
     private By visaCheckoutMockButton = By.id("v-button");
     private By applePay = By.id("st-apple-pay");
 
