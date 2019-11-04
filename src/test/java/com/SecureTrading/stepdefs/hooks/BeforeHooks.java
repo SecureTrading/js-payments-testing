@@ -18,6 +18,12 @@ public class BeforeHooks {
         PicoContainerHelper.cleanContainer();
         PicoContainerHelper.updateInContainer(StoredElement.scenarioName, scenario.getName());
         PicoContainerHelper.updateInContainer(StoredElement.scenarioTag, scenario.getSourceTagNames());
+
+        if (scenario.getSourceTagNames().contains("@animatedCardRepoTest"))
+            PicoContainerHelper.updateInContainer(StoredElement.isFieldInIframe, false);
+        else
+            PicoContainerHelper.updateInContainer(StoredElement.isFieldInIframe, true);
+
         if (!checkIfScenarioNameContainsText("skipped JSINIT process"))
             stubSTRequestType("jsinit.json", RequestType.JSINIT); // Stub so Cardinal can init but don't use cardinal
     }

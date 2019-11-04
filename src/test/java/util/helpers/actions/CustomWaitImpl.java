@@ -179,17 +179,21 @@ public class CustomWaitImpl {
         } while (list.size() != 0);
     }
 
-    public static void waitUntilElementIsDisplayed(By by, int wait) throws InterruptedException {
+    public static boolean waitUntilElementIsDisplayed(By by, int wait) throws InterruptedException {
+        boolean isDisplayed = false;
         try {
             for (int i = 0; i <= wait; i++) {
-                if (isElementDisplayed(by))
+                if (isElementDisplayed(by)) {
+                    isDisplayed = true;
                     break;
+                }
                 else
-                    Thread.sleep(1000);
+                Thread.sleep(1000);
             }
         } catch (WebDriverException wde) {
             wde.printStackTrace();
         }
+        return isDisplayed;
     }
 
     public static void waitForUrl(String text, int wait) throws InterruptedException {

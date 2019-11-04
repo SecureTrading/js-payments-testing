@@ -1,16 +1,11 @@
 package com.SecureTrading.pageobjects;
 
-import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import util.PicoContainerHelper;
 import util.SeleniumExecutor;
 import util.enums.FieldType;
 import util.enums.StoredElement;
-
-import java.io.IOException;
-
-import static util.JsonHandler.getTranslationFromJson;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
@@ -18,8 +13,9 @@ import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
 import static util.helpers.actions.CustomSendKeysImpl.sendKeys;
+import static util.helpers.actions.CustomWaitImpl.waitUntilElementIsDisplayed;
 
-public class AnimatedCardModule {
+public class AnimatedCardModule extends BasePage {
 
     // animated card
     private By animatedCard = By.id("st-animated-card");
@@ -78,7 +74,8 @@ public class AnimatedCardModule {
             sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
 
         sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), expiryDate);
-        sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), cvv);
+        if (cvv != null)
+            sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), cvv);
     }
 
     public String getCardTypeIconFromAnimatedCardText(boolean fieldInIframe) {
@@ -101,7 +98,8 @@ public class AnimatedCardModule {
                                                                      String cvc, boolean fieldInIframe) {
         validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.CARD_NUMBER, cardNumber, fieldInIframe);
         validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.EXPIRY_DATE, expirationDate, fieldInIframe);
-        validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.CVC, cvc, fieldInIframe);
+        if (cvc != null)
+            validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType.CVC, cvc, fieldInIframe);
     }
 
     public void validateIfProvidedDataOnAnimatedCardWasAsExpected(FieldType fieldType, String expectedData, boolean fieldInIframe) {
@@ -138,5 +136,9 @@ public class AnimatedCardModule {
 
     public void changeFieldFocus() {
         SeleniumExecutor.getDriver().findElement(cardNumberInputField).click();
+    }
+
+    public boolean waitUntilPageIsLoaded() throws InterruptedException {
+        return waitUntilElementIsDisplayed(animatedCard, 8);
     }
 }

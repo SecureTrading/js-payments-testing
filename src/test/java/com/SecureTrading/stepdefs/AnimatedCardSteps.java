@@ -3,65 +3,65 @@ package com.SecureTrading.stepdefs;
 import com.SecureTrading.pageobjects.AnimatedCardModule;
 import com.SecureTrading.pageobjects.PaymentPage;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
+import util.SeleniumExecutor;
 import util.enums.FieldType;
+import util.enums.PropertyType;
 import util.enums.StoredElement;
 
 import java.io.IOException;
 
+import static util.PropertiesHandler.getProperty;
+import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
+
 public class AnimatedCardSteps {
 
     private AnimatedCardModule animatedCardModule;
-    private PaymentPage paymentPage;
-    private boolean fieldInIframe = false;
+    private boolean fieldInIframe = PicoContainerHelper.getFromContainer(StoredElement.isFieldInIframe, Boolean.class);
 
     public AnimatedCardSteps() {
         animatedCardModule = new AnimatedCardModule();
-        paymentPage = new PaymentPage();
     }
 
-    @When("User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"")
+    @Given("User opens page with animated card")
+    public void userOpensPageWithAnimatedCard() throws InterruptedException {
+        animatedCardModule.OpenPage(getProperty(PropertyType.BASE_URI));
+        if (!animatedCardModule.waitUntilPageIsLoaded()){
+            animatedCardModule.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+            Thread.sleep(2000);
+            animatedCardModule.OpenPage(getProperty(PropertyType.BASE_URI));
+        }
+    }
+
+    @When("^User fills payment form with data: \"([^\"]*)\", \"([^\"]*)\"(?: and \"([^\"]*)\"|)$")
     public void userFillsPaymentFormWithDataAnd(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
         animatedCardModule.fillPaymentFormWithoutIFrames(cardNumber, expiryDate, cvv);
     }
 
-    @And("User will see that ([^\"]*) no-iframe-field is highlighted")
-    public void userWillSeeThatFieldNoIframeFieldIsHighlighted(FieldType fieldType) {
-        paymentPage.validateIfFieldIsHighlighted(fieldType, fieldInIframe);
-    }
-
-    @Then("User will see \"([^\"]*)\" message under no-iframe-field: (.*)")
-    public void userWillSeeMessageUnderNoIframeFieldField(String message, FieldType fieldType) {
-        paymentPage.validateIfFieldValidationMessageWasAsExpected(fieldType, message, fieldInIframe);
-    }
-
-    @Then("User will see correct card icon for ([^\"]*)")
-    public void userWillSeeCorrectCardIconForCardType(String cardType) throws InterruptedException {
+    @Then("^User will see card icon connected to card type ([^\"]*)$")
+    public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
         PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
         animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase(), fieldInIframe);
     }
 
-    @And("User will see correct data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)")
-    public void userWillSeeCorrectDataOnAnimatedCreditCardFormattedCardNumberExpirationDateAndCvc(String cardNumber,
-                                                                                                  String expirationDate, String cvc) {
+    @And("^User will see the same provided data on animated credit card \"([^\"]*)\", \"([^\"]*)\"(?: and \"([^\"]*)\"|)$")
+    public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
+                                                                                                 String expirationDate, String cvc) {
         animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc, fieldInIframe);
     }
 
-    @And("User will see animated card is flipped, except for {string}")
-    public void userWillSeeAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
+    @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
+    public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
         animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"), fieldInIframe);
-    }
-
-    @Then("User will see that labels on animated card are translated into ([^\"]*)")
-    public void userWillSeeThatLabelsOnAnimatedCardAreTranslatedIntoLanguage(String language) throws IOException, ParseException {
-        paymentPage.validateIfAnimatedCardTranslationWasAsExpected(language, fieldInIframe);
     }
 
     @And("User changes the field focus")
     public void userChangesTheFieldFocus() {
+        scrollToTopOfPage();
         animatedCardModule.changeFieldFocus();
     }
 }

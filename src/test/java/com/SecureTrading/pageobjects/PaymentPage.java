@@ -2,8 +2,7 @@ package com.SecureTrading.pageobjects;
 
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
-import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
-import static util.helpers.TestConditionHandler.checkIfDeviceNameStartWith;
+import static util.helpers.TestConditionHandler.*;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
@@ -106,7 +105,33 @@ public class PaymentPage extends BasePage {
         return isDisabled;
     }
 
-    public void choosePaymentMethodWithMock(PaymentType paymentType) throws InterruptedException {
+    public boolean checkIfElementIsDisabled(FieldType fieldType, boolean fieldInIframe) {
+        if (fieldInIframe)
+            switchToIframe(fieldType.getIframeName());
+        boolean isDisabled = false;
+        switch (fieldType) {
+            case CARD_NUMBER:
+                if (SeleniumExecutor.getDriver().findElement(cardNumberInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case CVC:
+                if (SeleniumExecutor.getDriver().findElement(cvcInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case EXPIRY_DATE:
+                if (SeleniumExecutor.getDriver().findElement(expirationDateInputField).isDisplayed())
+                    isDisabled = true;
+                break;
+            case SUBMIT_BUTTON:
+                if (SeleniumExecutor.getDriver().findElement(payMockButton).isDisplayed())
+                    isDisabled = true;
+                break;
+        }
+        switchToDefaultIframe();
+        return isDisabled;
+    }
+
+    public void choosePaymentMethodWithMock(PaymentType paymentType) {
         switch (paymentType) {
             case VISA_CHECKOUT:
                 click(SeleniumExecutor.getDriver().findElement(visaCheckoutMockButton));
@@ -125,13 +150,15 @@ public class PaymentPage extends BasePage {
             fillCreditCardInputFieldByJavaScript(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputFieldByJavaScript(FieldType.EXPIRY_DATE, expiryDate);
             scrollToBottomOfPage();
-            fillCreditCardInputFieldByJavaScript(FieldType.CVC, cvc);
+            if (!(cvc == null))
+                fillCreditCardInputFieldByJavaScript(FieldType.CVC, cvc);
         } else {
             fillCreditCardInputField(FieldType.CARD_NUMBER, cardNumber);
             fillCreditCardInputField(FieldType.EXPIRY_DATE, expiryDate);
             if (!(checkIfDeviceNameStartWith("Samsung") || checkIfDeviceNameStartWith("Google")))
                 scrollToBottomOfPage();
-            fillCreditCardInputField(FieldType.CVC, cvc);
+            if (!(cvc == null))
+                fillCreditCardInputField(FieldType.CVC, cvc);
         }
     }
 
@@ -146,7 +173,7 @@ public class PaymentPage extends BasePage {
         switch (fieldType) {
             case CARD_NUMBER:
                 if (checkIfBrowserNameStartWith("IE")) {
-                    for (char digit : value.toCharArray()){
+                    for (char digit : value.toCharArray()) {
                         sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
                     }
                 } else
@@ -340,6 +367,13 @@ public class PaymentPage extends BasePage {
                 checkIfElementIsEnabled(fieldType));
     }
 
+    public void validateIfFieldIsDisabled(FieldType fieldType, boolean fieldInIframe) {
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                fieldType.toString() + " should be disabled but it isn't ");
+        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                checkIfElementIsDisabled(fieldType, fieldInIframe));
+    }
+
     public void validateIfNotificationFrameIsDisplayed() throws InterruptedException {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Notification frame is not displayed but should be");
@@ -370,7 +404,7 @@ public class PaymentPage extends BasePage {
         String expirationDateTranslation = getTranslationFromJson("Expiration date", translation);
         String cvvTranslation = getTranslationFromJson("Security code", translation);
 
-        if (!checkIfBrowserNameStartWith("Safari")) {
+        if (!(checkIfBrowserNameStartWith("Safari") || (checkIfBrowserNameStartWith("Edge") && checkIfBrowserVersionIsEqual("17.0")))) {
             cardNumberTranslation = cardNumberTranslation.toUpperCase();
             expirationDateTranslation = expirationDateTranslation.toUpperCase();
             cvvTranslation = cvvTranslation.toUpperCase();
@@ -441,7 +475,7 @@ public class PaymentPage extends BasePage {
     public void validateIfFieldHasCorrectStyle(FieldType fieldType, String expectedStyle) throws InterruptedException {
         String actualStyle = getFieldCssStyle(fieldType);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
-                "Field has incorrect background-color" );
+                "Field has incorrect background-color");
         Assert.assertEquals(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                 expectedStyle, actualStyle);
     }

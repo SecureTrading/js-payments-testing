@@ -107,23 +107,23 @@ jobs:
     - name: "Behavioural test: Samsung Galaxy S8, Android 7.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S8" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S8" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Samsung Galaxy S7, Android 6.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S7" -Dos_version=6.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy S7" -Dos_version=6.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Samsung Galaxy Tab S3, Android 7.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Tab S3" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Samsung Galaxy Tab S3" -Dos_version=7.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Google Pixel 3, Android 9.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Google Pixel 3" -Dos_version=9.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Google Pixel 3" -Dos_version=9.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Google Pixel, Android 8.0"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Google Pixel" -Dos_version=8.0 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Google Pixel" -Dos_version=8.0 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Google Nexus 6, Android 6.0"
       if: env(TESTS_TYPE)=fullTest
       script:
@@ -131,7 +131,7 @@ jobs:
     - name: "Behavioural test: Google Nexus 9, Android 5.1"
       if: env(TESTS_TYPE)=fullTest
       script:
-        - mvn install -DLOCAL=true -Ddevice="Google Nexus 9" -Dos_version=5.1 -Dreal_mobile=true -Dcucumber.options="--tags @smokeTest"
+        - mvn install -DLOCAL=true -Ddevice="Google Nexus 9" -Dos_version=5.1 -Dreal_mobile=true -Dcucumber.options="--tags $TEST_TAG"
     - name: "Behavioural test: Google Nexus 5, Android 4.4"
       if: env(TESTS_TYPE)=fullTest
       script:

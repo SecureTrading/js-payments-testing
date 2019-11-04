@@ -26,12 +26,10 @@ import java.io.IOException;
 public class PaymentPageSteps {
 
     private PaymentPage paymentPage;
-    private AnimatedCardModule animatedCardModule;
-    private boolean fieldInIframe = true;
+    private boolean fieldInIframe = PicoContainerHelper.getFromContainer(StoredElement.isFieldInIframe, Boolean.class);
 
     public PaymentPageSteps() {
         paymentPage = new PaymentPage();
-        animatedCardModule = new AnimatedCardModule();
     }
 
     @Given("JavaScript configuration is set for scenario based on scenario's @config tag")
@@ -60,22 +58,23 @@ public class PaymentPageSteps {
         } else {
             //Accept self signed certificates for Safari purpose
             if (checkIfBrowserNameStartWith("Safari")) {
-                SeleniumExecutor.getDriver().get(getProperty(PropertyType.WEBSERVICES_DOMAIN));
-                SeleniumExecutor.getDriver().get("https://thirdparty.example.com:8443");
+                paymentPage.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
+                paymentPage.OpenPage("https://thirdparty.example.com:8443");
             }
             if (!checkIfScenarioNameContainsText("Immediate")) {
-                SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+                paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
+                paymentPage.waitUntilPageIsLoaded();
                 //Additional try for IE problems
                 if (!SeleniumExecutor.getDriver().getTitle().contains("Secure")) {
+                    paymentPage.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
                     Thread.sleep(4000);
-                    SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
+                    paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
                 }
             }
         }
-        paymentPage.waitUntilPageIsLoaded();
     }
 
-    @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\" and cvc \"([^\"]*)\"$")
+    @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\"(?: and cvc \"([^\"]*)\"|)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
         paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
@@ -91,17 +90,6 @@ public class PaymentPageSteps {
         paymentPage.choosePaymentMethodWithMock(PaymentType.CARDINAL_COMMERCE);
     }
 
-    @Then("^User will see card icon connected to card type ([^\"]*)$")
-    public void userWillSeeCardIconConnectedToCardTypeCardType(String cardType) {
-        PicoContainerHelper.updateInContainer(StoredElement.cardType, cardType);
-        animatedCardModule.validateIfCardTypeIconWasAsExpected(cardType.toLowerCase(), fieldInIframe);
-    }
-
-    @And("^User will see that animated card is flipped, except for \"([^\"]*)\"$")
-    public void userWillSeeThatAnimatedCardIsFlippedExceptFor(String cardType) throws InterruptedException {
-        animatedCardModule.validateIfAnimatedCardIsFlipped(cardType.equals("AMEX"), fieldInIframe);
-    }
-
     @When("^User fills payment form with incorrect or missing data: card number ([^\"]*), expiration date ([^\"]*) and cvc ([^\"]*)$")
     public void userFillsPaymentFormWithIncorrectOrMissingDataCardNumberCardNumberExpirationDateExpirationAndCvcCvc
             (
@@ -112,12 +100,6 @@ public class PaymentPageSteps {
     @And("^User will see \"([^\"]*)\" message under field: (.*)$")
     public void userWillSeeMessageUnderField(String message, FieldType fieldType) {
         paymentPage.validateIfFieldValidationMessageWasAsExpected(fieldType, message, fieldInIframe);
-    }
-
-    @And("^User will see the same provided data on animated credit card ([^\"]*), ([^\"]*) and ([^\"]*)$")
-    public void userWillSeeTheSameProvidedDataOnAnimatedCreditCardCardNumberExpirationDateAndCvc(String cardNumber,
-                                                                                                 String expirationDate, String cvc) {
-        animatedCardModule.validateIfAllProvidedDataOnAnimatedCardWasAsExpected(cardNumber, expirationDate, cvc, fieldInIframe);
     }
 
     @Then("^User will see payment status information: (.*)$")
@@ -257,9 +239,9 @@ public class PaymentPageSteps {
     }
 
     @When("^User changes page language to ([^\"]*)$")
-    public void userChangesPageLanguageToLanguage(String language) throws IOException, ParseException {
-        SeleniumExecutor.getDriver()
-                .get(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+    public void userChangesPageLanguageToLanguage(String language) throws IOException, ParseException, InterruptedException {
+        paymentPage.OpenPage(getProperty(PropertyType.BASE_URI) + "?jwt=" + getTranslationFromJson("jwt", language));
+        paymentPage.waitUntilPageIsLoaded();
     }
 
     @Then("^User will see all labels displayed on page translated into ([^\"]*)$")
@@ -331,5 +313,10 @@ public class PaymentPageSteps {
                 paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
                 break;
         }
+    }
+
+    @Then("^User will see that (.*) field is disabled$")
+    public void userWillSeeThatFieldIsDisabled(FieldType fieldType) throws InterruptedException {
+        paymentPage.validateIfFieldIsDisabled(fieldType, fieldInIframe);
     }
 }
