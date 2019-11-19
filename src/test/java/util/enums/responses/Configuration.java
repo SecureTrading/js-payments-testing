@@ -7,7 +7,8 @@ public enum Configuration {
     UPDATE_JWT("configUpdateJwtTrue.json"),
     FIELD_STYLE("configFieldStyle.json"),
     IMMEDIATE_PAYMENT("configImmediatePayment.json"),
-    SKIP_JSINIT("configSkipJSinit.json");
+    SKIP_JSINIT("configSkipJSinit.json"),
+    DEFER_INIT_START_ON_LOAD("configStartOnLoadAndDeferInitTrue.json");
 
     private String mockJson;
 

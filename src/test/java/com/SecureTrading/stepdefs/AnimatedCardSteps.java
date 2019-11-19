@@ -6,16 +6,14 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.json.simple.parser.ParseException;
 import util.PicoContainerHelper;
-import util.SeleniumExecutor;
-import util.enums.FieldType;
 import util.enums.PropertyType;
 import util.enums.StoredElement;
 
 import java.io.IOException;
 
 import static util.PropertiesHandler.getProperty;
+import static util.helpers.TestConditionHandler.checkIfBrowserNameStartWith;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
 
 public class AnimatedCardSteps {
@@ -29,6 +27,8 @@ public class AnimatedCardSteps {
 
     @Given("User opens page with animated card")
     public void userOpensPageWithAnimatedCard() throws InterruptedException {
+        if (checkIfBrowserNameStartWith("IE"))
+            Thread.sleep(2000);
         animatedCardModule.OpenPage(getProperty(PropertyType.BASE_URI));
         if (!animatedCardModule.waitUntilPageIsLoaded()){
             animatedCardModule.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));

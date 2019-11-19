@@ -334,7 +334,7 @@ Feature: Payment methods
     When THREEDQUERY response set to ENROLLED_Y
     And ACS response set to OK
     And AUTH response set to "<actionCode>"
-    And User opens immediate payment page
+    And User opens payment page
     Then User will see payment status information: <paymentStatusMessage>
     Examples:
       | actionCode | paymentStatusMessage                    | paymentCode |
@@ -345,14 +345,14 @@ Feature: Payment methods
   Scenario: Immediate payment (card enrolled N) - checking payment status for OK response code
     When THREEDQUERY response set to NOT_ENROLLED_N
     And AUTH response set to "OK"
-    And User opens immediate payment page
+    And User opens payment page
     Then User will see payment status information: Payment has been successfully processed
 
   @configImmediatePayment @fullTest @mockData
   Scenario Outline: Immediate payment (card enrolled Y) - check ACS response for code: <actionCode>
     When THREEDQUERY response set to ENROLLED_Y
     And ACS response set to <actionCode>
-    And User opens immediate payment page
+    And User opens payment page
     Then User will see payment status information: <paymentStatusMessage>
     Examples:
       | actionCode | paymentStatusMessage |
@@ -393,3 +393,10 @@ Feature: Payment methods
     And User clicks Pay button - AUTH response set to OK
     Then User will see payment status information: Payment has been successfully processed
     And User will see that notification frame has "green" color
+
+  @configDeferInitAndStartOnLoadTrue @fullTest
+  Scenario: Successful payment with updated JWT and StartOnLoad
+    When THREEDQUERY response set to NOT_ENROLLED_N
+    And AUTH response set to "OK"
+    And User opens payment page
+    Then User will see payment status information: Payment has been successfully processed
