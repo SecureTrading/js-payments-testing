@@ -14,7 +14,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cucumber.jvm.parallel.version>5.0.0</cucumber.jvm.parallel.version>
-    <surefire.maven.plugin.version>3.0.0-M3</surefire.maven.plugin.version>
+    <surefire.maven.plugin.version>3.0.0-M4</surefire.maven.plugin.version>
     <cucumber.java.version>4.8.0</cucumber.java.version>
     <cucumber.junit.version>4.8.0</cucumber.junit.version>
     <selenium.java.version>3.141.59</selenium.java.version>
