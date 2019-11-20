@@ -23,12 +23,12 @@ Feature: Animated Card tests
       | 5000000000000611    | 5000 0000 0000 0611    | 12/23          | 123  | MAESTRO      |
       | 5100000000000511    | 5100 0000 0000 0511    | 12/23          | 123  | MASTERCARD   |
 
-#  @animatedCardRepoTest
-#  Scenario: Credit card recognition for PIBA and validate date on animated card
-#    When User fills payment form with data: "3089500000000000021", "12/23"
-#    Then User will see card icon connected to card type PIBA
-#    And User will see the same provided data on animated credit card "3089 5000 0000 0000021", "12/23"
-#    Then User will see that CVC field is disabled
+  @animatedCardRepoTest
+  Scenario: Credit card recognition for PIBA and validate date on animated card
+    When User fills payment form with data: "3089500000000000021", "12/23"
+    Then User will see card icon connected to card type PIBA
+    And User will see the same provided data on animated credit card "3089 5000 0000 0000021", "12/23"
+    Then User will see that CVC field is disabled
 
   @animatedCardRepoTest
   Scenario Outline: Checking animated card translation for <language>

@@ -6,8 +6,6 @@ import static util.JsonHandler.getTranslationFromJson;
 import static util.helpers.TestConditionHandler.*;
 import static util.helpers.actions.CustomScrollImpl.scrollToBottomOfPage;
 import static util.helpers.actions.CustomScrollImpl.scrollToTopOfPage;
-
-import com.SecureTrading.pageobjects.AnimatedCardModule;
 import com.SecureTrading.pageobjects.PaymentPage;
 
 import cucumber.api.java.en.And;
@@ -47,6 +45,8 @@ public class PaymentPageSteps {
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.UPDATE_JWT.getMockJson());
         else if (scenarioTagsList.contains("@configSkipJSinit"))
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SKIP_JSINIT.getMockJson());
+        else if (scenarioTagsList.contains("@configDeferInitAndStartOnLoadTrue"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.DEFER_INIT_START_ON_LOAD.getMockJson());
         else
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.CONFIG.getMockJson());
     }
@@ -61,7 +61,9 @@ public class PaymentPageSteps {
                 paymentPage.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
                 paymentPage.OpenPage("https://thirdparty.example.com:8443");
             }
-            if (!checkIfScenarioNameContainsText("Immediate")) {
+            if (!(checkIfScenarioNameContainsText("Immediate") || checkIfScenarioNameContainsText("StartOnLoad"))) {
+                if (checkIfBrowserNameStartWith("IE"))
+                    Thread.sleep(2000);
                 paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
                 paymentPage.waitUntilPageIsLoaded();
                 //Additional try for IE problems
@@ -69,6 +71,7 @@ public class PaymentPageSteps {
                     paymentPage.OpenPage(getProperty(PropertyType.WEBSERVICES_DOMAIN));
                     Thread.sleep(4000);
                     paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
+                    paymentPage.waitUntilPageIsLoaded();
                 }
             }
         }
@@ -280,7 +283,7 @@ public class PaymentPageSteps {
         stubSTRequestType(response.getMockJson(), RequestType.AUTH);
     }
 
-    @And("^User opens immediate payment page$")
+    @And("^User opens payment page$")
     public void userOpensImmediatePaymentPage() {
         SeleniumExecutor.getDriver().get(getProperty(PropertyType.BASE_URI));
     }
