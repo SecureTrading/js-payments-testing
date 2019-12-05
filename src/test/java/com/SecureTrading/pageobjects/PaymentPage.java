@@ -3,6 +3,7 @@ package com.SecureTrading.pageobjects;
 import static util.helpers.IframeHandler.switchToDefaultIframe;
 import static util.helpers.IframeHandler.switchToIframe;
 import static util.helpers.TestConditionHandler.*;
+import static util.helpers.WebElementHandler.isElementDisplayed;
 import static util.helpers.actions.CustomClickImpl.click;
 import static util.helpers.actions.CustomGetAttributeImpl.getAttribute;
 import static util.helpers.actions.CustomGetTextImpl.getText;
@@ -482,5 +483,29 @@ public class PaymentPage extends BasePage {
 
     public void waitUntilPageIsLoaded() throws InterruptedException {
         waitUntilElementIsDisplayed(visaCheckoutMockButton, 8);
+    }
+
+    public void validateIfFieldIsPresent(FieldType fieldType) {
+        boolean isPresent = isFieldDisplayed(fieldType);
+        PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
+                "Field is visible but shouldn't be");
+        Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                isPresent);
+    }
+
+    public boolean isFieldDisplayed(FieldType fieldType) {
+        boolean isPresent = true;
+        switch (fieldType) {
+            case CARD_NUMBER:
+                isPresent = isElementDisplayed(cardNumberInputField);
+                break;
+            case EXPIRY_DATE:
+                isPresent = isElementDisplayed(expirationDateInputField);
+                break;
+            case CVC:
+                isPresent = isElementDisplayed(cvcInputField);
+                break;
+        }
+        return isPresent;
     }
 }

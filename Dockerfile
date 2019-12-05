@@ -1,4 +1,4 @@
-ARG CODE_VERSION=develop
+ARG CODE_VERSION=feature-ST-357-allow-returning-customer-to-only-submit-securitycode
 ARG CODE_REPO=js-payments
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO

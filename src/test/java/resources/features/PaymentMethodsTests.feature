@@ -400,3 +400,11 @@ Feature: Payment methods
     And AUTH response set to "OK"
     And User opens payment page
     Then User will see payment status information: Payment has been successfully processed
+
+  @configSubmitCvvOnly @smokeTest
+  Scenario: Successful payment when cvv field is selected to submit
+    When User fills CVC field "123"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to OK
+    Then User will see payment status information: Payment has been successfully processed
+    And User will not see card number and expiration date fields
