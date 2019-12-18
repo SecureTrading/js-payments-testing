@@ -485,7 +485,7 @@ public class PaymentPage extends BasePage {
         waitUntilElementIsDisplayed(visaCheckoutMockButton, 8);
     }
 
-    public void validateIfFieldIsPresent(FieldType fieldType) {
+    public void validateIfFieldIsNotPresent(FieldType fieldType) {
         boolean isPresent = isFieldDisplayed(fieldType);
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 "Field is visible but shouldn't be");

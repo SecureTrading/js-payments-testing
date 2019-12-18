@@ -332,7 +332,7 @@ public class PaymentPageSteps {
 
     @And("User will not see card number and expiration date fields")
     public void userWillNotSeeCardNumberAndExpirationDateFields() {
-        paymentPage.validateIfFieldIsPresent(FieldType.CARD_NUMBER);
-        paymentPage.validateIfFieldIsPresent(FieldType.EXPIRY_DATE);
+        paymentPage.validateIfFieldIsNotPresent(FieldType.CARD_NUMBER);
+        paymentPage.validateIfFieldIsNotPresent(FieldType.EXPIRY_DATE);
     }
 }
