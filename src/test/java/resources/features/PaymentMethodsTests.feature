@@ -99,17 +99,20 @@ Feature: Payment methods
       | cardNumber       | expirationDate | cvc | cardType   |
       | 5100000000000511 | 12/22          | 123 | MASTERCARD |
 
-  @configAnimatedCardTrue @animatedCard
+  @configAnimatedCardTrue @animatedCard @fullTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
     And User will see that animated card is flipped, except for "AMEX"
+    @smokeTest
+    Examples:
+      | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
+      | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
       | 340000000000611  | 3400 000000 00611   | 12/23          | 1234 | AMEX     |
-      | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
-#      | 6011000000000301 | 6011 0000 0000 0301 | 12/23          | 123  | DISCOVER   |
+ #     | 6011000000000301 | 6011 0000 0000 0301 | 12/23          | 123  | DISCOVER   |
 #      | 3528000000000411 | 3528 0000 0000 0411 | 12/23          | 123  | JCB        |
 #      | 5000000000000611 | 5000 0000 0000 0611 | 12/23          | 123  | MAESTRO    |
 #      | 5100000000000511 | 5100 0000 0000 0511 | 12/23          | 123  | MASTERCARD |
