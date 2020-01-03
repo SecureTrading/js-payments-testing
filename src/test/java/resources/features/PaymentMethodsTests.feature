@@ -117,11 +117,10 @@ Feature: Payment methods
 #      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
 #      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
 
-  #ToDo Uncomment when changes on js-payments will be ready
-#  @baseConfig @fullTest
-#  Scenario: Disabled CVC field for PIBA card type
-#    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
-#    Then User will see that CVC field is disabled
+  @baseConfig @fullTest
+  Scenario: Disabled CVC field for PIBA card type
+    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
+    Then User will see that CVC field is disabled
 
   @baseConfig @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
