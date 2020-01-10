@@ -1,4 +1,4 @@
-ARG CODE_VERSION=develop_paymentcardrefactor
+ARG CODE_VERSION=feature-ST-383-cybertonica-integration-spike
 ARG CODE_REPO=js-payments
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO
