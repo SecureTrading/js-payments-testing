@@ -27,9 +27,6 @@
   },
   "components": {
   },
-  "cybertonica": {
-    "apikey": ""
-  },
   "applePay": {
     "buttonStyle": "white-outline",
     "buttonText": "donate",

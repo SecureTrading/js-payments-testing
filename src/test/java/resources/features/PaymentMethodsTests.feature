@@ -403,7 +403,7 @@ Feature: Payment methods
     And User opens payment page
     Then User will see payment status information: Payment has been successfully processed
 
-  @configSubmitCvvOnly @smokeTest
+  @configSubmitCvvOnly @smokeTest @fullTest
   Scenario: Successful payment when cvv field is selected to submit
     When User fills CVC field "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
