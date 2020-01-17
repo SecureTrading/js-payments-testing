@@ -47,6 +47,8 @@ public class PaymentPageSteps {
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SKIP_JSINIT.getMockJson());
         else if (scenarioTagsList.contains("@configDeferInitAndStartOnLoadTrue"))
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.DEFER_INIT_START_ON_LOAD.getMockJson());
+        else if (scenarioTagsList.contains("@configSubmitCvvOnly"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SUBMIT_CVV_ONLY.getMockJson());
         else
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.CONFIG.getMockJson());
     }
@@ -321,5 +323,16 @@ public class PaymentPageSteps {
     @Then("^User will see that (.*) field is disabled$")
     public void userWillSeeThatFieldIsDisabled(FieldType fieldType) throws InterruptedException {
         paymentPage.validateIfFieldIsDisabled(fieldType, fieldInIframe);
+    }
+
+    @When("^User fills (.*) field (.*)$")
+    public void userFillsCVVField(FieldType fieldType, String text) throws InterruptedException {
+        paymentPage.fillCreditCardInputField(fieldType, text);
+    }
+
+    @And("User will not see card number and expiration date fields")
+    public void userWillNotSeeCardNumberAndExpirationDateFields() {
+        paymentPage.validateIfFieldIsNotPresent(FieldType.CARD_NUMBER);
+        paymentPage.validateIfFieldIsNotPresent(FieldType.EXPIRY_DATE);
     }
 }

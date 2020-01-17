@@ -99,17 +99,20 @@ Feature: Payment methods
       | cardNumber       | expirationDate | cvc | cardType   |
       | 5100000000000511 | 12/22          | 123 | MASTERCARD |
 
-  @configAnimatedCardTrue @animatedCard
+  @configAnimatedCardTrue @animatedCard @fullTest
   Scenario Outline: Credit card recognition for <cardType> and validate date on animated card
     When User fills payment form with credit card number "<cardNumber>", expiration date "<expirationDate>" and cvc "<cvc>"
     Then User will see card icon connected to card type <cardType>
     And User will see the same provided data on animated credit card "<formattedCardNumber>", "<expirationDate>" and "<cvc>"
     And User will see that animated card is flipped, except for "AMEX"
+    @smokeTest
+    Examples:
+      | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
+      | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
     Examples:
       | cardNumber       | formattedCardNumber | expirationDate | cvc  | cardType |
       | 340000000000611  | 3400 000000 00611   | 12/23          | 1234 | AMEX     |
-      | 4111110000000211 | 4111 1100 0000 0211 | 12/22          | 123  | VISA     |
-#      | 6011000000000301 | 6011 0000 0000 0301 | 12/23          | 123  | DISCOVER   |
+ #     | 6011000000000301 | 6011 0000 0000 0301 | 12/23          | 123  | DISCOVER   |
 #      | 3528000000000411 | 3528 0000 0000 0411 | 12/23          | 123  | JCB        |
 #      | 5000000000000611 | 5000 0000 0000 0611 | 12/23          | 123  | MAESTRO    |
 #      | 5100000000000511 | 5100 0000 0000 0511 | 12/23          | 123  | MASTERCARD |
@@ -117,11 +120,10 @@ Feature: Payment methods
 #      | 1801000000000901    | 1801 0000 0000 0901    | 12/23          | 123 | ASTROPAYCARD |
 #      | 3000000000000111    | 3000 000000 000111     | 12/23          | 123 | DINERS       |
 
-  #ToDo Uncomment when changes on js-payments will be ready
-#  @baseConfig @fullTest
-#  Scenario: Disabled CVC field for PIBA card type
-#    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
-#    Then User will see that CVC field is disabled
+  @baseConfig @fullTest
+  Scenario: Disabled CVC field for PIBA card type
+    When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
+    Then User will see that CVC field is disabled
 
   @baseConfig @smokeTest @fullTest
   Scenario: Submit payment form without data - fields validation
@@ -400,3 +402,11 @@ Feature: Payment methods
     And AUTH response set to "OK"
     And User opens payment page
     Then User will see payment status information: Payment has been successfully processed
+
+  @configSubmitCvvOnly @smokeTest @fullTest
+  Scenario: Successful payment when cvv field is selected to submit
+    When User fills CVC field "123"
+    And THREEDQUERY response set to NOT_ENROLLED_N
+    And User clicks Pay button - AUTH response set to OK
+    Then User will see payment status information: Payment has been successfully processed
+    And User will not see card number and expiration date fields
