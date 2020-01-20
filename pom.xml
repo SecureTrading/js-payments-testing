@@ -24,7 +24,7 @@
     <pico.container.version>2.15</pico.container.version>
     <commons.lang.version>3.8.1</commons.lang.version>
     <wiremock.version>2.25.1</wiremock.version>
-    <rest.assured.version>4.1.2</rest.assured.version>
+    <rest.assured.version>4.2.0</rest.assured.version>
     <jackson.databind>2.10.0</jackson.databind>
     <acceptance.test.parallel.count>5</acceptance.test.parallel.count>
     <maven.compiler.source>1.8</maven.compiler.source>
