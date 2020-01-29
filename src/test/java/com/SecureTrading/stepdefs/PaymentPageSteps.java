@@ -49,6 +49,8 @@ public class PaymentPageSteps {
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.DEFER_INIT_START_ON_LOAD.getMockJson());
         else if (scenarioTagsList.contains("@configSubmitCvvOnly"))
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.SUBMIT_CVV_ONLY.getMockJson());
+        else if (scenarioTagsList.contains("@configBypassCards"))
+            stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.BYPASS_CARDS.getMockJson());
         else
             stubConfig(PropertyType.CONFIG_MOCK_URI, Configuration.CONFIG.getMockJson());
     }
@@ -82,7 +84,12 @@ public class PaymentPageSteps {
     @When("^User fills payment form with credit card number \"([^\"]*)\", expiration date \"([^\"]*)\"(?: and cvc \"([^\"]*)\"|)$")
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
-        paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
+
+        //ToDo Temporary workaround for IE problem - for bypassCards test used JCB card instead PIBA
+        if (checkIfBrowserNameStartWith("IE") && getScenarioTagsList().contains("@configBypassCards"))
+            paymentPage.fillPaymentForm("3528000000000411", "01/23", "123");
+        else
+            paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
     }
 
     @When("^User fills merchant data with name \"([^\"]*)\", email \"([^\"]*)\", phone \"([^\"]*)\"$")
