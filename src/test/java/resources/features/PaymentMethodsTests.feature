@@ -411,7 +411,7 @@ Feature: Payment methods
     Then User will see payment status information: Payment has been successfully processed
     And User will not see card number and expiration date fields
 
-  @baseConfig @bypassCards @smokeTest @fullTest
+  @configBypassCards @bypassCards @smokeTest @fullTest
   Scenario: Successful payment using non-3d "PIBA" card type
     When User fills payment form with credit card number "3089500000000000021", expiration date "12/23"
     And User clicks Pay button - AUTH response set to OK
