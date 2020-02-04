@@ -170,23 +170,33 @@ public class PaymentPage extends BasePage {
     }
 
     public void fillCreditCardInputField(FieldType fieldType, String value) throws InterruptedException {
+        Thread.sleep(500);
         switchToIframe(fieldType.getIframeName());
         switch (fieldType) {
             case CARD_NUMBER:
                 if (checkIfBrowserNameStartWith("IE")) {
+                    Thread.sleep(1000);
                     for (char digit : value.toCharArray()) {
                         sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
+                        Thread.sleep(300);
                     }
                 } else
                     sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
                 break;
             case CVC:
-                sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
+                if (checkIfBrowserNameStartWith("IE")){
+                    Thread.sleep(1000);
+                    for (char digit : value.toCharArray()) {
+                        sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), String.valueOf(digit));
+                        Thread.sleep(300);
+                    }
+                } else
+                    sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
                 break;
             case EXPIRY_DATE:
                 if (checkIfBrowserNameStartWith("IE") && value.length() > 3) {
                     sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(0, 2));
-                    Thread.sleep(1000);
+                    Thread.sleep(1500);
                     sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value.substring(3, 5));
                 } else
                     sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), value);

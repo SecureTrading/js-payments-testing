@@ -65,14 +65,17 @@ public class AnimatedCardModule extends BasePage {
 
     public void fillPaymentFormWithoutIFrames(String cardNumber, String expiryDate, String cvv) throws InterruptedException {
         if (checkIfBrowserNameStartWith("IE")) {
+            Thread.sleep(1000);
             click(SeleniumExecutor.getDriver().findElement(cardNumberInputField));
             for (char digit : cardNumber.toCharArray()) {
                 sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), String.valueOf(digit));
-                Thread.sleep(100);
+                Thread.sleep(300);
             }
         } else
             sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), cardNumber);
 
+        if (checkIfBrowserNameStartWith("IE"))
+            Thread.sleep(1000);
         sendKeys(SeleniumExecutor.getDriver().findElement(expirationDateInputField), expiryDate);
         if (cvv != null)
             sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), cvv);
