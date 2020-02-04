@@ -371,11 +371,17 @@ public class PaymentPage extends BasePage {
                 checkIfMerchantFieldIsHighlighted(fieldType));
     }
 
-    public void validateIfElementIsEnabledAfterPayment(FieldType fieldType) {
+    public void validateIfElementIsDisabledAfterPayment(String formStatus, FieldType fieldType) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be enabled but it isn't ");
-        Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
-                checkIfElementIsEnabled(fieldType));
+         if (formStatus === "enabled") {
+              Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                         checkIfElementIsEnabled(fieldType));
+         } else {
+              Assert.assertFalse(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
+                         checkIfElementIsEnabled(fieldType));
+         }
+
     }
 
     public void validateIfFieldIsDisabled(FieldType fieldType, boolean fieldInIframe) {
