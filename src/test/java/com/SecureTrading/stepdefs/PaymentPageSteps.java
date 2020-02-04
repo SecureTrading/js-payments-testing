@@ -67,7 +67,7 @@ public class PaymentPageSteps {
             }
             if (!(checkIfScenarioNameContainsText("Immediate") || checkIfScenarioNameContainsText("StartOnLoad"))) {
                 if (checkIfBrowserNameStartWith("IE"))
-                    Thread.sleep(2000);
+                    Thread.sleep(4000);
                 paymentPage.OpenPage(getProperty(PropertyType.BASE_URI));
                 paymentPage.waitUntilPageIsLoaded();
                 //Additional try for IE problems
