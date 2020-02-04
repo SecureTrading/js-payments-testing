@@ -184,9 +184,14 @@ public class PaymentPage extends BasePage {
                     sendKeys(SeleniumExecutor.getDriver().findElement(cardNumberInputField), value);
                 break;
             case CVC:
-                if (checkIfBrowserNameStartWith("IE"))
+                if (checkIfBrowserNameStartWith("IE")){
                     Thread.sleep(1000);
-                sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
+                    for (char digit : value.toCharArray()) {
+                        sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), String.valueOf(digit));
+                        Thread.sleep(300);
+                    }
+                } else
+                    sendKeys(SeleniumExecutor.getDriver().findElement(cvcInputField), value);
                 break;
             case EXPIRY_DATE:
                 if (checkIfBrowserNameStartWith("IE") && value.length() > 3) {
