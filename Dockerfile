@@ -1,4 +1,4 @@
-ARG CODE_VERSION=bugfix/ST-453-block-form-after-payment
+ARG CODE_VERSION=bugfix-ST-453-block-form-after-payment
 ARG CODE_REPO=js-payments
 FROM securetrading1/${CODE_REPO}:${CODE_VERSION}
 ARG CODE_REPO
