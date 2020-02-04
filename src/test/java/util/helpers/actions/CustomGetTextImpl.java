@@ -1,7 +1,7 @@
 package util.helpers.actions;
 
 import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
-import static util.helpers.actions.CustomWaitImpl.waitForJsJq;
+import static util.helpers.actions.CustomWaitImpl.waitForJs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class CustomGetTextImpl {
      * @return text
      */
     public static String getText(WebElement e) {
-        waitForJsJq();
+        waitForJs();
         waitForElementDisplayed(e);
         return e.getText();
     }
@@ -48,7 +48,7 @@ public class CustomGetTextImpl {
      * @return text
      */
     public static String getValue(WebElement e) {
-        waitForJsJq();
+        waitForJs();
         waitForElementDisplayed(e);
         return e.getAttribute("value");
     }

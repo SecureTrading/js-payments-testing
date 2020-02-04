@@ -19,20 +19,9 @@ public class CustomWaitImpl {
      *
      * @return true if finished
      */
-    public static boolean waitForJsJq() {
+    public static boolean waitForJs() {
         WebDriver webDriver = SeleniumExecutor.getDriver();
         WebDriverWait wait = SeleniumExecutor.getWaitDriver();
-        // wait for jQuery to load
-        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                try {
-                    return ((Long) ((JavascriptExecutor) webDriver).executeScript("return jQuery.active") == 0);
-                } catch (Exception e) {
-                    return true;
-                }
-            }
-        };
 
         // wait for Javascript to load
         ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
@@ -43,7 +32,7 @@ public class CustomWaitImpl {
             }
         };
 
-        return wait.until(jQueryLoad) && wait.until(jsLoad);
+        return wait.until(jsLoad);
     }
 
     /**

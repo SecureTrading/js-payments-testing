@@ -1,7 +1,7 @@
 package util.helpers.actions;
 
 import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
-import static util.helpers.actions.CustomWaitImpl.waitForJsJq;
+import static util.helpers.actions.CustomWaitImpl.waitForJs;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -15,7 +15,7 @@ public class CustomSendKeysImpl {
      * @param text string to type
      */
     public static void sendKeys(WebElement e, String text) {
-        waitForJsJq();
+        waitForJs();
         waitForElementDisplayed(e);
         e.sendKeys(text);
     }

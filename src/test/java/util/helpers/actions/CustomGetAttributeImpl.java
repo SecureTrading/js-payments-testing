@@ -1,6 +1,6 @@
 package util.helpers.actions;
 
-import static util.helpers.actions.CustomWaitImpl.waitForJsJq;
+import static util.helpers.actions.CustomWaitImpl.waitForJs;
 
 import org.openqa.selenium.WebElement;
 import util.enums.AttributeType;
@@ -13,7 +13,7 @@ public class CustomGetAttributeImpl {
      * @return value
      */
     public static String getAttribute(WebElement e, String attribute) {
-        //waitForJsJq();
+        //waitForJs();
         return e.getAttribute(attribute);
     }
 
@@ -24,7 +24,7 @@ public class CustomGetAttributeImpl {
      * @return value
      */
     public static String getAttribute(WebElement e, AttributeType attribute) {
-        waitForJsJq();
+        waitForJs();
         return e.getAttribute(attribute.toString());
     }
 }

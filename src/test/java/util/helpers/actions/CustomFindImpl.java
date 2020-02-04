@@ -1,6 +1,6 @@
 package util.helpers.actions;
 
-import static util.helpers.actions.CustomWaitImpl.waitForJsJq;
+import static util.helpers.actions.CustomWaitImpl.waitForJs;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,7 +17,7 @@ public class CustomFindImpl {
      * @return children WebElement
      */
     public static WebElement findElement(WebElement e, By by) {
-        waitForJsJq();
+        waitForJs();
         WebElement element = e.findElement(by);
         CustomScrollImpl.scrollToElement(element);
         return element;
@@ -30,7 +30,7 @@ public class CustomFindImpl {
      * @return list of children WebElements
      */
     public static List<WebElement> findElements(WebElement e, By by) {
-        waitForJsJq();
+        waitForJs();
         return e.findElements(by);
     }
 
@@ -40,7 +40,7 @@ public class CustomFindImpl {
      * @return list of WebElements
      */
     public static List<WebElement> findElements(By by) {
-        waitForJsJq();
+        waitForJs();
         return SeleniumExecutor.getDriver().findElements(by);
     }
 

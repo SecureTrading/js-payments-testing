@@ -15,7 +15,7 @@ public class CustomClickImpl {
     public static void click(WebElement e) {
         e.click();
         try {
-            CustomWaitImpl.waitForJsJq();
+            CustomWaitImpl.waitForJs();
         } catch (UnhandledAlertException ex) {
             ex.printStackTrace();
         }

@@ -11,7 +11,7 @@ import java.util.Random;
 
 import static util.helpers.WebElementHandler.isElementPresent;
 import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
-import static util.helpers.actions.CustomWaitImpl.waitForJsJq;
+import static util.helpers.actions.CustomWaitImpl.waitForJs;
 
 public class CustomSelectImpl {
     /**
@@ -20,7 +20,7 @@ public class CustomSelectImpl {
      * @param value text
      */
     public static void selectFromDropDown(WebElement e, String value) {
-        waitForJsJq();
+        waitForJs();
         isElementPresent(e);
         Select select = new Select(e);
         select.selectByVisibleText(value);
@@ -32,7 +32,7 @@ public class CustomSelectImpl {
      * @param value
      */
     public static void selectFromDropDownByValue(WebElement e, String value) {
-        waitForJsJq();
+        waitForJs();
         waitForElementDisplayed(e);
         Select select = new Select(e);
         select.selectByValue(value);
@@ -44,7 +44,7 @@ public class CustomSelectImpl {
      * @param index
      */
     public static void selectFromDropDownByIndex(WebElement e, int index) {
-        waitForJsJq();
+        waitForJs();
         waitForElementDisplayed(e);
         Select select = new Select(e);
         select.selectByIndex(index);
