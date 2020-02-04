@@ -374,7 +374,7 @@ public class PaymentPage extends BasePage {
     public void validateIfElementIsDisabledAfterPayment(String formStatus, FieldType fieldType) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be enabled but it isn't ");
-         if (formStatus === "enabled") {
+         if (formStatus == "enabled") {
               Assert.assertTrue(PicoContainerHelper.getFromContainer(StoredElement.errorMessage, String.class),
                          checkIfElementIsEnabled(fieldType));
          } else {
