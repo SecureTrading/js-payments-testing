@@ -371,7 +371,7 @@ public class PaymentPage extends BasePage {
                 checkIfMerchantFieldIsHighlighted(fieldType));
     }
 
-    public void validateIfElementIsDisabledAfterPayment(String formStatus, FieldType fieldType) {
+    public void validateIfElementIsEnabledAfterPayment(String formStatus, FieldType fieldType) {
         PicoContainerHelper.updateInContainer(StoredElement.errorMessage,
                 fieldType.toString() + " should be enabled but it isn't ");
          if (formStatus == "enabled") {

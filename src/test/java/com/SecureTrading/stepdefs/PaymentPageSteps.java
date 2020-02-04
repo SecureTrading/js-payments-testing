@@ -245,9 +245,9 @@ public class PaymentPageSteps {
 
     @And("^User will see that all input fields are (.*)$")
     public void userWillSeeThatAllInputFieldsAreDisabled(String formStatus) {
-        paymentPage.validateIfElementIsDisabledAfterPayment(formStatus, FieldType.CARD_NUMBER);
-        paymentPage.validateIfElementIsDisabledAfterPayment(formStatus, FieldType.CVC);
-        paymentPage.validateIfElementIsDisabledAfterPayment(formStatus, FieldType.EXPIRY_DATE);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.CARD_NUMBER);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.CVC);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.EXPIRY_DATE);
     }
 
     @When("^User changes page language to ([^\"]*)$")
