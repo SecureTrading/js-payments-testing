@@ -2,6 +2,7 @@ package util.helpers;
 
 import org.openqa.selenium.WebDriver;
 import util.SeleniumExecutor;
+import static util.helpers.actions.CustomWaitImpl.waitForElementDisplayed;
 
 public class IframeHandler {
     /**
