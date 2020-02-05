@@ -230,15 +230,15 @@ Feature: Payment methods
     When User fills payment form with credit card number "4000000000001000", expiration date "12/22" and cvc "123"
     And THREEDQUERY response set to NOT_ENROLLED_N
     And User clicks Pay button - AUTH response set to <actionCode>
-    Then User will see that Submit button is enabled after payment
-    And User will see that all input fields are enabled
+    Then User will see that Submit button is <formStatus> after payment
+    And User will see that all input fields are <formStatus>
   @smokeTest
     Examples:
-      | actionCode |
-      | OK         |
+      | actionCode | formStatus   |
+      | OK         | disabled |
     Examples:
-      | actionCode |
-      | DECLINE    |
+      | actionCode | formStatus |
+      | DECLINE    | enabled |
 
   @baseConfig @fullTest @translations
   Scenario Outline: Checking translations of labels and fields error for <language>

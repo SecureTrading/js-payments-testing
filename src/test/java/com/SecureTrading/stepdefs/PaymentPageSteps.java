@@ -237,17 +237,17 @@ public class PaymentPageSteps {
         stubSTRequestType(fieldType.getMockJson(), RequestType.THREEDQUERY);
     }
 
-    @Then("^User will see that Submit button is enabled after payment$")
-    public void userWillSeeThatSubmitButtonIsEnabledAfterPayment() throws InterruptedException {
+    @Then("^User will see that Submit button is (.*) after payment$")
+    public void userWillSeeThatSubmitButtonIsDisabledAfterPayment(String formStatus) throws InterruptedException {
         paymentPage.validateIfNotificationFrameIsDisplayed();
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.SUBMIT_BUTTON);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.SUBMIT_BUTTON);
     }
 
-    @And("^User will see that all input fields are enabled$")
-    public void userWillSeeThatAllInputFieldsAreEnabled() {
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CARD_NUMBER);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.CVC);
-        paymentPage.validateIfElementIsEnabledAfterPayment(FieldType.EXPIRY_DATE);
+    @And("^User will see that all input fields are (.*)$")
+    public void userWillSeeThatAllInputFieldsAreDisabled(String formStatus) {
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.CARD_NUMBER);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.CVC);
+        paymentPage.validateIfElementIsEnabledAfterPayment(formStatus, FieldType.EXPIRY_DATE);
     }
 
     @When("^User changes page language to ([^\"]*)$")
