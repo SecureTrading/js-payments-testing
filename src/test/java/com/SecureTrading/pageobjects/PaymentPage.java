@@ -171,7 +171,7 @@ public class PaymentPage extends BasePage {
 
     public void fillCreditCardInputField(FieldType fieldType, String value) throws InterruptedException {
         String frameName = fieldType.getIframeName();
-        waitUntilElementIsDisplayed(frameName, 20);
+        waitUntilElementIsDisplayed(By.id(frameName), 20);
         switchToIframe(frameName);
         switch (fieldType) {
             case CARD_NUMBER:
