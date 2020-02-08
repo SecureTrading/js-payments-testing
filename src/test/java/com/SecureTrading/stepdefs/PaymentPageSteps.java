@@ -85,8 +85,9 @@ public class PaymentPageSteps {
     public void userFillsPaymentFormWithCreditCardNumberCardNumberExpirationDateExpirationDateAndCvcCvc(
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
 
-        //ToDo Temporary workaround for IE problem - for bypassCards test used JCB card instead PIBA
-        if (checkIfBrowserNameStartWith("IE") && getScenarioTagsList().contains("@configBypassCards"))
+        //ToDo Temporary workaround for IE and Edge problem - for bypassCards test used JCB card instead PIBA
+        if (checkIfBrowserNameStartWith("IE") || checkIfBrowserNameStartWith("Edge")
+                && getScenarioTagsList().contains("@configBypassCards"))
             paymentPage.fillPaymentForm("3528000000000411", "01/23", "123");
         else
             paymentPage.fillPaymentForm(cardNumber, expirationDate, cvc);
@@ -317,12 +318,22 @@ public class PaymentPageSteps {
 
     @Then("User will see that (.*) field has correct style")
     public void userWillSeeThatFieldHasCorrectStyle(FieldType fieldType) throws InterruptedException {
+        String cardNumberExpectedStyle = "";
+        String securityCodeExpectedStyle = "";
+        if (checkIfBrowserNameStartWith("Firefox") || checkIfBrowserNameStartWith("Safari")
+            || checkIfBrowserNameStartWith("Edge")){
+            cardNumberExpectedStyle = "rgb(240, 248, 255)";
+            securityCodeExpectedStyle = "rgb(255, 243, 51)";
+        } else {
+            cardNumberExpectedStyle = "rgba(240, 248, 255, 1)";
+            securityCodeExpectedStyle = "rgba(255, 243, 51, 1)";
+        }
         switch (fieldType) {
             case CARD_NUMBER:
-                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(240, 248, 255, 1)");
+                paymentPage.validateIfFieldHasCorrectStyle(fieldType, cardNumberExpectedStyle);
                 break;
             case CVC:
-                paymentPage.validateIfFieldHasCorrectStyle(fieldType, "rgba(255, 243, 51, 1)");
+                paymentPage.validateIfFieldHasCorrectStyle(fieldType, securityCodeExpectedStyle);
                 break;
         }
     }
