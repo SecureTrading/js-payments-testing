@@ -86,7 +86,7 @@ public class PaymentPageSteps {
             String cardNumber, String expirationDate, String cvc) throws InterruptedException {
 
         //ToDo Temporary workaround for IE and Edge problem - for bypassCards test used JCB card instead PIBA
-        if (checkIfBrowserNameStartWith("IE") || checkIfBrowserNameStartWith("Edge")
+        if ((checkIfBrowserNameStartWith("IE") || checkIfBrowserNameStartWith("Edge"))
                 && getScenarioTagsList().contains("@configBypassCards"))
             paymentPage.fillPaymentForm("3528000000000411", "01/23", "123");
         else
