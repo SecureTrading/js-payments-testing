@@ -16,7 +16,7 @@
     <cucumber.jvm.parallel.version>5.0.0</cucumber.jvm.parallel.version>
     <surefire.maven.plugin.version>3.0.0-M3</surefire.maven.plugin.version>
     <cucumber.java.version>4.8.0</cucumber.java.version>
-    <cucumber.junit.version>4.8.0</cucumber.junit.version>
+    <cucumber.junit.version>5.4.0</cucumber.junit.version>
     <selenium.java.version>3.141.59</selenium.java.version>
     <junit.jupiter.api.version>5.5.2</junit.jupiter.api.version>
     <commons.io.version>2.6</commons.io.version>
