@@ -19,7 +19,7 @@ addons:
 services:
   - docker
 before_script:
-  - if [ "$TRAVIS_BRANCH" == "testing/2.2.0" ]; then echo "test; fi
+  - if [ "$TRAVIS_BRANCH" == "testing/2.2.0" ]; then echo "test"; fi
   - echo $TRAVIS_BRANCH
 jobs:
   include:
