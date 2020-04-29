@@ -21,7 +21,8 @@ services:
 before_script:
   - if [ "$TRAVIS_BRANCH" == "testing/2.2.0" ]; then echo "test"; fi
   - echo $TRAVIS_BRANCH
-  - if [ $TRAVIS_BRANCH == testing/2.2.0 ]; then echo "test2"; fi
+  - if [ $TRAVIS_BRANCH == (^testing) ]; then echo "test2"; fi
+  - if [ $TRAVIS_BRANCH =~ (^testing) ]; then echo "test3"; fi
 #jobs:
 #  include:
 #    - stage: Build
