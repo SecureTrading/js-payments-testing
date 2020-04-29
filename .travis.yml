@@ -19,9 +19,10 @@ addons:
 services:
   - docker
 before_script:
-  - if [ "$TRAVIS_BRANCH" == "testing/2.2.0" ]; then echo "test"; fi
+  - if [[ $TRAVIS_BRANCH !~ (^testing) ]]; then echo "test3"; fi
   - echo $TRAVIS_BRANCH
   - if [[ $TRAVIS_BRANCH =~ (^testing) ]]; then echo "test3"; fi
+  - if [ "$TRAVIS_BRANCH" != "master" ] && [[ $TRAVIS_BRANCH !~ (^testing) ]]; then echo "test4"; fi
 #jobs:
 #  include:
 #    - stage: Build
