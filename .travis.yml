@@ -19,8 +19,8 @@ addons:
 services:
   - docker
 before_script:
-  - docker pull "securetrading1/js-payments-testing"
-  - docker run -d -p 8443:8443 -it "securetrading1/js-payments-testing"
+  - if [ "$TRAVIS_BRANCH" == "testing/2.2.0" ]; then echo "test; fi
+  - echo $TRAVIS_BRANCH
 jobs:
   include:
     - stage: Build
