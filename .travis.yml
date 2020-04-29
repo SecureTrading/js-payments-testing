@@ -21,7 +21,9 @@ services:
 before_script:
   - if [[ ! $TRAVIS_BRANCH =~ ^xxx\/.*$ ]]; then echo "test3"; fi
   - if [[ $TRAVIS_BRANCH =~ ^testing\/.*$ ]]; then echo "test3"; fi
-  - if [[ "$TRAVIS_BRANCH" != "master" ] && [ ! $TRAVIS_BRANCH =~ ^xxx\/.*$ ]]; then echo "test3"; fi
+  - if [[ $TRAVIS_BRANCH =~ ^aaa\/.*$ ]]; then echo "test3"; fi
+  - if [[ "$TRAVIS_BRANCH" != "master" ]] && [[ ! $TRAVIS_BRANCH =~ ^xxx\/.*$ ]]; then echo "test3"; fi
+  - if [[! $TRAVIS_BRANCH =~ ^xxx\/.*$ && "$TRAVIS_BRANCH" != "master" ]]; then echo "test3"; fi
   - if [ "$TRAVIS_BRANCH" != "master" ] && [[ ! $TRAVIS_BRANCH =~ ^xxx\/.*$ ]]; then echo "test3"; fi
   - if [ "$TRAVIS_BRANCH" == "master" ] || [[ $TRAVIS_BRANCH =~ ^testing\/.*$ ]]; then echo "test3"; fi
   - if [[ "$TRAVIS_BRANCH" == "master" ] || [ $TRAVIS_BRANCH =~ ^testing\/.*$ ]]; then echo "test3"; fi
