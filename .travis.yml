@@ -21,11 +21,10 @@ services:
 before_script:
   - if [[ $TRAVIS_BRANCH =~ (^fff) ]]; then echo "test3"; fi
   - if [[ $TRAVIS_BRANCH =~ (\testing) ]]; then echo "test3"; fi
-  - if [[ $TRAVIS_BRANCH =~ ^testing$ ]]; then echo "test3"; fi
-  - if [ $TRAVIS_BRANCH =~ /^testing$/ ]; then echo "test3"; fi
-  - if [[ $TRAVIS_BRANCH =~ /^testing$/ ]]; then echo "test3"; fi
+  - if [[ $TRAVIS_BRANCH =~ (^testing$) ]]; then echo "test3"; fi
+  - if [[ $TRAVIS_BRANCH =~ (\^testing$) ]]; then echo "test3"; fi
   - echo $TRAVIS_BRANCH
-  - if [[ $TRAVIS_BRANCH =~ (^testing) ]]; then echo "test3"; fi
+  - if [[ $TRAVIS_BRANCH !~ (^testing) ]]; then echo "test3"; fi
 #  - if [ "$TRAVIS_BRANCH" != "master" ] && [[ $TRAVIS_BRANCH !~ (^testing) ]]; then echo "test4"; fi
 #jobs:
 #  include:
